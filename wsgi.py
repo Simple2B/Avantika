@@ -2,6 +2,7 @@
 import click
 
 from app import create_app, db, models, forms
+from app.auth.models import User
 
 app = create_app()
 
@@ -17,6 +18,9 @@ def get_context():
 def create_db():
     """Create the configured database."""
     db.create_all()
+    admin = User(username="admin",)
+    admin.password = "admin"
+    admin.save()
 
 
 @app.cli.command()
