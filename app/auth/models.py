@@ -14,9 +14,8 @@ class User(db.Model, UserMixin, ModelMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(60), unique=True, nullable=False)
-    email = db.Column(db.String(255), unique=True, nullable=True)
     password_hash = db.Column(db.String(255), nullable=False)
-    activated = db.Column(db.Boolean, default=False)
+    active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.now)
 
     @hybrid_property
@@ -29,9 +28,7 @@ class User(db.Model, UserMixin, ModelMixin):
 
     @classmethod
     def authenticate(cls, user_id, password):
-        user = cls.query.filter(
-            db.or_(cls.username == user_id, cls.email == user_id)
-        ).first()
+        user = cls.query.filter(cls.username == user_id).first()
         if user is not None and check_password_hash(user.password, password):
             return user
         return None
