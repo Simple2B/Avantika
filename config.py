@@ -6,7 +6,7 @@ base_dir = os.path.dirname(os.path.abspath(__file__))
 class BaseConfig(object):
     """Base configuration."""
 
-    APP_NAME = "Flask App"
+    APP_NAME = "Practice Coding"
     DEBUG_TB_ENABLED = False
     SECRET_KEY = os.environ.get(
         "SECRET_KEY", "Ensure you set a secret key, this is important!"
@@ -50,6 +50,8 @@ class ProductionConfig(BaseConfig):
     WTF_CSRF_ENABLED = True
 
 
-config = dict(
-    development=DevelopmentConfig, testing=TestingConfig, production=ProductionConfig
-)
+config = {
+    "development": DevelopmentConfig,
+    "testing": TestingConfig,
+    "production": ProductionConfig,
+}

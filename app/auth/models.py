@@ -10,7 +10,7 @@ from ..utils import ModelMixin
 
 class User(db.Model, UserMixin, ModelMixin):
 
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(60), unique=True, nullable=False)
@@ -29,12 +29,15 @@ class User(db.Model, UserMixin, ModelMixin):
 
     @classmethod
     def authenticate(cls, user_id, password):
-        user = cls.query.filter(db.or_(cls.username == user_id, cls.email == user_id)).first()
+        user = cls.query.filter(
+            db.or_(cls.username == user_id, cls.email == user_id)
+        ).first()
         if user is not None and check_password_hash(user.password, password):
             return user
+        return None
 
     def __str__(self):
-        return '<User: %s>' % self.username
+        return "<User: %s>" % self.username
 
 
 class AnonymousUser(AnonymousUserMixin):

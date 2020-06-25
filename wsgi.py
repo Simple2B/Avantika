@@ -2,7 +2,6 @@
 import click
 
 from app import create_app, db, models, forms
-from tests import test_app
 
 app = create_app()
 
@@ -21,11 +20,11 @@ def create_db():
 
 
 @app.cli.command()
-@click.confirmation_option(prompt='Drop all database tables?')
+@click.confirmation_option(prompt="Drop all database tables?")
 def drop_db():
     """Drop the current database."""
     db.drop_all()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run()
