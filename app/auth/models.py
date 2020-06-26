@@ -17,6 +17,7 @@ class User(db.Model, UserMixin, ModelMixin):
     password_hash = db.Column(db.String(255), nullable=False)
     active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.now)
+    roles = db.relationship('Role', secondary='user_roles')
 
     @hybrid_property
     def password(self):
@@ -39,3 +40,22 @@ class User(db.Model, UserMixin, ModelMixin):
 
 class AnonymousUser(AnonymousUserMixin):
     pass
+
+
+class Role(db.Model):
+    '''User roles '''
+
+    __tablename__ = "roles"
+
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+
+
+class UserRoles(db.Model):
+    '''Maping Users to the Roles'''
+
+    __tablename__ = "user_roles"
+
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), db.ForeingKey('users.id', ondelete='CASCADE'))
+    role_id = db.Column(db.Integer(), db.ForeingKey('roles.id', ondelete='CASCADE'))
