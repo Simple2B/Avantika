@@ -18,7 +18,7 @@ def get_context():
 def create_db():
     """Create the configured database."""
     db.create_all()
-    admin = User(username="admin",)
+    admin = User(username="admin")
     admin.password = "admin"
     admin.save()
 
