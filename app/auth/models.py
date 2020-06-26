@@ -39,3 +39,20 @@ class User(db.Model, UserMixin, ModelMixin):
 
 class AnonymousUser(AnonymousUserMixin):
     pass
+
+
+class Role(db.Model):
+    '''User roles '''
+
+    __tablename__ = "roles"
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+
+
+class UserRoles(db.Model):
+    '''Maping Users to the Roles'''
+
+    __tablename__ = "user_roles"
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), db.ForeingKey('users.id', ondelete='CASCADE'))
+    role_id = db.Column(db.Integer(), db.ForeingKey('roles.id', ondelete='CASCADE'))
