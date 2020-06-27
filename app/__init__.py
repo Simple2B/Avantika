@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from werkzeug.exceptions import HTTPException
 
+
 # instantiate extensions
 login_manager = LoginManager()
 db = SQLAlchemy()
@@ -16,6 +17,7 @@ def create_app(environment="development"):
     from app.views import main_blueprint
     from app.auth.views import auth_blueprint
     from app.auth.models import User, AnonymousUser
+    from app.exam.views import exam_blueprint
 
     # Instantiate app.
     app = Flask(__name__)
@@ -32,6 +34,7 @@ def create_app(environment="development"):
     # Register blueprints.
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(main_blueprint)
+    app.register_blueprint(exam_blueprint)
 
     # Set up flask login.
     @login_manager.user_loader
