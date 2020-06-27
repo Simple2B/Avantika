@@ -12,4 +12,4 @@ class ExamType(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True, nullable=False)
-    role_id = db.Column(db.Integer(), db.ForeingKey("roles.id", ondelete="CASCADE"))
+    role_id = db.Column(db.Integer(), db.ForeignKey("roles.id", ondelete="CASCADE"))
