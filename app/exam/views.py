@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, url_for, redirect, flash, request
 
 from .models import Exam
 from .forms import ExamForm
+from app.tab import get_allowed_tabs
 
 exam_blueprint = Blueprint("exam", __name__)
 
@@ -26,4 +27,5 @@ def exam():
         form=form,
         instruction_height=(exam.instruction.count("\n") + 2),
         code_height=(exam.template.count("\n") + 2),
+        tabs=get_allowed_tabs({})
     )
