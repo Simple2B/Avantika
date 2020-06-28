@@ -8,7 +8,7 @@ from .models import Tab
 CONFIG_TABS = "tabs.json"
 
 
-def get_allowed_tabs(client):
+def get_allowed_tabs():
     # logic to filter tabs by client's roles
     user_role = current_user.roles[0].name if not current_user.is_anonymous else []
     client_tabs = []

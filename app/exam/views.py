@@ -27,5 +27,5 @@ def exam():
         form=form,
         instruction_height=(exam.instruction.count("\n") + 2),
         code_height=(exam.template.count("\n") + 2),
-        tabs=get_allowed_tabs({})
+        tabs=get_allowed_tabs(),
     )
