@@ -1,5 +1,6 @@
 import json
 import os
+from flask_login import current_user
 
 from app.logger import log
 from .models import Tab
@@ -9,7 +10,7 @@ CONFIG_TABS = "tabs.json"
 
 def get_allowed_tabs(client):
     # logic to filter tabs by client's roles
-    user_role = "Student_PB_reg"
+    user_role = current_user.roles[0].name if not current_user.is_anonymous else []
     client_tabs = []
     for tab in tabs:
         if user_role in tab.roles:

@@ -3,7 +3,7 @@ import json
 import click
 
 from app import create_app, db, models, forms
-from app.auth.models import User
+from app.auth.models import User, Role, UserRoles
 from app.exam.models import Exam
 
 app = create_app()
@@ -17,20 +17,29 @@ def get_context():
 
 
 def load_exams():
-    with open('exams.json', 'r') as f:
+    with open("exams.json", "r") as f:
         for exam in json.load(f):
-            if not Exam.query.filter(Exam.name == exam['name']).first():
-                Exam(name=exam['name']).from_dict(**exam).save()
+            if not Exam.query.filter(Exam.name == exam["name"]).first():
+                Exam(name=exam["name"]).from_dict(**exam).save()
 
 
 @app.cli.command()
 def create_db():
     """Create the configured database."""
     db.create_all()
-    admin = User(username="admin")
-    admin.password = "admin"
-    admin.save()
+    create_user("admin", "admin", "Admin")
+    create_user("student", "student", "Student_PI_reg")
     load_exams()
+
+
+def create_user(username, password, role_name):
+    admin = User(username=username)
+    admin.password = password
+    admin.save()
+    admin_role = Role(name=role_name)
+    admin_role.save()
+    join_admin_to_role = UserRoles(user_id=admin.id, role_id=admin_role.id)
+    join_admin_to_role.save()
 
 
 @app.cli.command()

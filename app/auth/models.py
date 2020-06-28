@@ -42,7 +42,7 @@ class AnonymousUser(AnonymousUserMixin):
     pass
 
 
-class Role(db.Model):
+class Role(db.Model, ModelMixin):
     """
     User roles:
         Python Basic: Student_PB_reg, Student_PB_prem, Student_PB_prem_outsider
@@ -59,7 +59,7 @@ class Role(db.Model):
     exam_types = db.relationship("ExamType")
 
 
-class UserRoles(db.Model):
+class UserRoles(db.Model, ModelMixin):
     """Maping Users to the Roles"""
 
     __tablename__ = "user_roles"
