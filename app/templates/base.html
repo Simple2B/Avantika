@@ -33,7 +33,7 @@
     <!-- /#sidebar-wrapper -->
 
     <!-- Page Content -->
-    <div id="page-content-wrapper">
+    <div id="page-content-wrapper" class='d-flex flex-column'>
 
       <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
         <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
@@ -63,28 +63,27 @@
         </div>
       </nav>
 
-    <div class="container-fluid">
-      <!-- Flash Messages -->
-      {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-      {% for category, message in messages %}
-      <div class="alert alert-{{ category }} alert-dismisible">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          <span class="sr-only">Close</span>
-        </button>
-        {{ message }}
-      </div>
-      {% endfor %}
-      {% endif %}
-      {% endwith %}
-
-      <!-- Main Content -->
-      {% block content %}{% endblock %}
+      <div class="container-fluid">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismisible">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <!-- Main Content -->
+        {% block content %}{% endblock %}
 
       </div> <!-- /#container-fluid -->
       <!-- Footer-->
-      <footer>
+      <footer class='footer' style="margin-top:auto">
         <div class="container-fluid bg-light py-2">
 
           <!-- Copyrights -->
@@ -92,9 +91,8 @@
             <p class="text-muted mb-0 py-1">&copy;2020 {{ config.APP_NAME }} | All rights reserved.</p>
           </div>
         </div>
-      </div>
-    </footer><!-- /footer -->
-  </div> <!-- /#page-content-wrapper -->
+      </footer>
+    </div> <!-- /#page-content-wrapper -->
 
   </div>
   <!-- /#wrapper -->
