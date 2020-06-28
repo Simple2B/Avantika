@@ -9,8 +9,12 @@ CONFIG_TABS = "tabs.json"
 
 
 def get_allowed_tabs():
-    # logic to filter tabs by client's roles
-    user_role = current_user.roles[0].name if not current_user.is_anonymous else []
+    user_roles = current_user.roles if not current_user.is_anonymous else []
+    if len(user_roles) > 0:
+        user_role = user_roles[0].name
+    else:
+        return []
+
     client_tabs = []
     for tab in tabs:
         if user_role in tab.roles:
