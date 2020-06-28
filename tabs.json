@@ -1,5 +1,4 @@
-[
-    {
+[{
         "href": "exam.exam",
         "name": "Admin Dashboard",
         "roles": [
@@ -13,7 +12,13 @@
             "Admin",
             "Student_PB_reg",
             "Student_PB_prem",
-            "Student_PB_prem_outsider"
+            "Student_PB_prem_outsider",
+            "Student_PI_reg",
+            "Student_PI_prem",
+            "Student_PI_prem_outsider",
+            "Student_PA_reg",
+            "Student_PA_prem",
+            "Student_PA_prem_outsider"
         ]
     },
     {
@@ -23,7 +28,10 @@
             "Admin",
             "Student_PI_reg",
             "Student_PI_prem",
-            "Student_PI_prem_outsider"
+            "Student_PI_prem_outsider",
+            "Student_PA_reg",
+            "Student_PA_prem",
+            "Student_PA_prem_outsider"
         ]
     },
     {
