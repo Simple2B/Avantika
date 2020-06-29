@@ -6,7 +6,7 @@ from .models import User
 
 
 class LoginForm(FlaskForm):
-    user_id = StringField("Username or Email", [DataRequired()])
+    user_id = StringField("Username", [DataRequired()])
     password = PasswordField("Password", [DataRequired()])
     submit = SubmitField("Login")
 
@@ -23,6 +23,6 @@ class RegistrationForm(FlaskForm):
     )
     submit = SubmitField("Register")
 
-    def validate_username(form, field):
+    def validate_username(self, field):
         if User.query.filter_by(username=field.data).first() is not None:
             raise ValidationError("This username is taken.")
