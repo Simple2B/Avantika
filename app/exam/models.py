@@ -46,3 +46,14 @@ class Exam(db.Model, ModelMixin):
             "\n".join(args["template"]) if "template" in args else ""
         )
         return self
+
+
+class ExamType(db.Model, ModelMixin):
+    '''
+    It represents a type of exam like: regular, premium
+    '''
+    __tablename__ = "exam_types"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60), unique=True, nullable=False)
+    role_id = db.Column(db.Integer(), db.ForeignKey("roles.id", ondelete="CASCADE"))
