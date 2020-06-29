@@ -13,3 +13,4 @@ WTForms==2.2.1
 pytest
 flake8
 black
+flask-user
