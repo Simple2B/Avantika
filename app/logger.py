@@ -1,7 +1,7 @@
 import logging
 import sys
 
-LOGGER_NAME = 'AVANTIKA'
+LOGGER_NAME = 'PRACTICE_CODING'
 
 
 class Logger(object):

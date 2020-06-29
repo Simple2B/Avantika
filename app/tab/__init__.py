@@ -1,2 +1,2 @@
-from .models import Tab
-from .utils import get_allowed_tabs, load_tabs
+from .models import Tab  # noqa
+from .utils import get_allowed_tabs, load_tabs # noqa
