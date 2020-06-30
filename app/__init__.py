@@ -47,6 +47,9 @@ def create_app(environment="development"):
     login_manager.login_message_category = "info"
     login_manager.anonymous_user = AnonymousUser
 
+    # user_manager = UserManager(app, db, User)
+    # user_manager.USER_UNAUTHORIZED_ENDPOINT = "main.index"  # TODO: rethink of it
+
     # Error handlers.
     @app.errorhandler(HTTPException)
     def handle_http_error(exc):
