@@ -7,29 +7,21 @@
         <tr>
             <th scope="col">№</th>
             <th scope="col">Name</th>
-            <th scope="col">Password</th>
             <th scope="col">Role</th>
+            <th scope="col">Registered</th>
+            <th scope="col">Active</th>
         </tr>
     </thead>
     <tbody>
+        {% for user in users %}
         <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <th scope="row">{{user.id}}</th>
+            <td>{{user.username}}</td>
+            <td>{% for role in user.roles %} {{ role.name }} {% endfor %}</td>
+            <td>{{user.created_at}}</td>
+            <td>{{user.active}}</td>
         </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-        </tr>
+        {% endfor %}
     </tbody>
 </table>
 {% endblock %}

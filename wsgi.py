@@ -28,18 +28,39 @@ def create_db():
     """Create the configured database."""
     db.create_all()
     create_user("admin", "admin", "Admin")
-    create_user("student", "student", "Student_PI_reg")
+    create_user("admin2", "admin", "Admin")
+    create_user("admin3", "admin", "Admin")
+    create_user("student_PB_reg", "student", "Student_PB_reg")
+    create_user("student_PB_prem", "student", "Student_PB_prem")
+    create_user("student_PB_prem_outsider", "student", "Student_PB_prem_outsider")
+    create_user("student_PI_reg", "student", "Student_PI_reg")
+    create_user("student_PI_prem", "student", "Student_PI_prem")
+    create_user("student_PI_prem_outsider", "student", "Student_PI_prem_outsider")
+    create_user("student_PA_reg", "student", "Student_PA_reg")
+    create_user("student_PA_prem", "student", "Student_PA_prem")
+    create_user("student_PA_prem_outsider", "student", "Student_PA_prem_outsider")
+    create_user("student_J_reg", "student", "Student_J_reg")
+    create_user("student_J_pre", "student", "Student_J_pre")
+    create_user("student_J_pre_outsider", "student", "Student_J_pre_outsider")
+    create_user("student_HTML_reg", "student", "Student_HTML_reg")
+    create_user("student_HTML_prem", "student", "Student_HTML_prem")
+    create_user("student_HTML_prem_outsider", "student", "Student_HTML_prem_outsider")
     load_exams()
 
 
 def create_user(username, password, role_name):
-    admin = User(username=username)
-    admin.password = password
-    admin.save()
-    admin_role = Role(name=role_name)
-    admin_role.save()
-    join_admin_to_role = UserRoles(user_id=admin.id, role_id=admin_role.id)
-    join_admin_to_role.save()
+    user = User.query.filter(User.username == username).first()
+    if user:
+        return
+    user = User(username=username)
+    user.password = password
+    user.save()
+    user_role = Role.query.filter(Role.name == role_name).first()
+    if not user_role:
+        user_role = Role(name=role_name)
+        user_role.save()
+    join_user_to_role = UserRoles(user_id=user.id, role_id=user_role.id)
+    join_user_to_role.save()
 
 
 @app.cli.command()
