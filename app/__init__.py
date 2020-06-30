@@ -3,6 +3,7 @@ import os
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_user import UserManager
 from werkzeug.exceptions import HTTPException
 
 
@@ -47,8 +48,9 @@ def create_app(environment="development"):
     login_manager.login_message_category = "info"
     login_manager.anonymous_user = AnonymousUser
 
-    # user_manager = UserManager(app, db, User)
-    # user_manager.USER_UNAUTHORIZED_ENDPOINT = "main.index"  # TODO: rethink of it
+    user_manager = UserManager(app, db, User)
+    user_manager.USER_UNAUTHORIZED_ENDPOINT = "main.index"  # TODO: rethink of it
+    user_manager.USER_UNAUTHENTICATED_ENDPOINT = "auth.login"
 
     # Error handlers.
     @app.errorhandler(HTTPException)
