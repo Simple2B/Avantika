@@ -1,7 +1,6 @@
 from datetime import datetime
 
-from flask_login import AnonymousUserMixin
-from flask_user import UserMixin
+from flask_login import AnonymousUserMixin, UserMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from werkzeug.security import generate_password_hash, check_password_hash
 
