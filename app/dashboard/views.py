@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, redirect, flash, request
+from flask import Blueprint, render_template
 from flask_user import roles_required
 from app.tab import get_allowed_tabs
 

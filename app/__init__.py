@@ -50,6 +50,7 @@ def create_app(environment="development"):
 
     user_manager = UserManager(app, db, User)
     user_manager.USER_UNAUTHORIZED_ENDPOINT = "main.index"  # TODO: rethink of it
+    user_manager.USER_UNAUTHENTICATED_ENDPOINT = "auth.login"
 
     # Error handlers.
     @app.errorhandler(HTTPException)
