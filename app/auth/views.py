@@ -12,14 +12,15 @@ def register():
     form = RegistrationForm(request.form)
     if form.validate_on_submit():
         user = User(
+            # We need username, password, role
             username=form.username.data,
-            email=form.email.data,
             password=form.password.data,
+            role=form.role.data,
         )
         user.save()
         login_user(user)
         flash("Registration successful. You are logged in.", "success")
-        return redirect(url_for("main.index"))
+        return redirect(url_for("dashboard.dashboard"))
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
     return render_template("auth/register.html", form=form)

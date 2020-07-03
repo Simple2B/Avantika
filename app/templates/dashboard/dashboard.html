@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h3 align="center" , style="margin-top: 7%;">Manage Users</h3>
-<table class="table table-striped" , style="margin-top: 3%;">
+<table id="theTable" class="table table-striped table-sm">
     <thead>
         <tr>
             <th scope="col">№</th>
@@ -22,6 +21,22 @@
             <td>{{user.active}}</td>
         </tr>
         {% endfor %}
+    <tfoot>
+        <tr>
+            <th>№</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Registered</th>
+            <th>Active</th>
+        </tr>
+    </tfoot>
     </tbody>
 </table>
+{% endblock %}
+{% block scripts %}
+<script>
+    $(document).ready(function () {
+        $('#theTable').DataTable();
+    });
+</script>
 {% endblock %}
