@@ -9,13 +9,13 @@ LOGIN_ADMIN = "admin"
 PASSW_ADMIN = "admin"
 ROLE_ADMIN = "Admin"
 
-LOGIN_STUDENT = "student"
+LOGIN_STUDENT = "student124"
 PASSW_STUDENT = "student"
 ROLE_STUDENT = "Student_PI_reg"
 
 app = create_app(environment="testing")
 app.config["TESTING"] = True
-app.config["SERVER_NAME"] = "localhost"
+app.config["SERVER_NAME"] = "localhost.localdomain"
 
 
 @pytest.fixture
@@ -64,4 +64,12 @@ def test_registration(client):
             role=ROLE_STUDENT,
         ),
     )
-    assert response.status_code == 201
+    assert response.status_code == 302
+    # with open("temp.html", "wb") as file:
+    #     file.write(response.data)
+    response = client.get(url_for("dashboard.index"))
+    assert b"Registration successful." in response.data
+    user = User.query.filter(User.username == LOGIN_STUDENT).first()
+    assert user
+    assert user.active
+    assert ROLE_STUDENT in [role.name for role in user.roles]

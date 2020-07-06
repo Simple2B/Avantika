@@ -6,7 +6,7 @@ from app.auth.models import User, Role, UserRoles
 
 app = create_app(environment="testing")
 app.config["TESTING"] = True
-app.config["SERVER_NAME"] = "localhost"
+app.config["SERVER_NAME"] = "localhost.localdomain"
 
 LOGIN_ADMIN = "admin"
 PASSW_ADMIN = "admin"
@@ -111,10 +111,12 @@ def test_get_tabs_user(client):
 
 
 def create_user(username, password, role_name):
-    admin = User(username=username)
-    admin.password = password
-    admin.save()
-    admin_role = Role(name=role_name)
-    admin_role.save()
-    join_admin_to_role = UserRoles(user_id=admin.id, role_id=admin_role.id)
-    join_admin_to_role.save()
+    user = User(username=username)
+    user.password = password
+    user.save()
+    role = Role.query.filter(Role.name == role_name).first()
+    if not role:
+        role = Role(name=role_name)
+        role.save()
+    user_to_role = UserRoles(user_id=user.id, role_id=role.id)
+    user_to_role.save()
