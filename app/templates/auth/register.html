@@ -45,15 +45,15 @@
         </div>
         <div class="form-group">
           {{form.role.label}}
-          {{form.username(class='form-control')}}
+          {{form.role(class='form-control', placeholder="Roles")}}
           {% for error in form.errors.role %}
           <small class="text-danger">{{error}}</small>
           {% endfor %}
         </div>
         <div class="form-group">
           {{form.active.label}}
-          {{form.username(class='form-control')}}
-          {% for error in form.errors.active %}
+          {{form.active(class='form-control', placeholder="Active")}}
+          {% for error in form.errors.role %}
           <small class="text-danger">{{error}}</small>
           {% endfor %}
         </div>
