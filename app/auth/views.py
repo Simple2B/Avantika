@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, url_for, redirect, flash, request
 from flask_login import login_user, logout_user, login_required
+from flask_user import roles_required
 
 from .models import User
 from .forms import LoginForm, RegistrationForm
@@ -8,6 +9,7 @@ auth_blueprint = Blueprint("auth", __name__)
 
 
 @auth_blueprint.route("/register", methods=["GET", "POST"])
+@roles_required("Admin")
 def register():
     form = RegistrationForm(request.form)
     if form.validate_on_submit():
@@ -15,10 +17,11 @@ def register():
             # We need username, password, role
             username=form.username.data,
             password=form.password.data,
+            active=form.active.data,
             role=form.role.data,
         )
         user.save()
-        login_user(user)
+        # login_user(user)
         flash("Registration successful. You are logged in.", "success")
         return redirect(url_for("dashboard.dashboard"))
     elif form.is_submitted():

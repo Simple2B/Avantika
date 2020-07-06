@@ -1,6 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, ValidationError
-from wtforms.validators import DataRequired, Length, EqualTo
+from wtforms import (
+    StringField,
+    PasswordField,
+    SubmitField,
+    ValidationError,
+    BooleanField,
+)
+from wtforms.validators import DataRequired, Length, EqualTo, InputRequired
 
 from .models import User
 
@@ -21,6 +27,8 @@ class RegistrationForm(FlaskForm):
             EqualTo("password", message="Password do not match."),
         ],
     )
+    active = BooleanField("Active", validators=[InputRequired()])
+    role = StringField("Role", validators=[DataRequired()])
     submit = SubmitField("Register")
 
     def validate_username(self, field):
