@@ -54,7 +54,6 @@
                 aria-expanded="false">{{current_user.username | capitalize}}</a>
               <div class="dropdown-menu" aria-labelledby="userActions">
                 <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a>
-                <a class="dropdown-item" href="{{ url_for('auth.register') }}">Register</a>
               </div>
             </li>
             {% else %}
