@@ -28,7 +28,7 @@ class RegistrationForm(FlaskForm):
     )
     role = SelectField(
         "Role:",
-        default="user",
+        default="admin",
         choices=[
             ("admin", "Admin"),
             ("student_PB_reg", "Student_PB_reg"),

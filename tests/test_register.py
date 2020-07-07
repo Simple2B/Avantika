@@ -10,7 +10,7 @@ ROLE_ADMIN = "Admin"
 
 LOGIN_STUDENT = "student124"
 PASSW_STUDENT = "student"
-ROLE_STUDENT = "Student_PI_reg"
+ROLE_STUDENT = "student_PI_reg"
 
 app = create_app(environment="testing")
 app.config["TESTING"] = True
@@ -47,7 +47,7 @@ def test_registration(client):
         data=dict(
             username=LOGIN_STUDENT,
             password=PASSW_STUDENT,
-            active=True,
+            active="active",
             role=ROLE_STUDENT,
         ),
     )
@@ -59,7 +59,7 @@ def test_registration(client):
             username=LOGIN_STUDENT,
             password=PASSW_STUDENT,
             password_confirmation=PASSW_STUDENT,
-            active=True,
+            active="active",
             role=ROLE_STUDENT,
         ),
     )
