@@ -1,9 +1,8 @@
 import pytest
 from flask import url_for
 from app import db, create_app
-from app.tab import load_tabs
-from app.auth.models import User, Role, UserRoles
-from tests.test_app import create_user, login, logout
+from app.auth.models import User
+from tests.test_app import create_user, login
 
 LOGIN_ADMIN = "admin"
 PASSW_ADMIN = "admin"

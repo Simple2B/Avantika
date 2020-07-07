@@ -17,7 +17,7 @@ def register():
             # We need username, password, role
             username=form.username.data,
             password=form.password.data,
-            active=form.active.data,
+            active=(form.active.data == "active"),
             # role=form.role.data,
         )
         user.save()

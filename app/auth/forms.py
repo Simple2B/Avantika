@@ -4,11 +4,9 @@ from wtforms import (
     PasswordField,
     SubmitField,
     ValidationError,
-    BooleanField,
     SelectField,
 )
-from wtforms.validators import DataRequired, Length, EqualTo, InputRequired
-
+from wtforms.validators import DataRequired, Length, EqualTo
 from .models import User
 
 
@@ -28,14 +26,6 @@ class RegistrationForm(FlaskForm):
             EqualTo("password", message="Password do not match."),
         ],
     )
-    """
-    User roles:
-        Python Basic: Student_PB_reg, Student_PB_prem, Student_PB_prem_outsider
-        Python Intermediate: Student_PI_reg, Student_PI_prem, Student_PI_prem_outsider
-        Python Advanced: Student_PA_reg, Student_PA_prem, Student_PA_prem_outsider
-        Java Basic: Student_J_reg, Student_J_pre, Student_J_pre_outsider
-        HTML/CSS/JS: Student_HTML_reg, Student_HTML_prem, Student_HTML_prem_outsider
-    """
     role = SelectField(
         "Role:",
         default="user",
