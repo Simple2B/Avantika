@@ -6,7 +6,7 @@ from app.auth.models import User, Role, UserRoles
 
 app = create_app(environment="testing")
 app.config["TESTING"] = True
-app.config["SERVER_NAME"] = "localhost"
+app.config["SERVER_NAME"] = "localhost.localdomain"
 
 LOGIN_ADMIN = "admin"
 PASSW_ADMIN = "admin"
@@ -53,22 +53,9 @@ def test_index_page(client):
     assert response.status_code == 200
 
 
-def test_registration_page(client):
-    response = client.get("/register")
-    assert response.status_code == 200
-
-
 def test_login_page(client):
     response = client.get("/login")
     assert response.status_code == 200
-
-
-# def test_registration(client):
-#     # Valid data should register successfully.
-#     assert register("alice")
-#     # Password/Confirmation mismatch should fail.
-#     response = register("alice")
-#     assert b"The given data was invalid." in response.data
 
 
 def test_login_and_logout(client):
@@ -95,7 +82,7 @@ def test_get_tabs_not_logged(client):
     response = client.get(url)
     tabs = load_tabs()
     for tab in tabs:
-        assert f'{tab.name}'.encode('utf-8') not in response.data
+        assert f"{tab.name}".encode("utf-8") not in response.data
 
 
 def test_get_tabs_admin(client):
@@ -105,7 +92,7 @@ def test_get_tabs_admin(client):
     logout(client)
     tabs = load_tabs()
     for tab in tabs:
-        assert f'{tab.name}'.encode('utf-8') in response.data
+        assert f"{tab.name}".encode("utf-8") in response.data
 
 
 def test_get_tabs_user(client):
@@ -118,16 +105,18 @@ def test_get_tabs_user(client):
     allowed_tabs = [tab for tab in tabs if ROLE_STUDENT in tab.roles]
     restricted_tabs = [tab for tab in tabs if ROLE_STUDENT not in tab.roles]
     for a_tab in allowed_tabs:
-        assert f'{a_tab.name}'.encode('utf-8') in response.data
+        assert f"{a_tab.name}".encode("utf-8") in response.data
     for r_tab in restricted_tabs:
-        assert f'{r_tab.name}'.encode('utf-8') not in response.data
+        assert f"{r_tab.name}".encode("utf-8") not in response.data
 
 
 def create_user(username, password, role_name):
-    admin = User(username=username)
-    admin.password = password
-    admin.save()
-    admin_role = Role(name=role_name)
-    admin_role.save()
-    join_admin_to_role = UserRoles(user_id=admin.id, role_id=admin_role.id)
-    join_admin_to_role.save()
+    user = User(username=username)
+    user.password = password
+    user.save()
+    role = Role.query.filter(Role.name == role_name).first()
+    if not role:
+        role = Role(name=role_name)
+        role.save()
+    user_to_role = UserRoles(user_id=user.id, role_id=role.id)
+    user_to_role.save()

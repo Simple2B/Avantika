@@ -7,6 +7,7 @@ class BaseConfig(object):
     """Base configuration."""
 
     APP_NAME = "Practice Coding"
+    USER_ENABLE_EMAIL = False  # TODO: rethink of it
     DEBUG_TB_ENABLED = False
     SECRET_KEY = os.environ.get(
         "SECRET_KEY", "Ensure you set a secret key, this is important!"

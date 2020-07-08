@@ -3,6 +3,7 @@ import os
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_user import UserManager
 from werkzeug.exceptions import HTTPException
 
 
@@ -18,6 +19,7 @@ def create_app(environment="development"):
     from app.auth.views import auth_blueprint
     from app.auth.models import User, AnonymousUser
     from app.exam.views import exam_blueprint
+    from app.dashboard.views import dashboard_blueprint
 
     # Instantiate app.
     app = Flask(__name__)
@@ -35,6 +37,7 @@ def create_app(environment="development"):
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(main_blueprint)
     app.register_blueprint(exam_blueprint)
+    app.register_blueprint(dashboard_blueprint)
 
     # Set up flask login.
     @login_manager.user_loader
@@ -44,6 +47,10 @@ def create_app(environment="development"):
     login_manager.login_view = "auth.login"
     login_manager.login_message_category = "info"
     login_manager.anonymous_user = AnonymousUser
+
+    user_manager = UserManager(app, db, User)
+    user_manager.USER_UNAUTHORIZED_ENDPOINT = "main.index"  # TODO: rethink of it
+    user_manager.USER_UNAUTHENTICATED_ENDPOINT = "auth.login"
 
     # Error handlers.
     @app.errorhandler(HTTPException)
