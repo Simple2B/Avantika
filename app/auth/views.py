@@ -100,7 +100,6 @@ def edit_user(user_id):
             user.password = form.password.data
         user.role = form.role.data
         user.active = form.active.data == "Active"
-        # TODO: all fields
         user.save()
         new_role = Role.query.filter(Role.name == form.role.data).first()
         if not new_role:
