@@ -54,7 +54,6 @@
                 aria-expanded="false">{{current_user.username | capitalize}}</a>
               <div class="dropdown-menu" aria-labelledby="userActions">
                 <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a>
-                <a class="dropdown-item" href="{{ url_for('auth.register') }}">Register</a>
               </div>
             </li>
             {% else %}
@@ -112,25 +111,9 @@
   <!-- <script src="/static/js/jquery-3.5.1.slim.min.js"></script> -->
   <script src="/static/js/jquery.dataTables.min.js"></script>
   <!-- <script src="/static/js/bootstrap.min.js"></script> -->
-  <!-- <script src="{{ url_for('static', filename='main.js') }}" type="text/javascript"></script> -->
-  <script>
-    // $(document).ready(function () {
-    //   $('#theTable').DataTable({
-    //     "lengthMenu": [
-    //       [10, 25, 50, -1],
-    //       [10, 25, 50, "All"]
-    //     ]
-    //   });
-    // });
-  </script>
+  <script src="{{ url_for('static', filename='main.js') }}" type="text/javascript"></script>
   {% block scripts %}{% endblock %}
   <!-- Menu Toggle Script -->
-  <script>
-    $("#menu-toggle").click(function (e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-    });
-  </script>
 </body>
 
 </html>
