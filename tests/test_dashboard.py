@@ -75,4 +75,4 @@ def test_index(client):
 def test_delete_user(client):
     login(client, Admin.LOGIN, Admin.PASSW)
     respose = client.get(url_for("auth.delete_user", user_id=56))
-    assert respose.status_code == 200
+    assert respose.status_code == 302
