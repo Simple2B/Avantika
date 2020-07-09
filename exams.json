@@ -1,39 +1,38 @@
-[
-  {
-    "name": "Py-Exam 1",
-    "lang": "py",
-    "instruction": [
-      "Given a number, return the difference between the maximum and minimum possible numbers",
-      "that can be formed when the digits are rearranged.",
-      "",
-      "sort() --> sort an integer list from lowest numbers to highest numbers",
-      "reverse() --> reverses a list",
-      "",
-      "Examples",
-      "rearranged_difference(972882) --> 760833",
-      "# 988722 - 227889 = 760833",
-      "",
-      "rearranged_difference(3320707) --> 7709823",
-      "# 7733200 - 23377 = 7709823",
-      "",
-      "rearranged_difference(90010) --> 90981",
-      "# 91000 - 19 = 90981"
-    ],
-    "solution": [
-      "def rearranged_difference(num):",
-      "\tlst = list(str(num))",
-      "\tlst.sort()",
-      "\t# l_min = lst",
-      "\tnum_min = int(\"\".join(lst))",
-      "\tlst.reverse()",
-      "\t# l_max = lst",
-      "\tnum_max = int(\"\".join(lst))",
-      "\t",
-      "\treturn num_max - num_min"
-    ],
-    "template": [
-      "def rearranged_difference(num):",
-      "\t"
-    ]
-  }
-]
+[{
+  "name": "Py-Exam 1",
+  "lang": "py",
+  "instruction": [
+    "Given a number, return the difference between the maximum and minimum possible numbers",
+    "that can be formed when the digits are rearranged.",
+    "",
+    "sort() --> sort an integer list from lowest numbers to highest numbers",
+    "reverse() --> reverses a list",
+    "",
+    "Examples",
+    "rearranged_difference(972882) --> 760833",
+    "# 988722 - 227889 = 760833",
+    "",
+    "rearranged_difference(3320707) --> 7709823",
+    "# 7733200 - 23377 = 7709823",
+    "",
+    "rearranged_difference(90010) --> 90981",
+    "# 91000 - 19 = 90981"
+  ],
+  "solution": [
+    "def rearranged_difference(num):",
+    "\tlst = list(str(num))",
+    "\tlst.sort()",
+    "\t# l_min = lst",
+    "\tnum_min = int(\"\".join(lst))",
+    "\tlst.reverse()",
+    "\t# l_max = lst",
+    "\tnum_max = int(\"\".join(lst))",
+    "\t",
+    "\treturn num_max - num_min"
+  ],
+  "template": [
+    "def rearranged_difference(num):",
+    "\t"
+  ],
+  "exam_type": "Python Basics reg"
+}]
