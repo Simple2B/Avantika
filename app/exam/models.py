@@ -3,6 +3,7 @@ from sqlalchemy import Enum
 
 from app import db
 from app.utils import ModelMixin
+from app.logger import log
 
 
 class Exam(db.Model, ModelMixin):
@@ -20,9 +21,8 @@ class Exam(db.Model, ModelMixin):
     instruction = db.Column(db.String(1024), nullable=False)
     solution = db.Column(db.String(1024), nullable=False)
     template = db.Column(db.String(1024), nullable=False)
-    exam_type_id = db.Column(
-        db.Integer(), db.ForeignKey("exam_types.id", ondelete="CASCADE")
-    )
+    type_id = db.Column(db.Integer(), db.ForeignKey("exam_types.id"))
+    exam_type = db.relationship("ExamType")
 
     def __repr__(self):
         return f"<Exam: {self.name}>"
@@ -45,7 +45,12 @@ class Exam(db.Model, ModelMixin):
         )
         self.solution = "\n".join(args["solution"]) if "solution" in args else ""
         self.template = "\n".join(args["template"]) if "template" in args else ""
-        self.exam_type = ExamType.id
+        if "exam_type" in args:
+            self.exam_type = ExamType.query.filter(
+                ExamType.name == args["exam_type"]
+            ).first()
+        else:
+            log(log.ERROR, "Exam [%s] has not type", self.name)
         # очень не уверенна что так должно быть, тут надо что бы имя которое мы получили с джейсона соответствоаало id
         # в  ExamType
         # TODO exam_type_id
@@ -55,6 +60,7 @@ class Exam(db.Model, ModelMixin):
 class ExamType(db.Model, ModelMixin):
     """
     It represents a type of exam like: regular, premium
+
     """
 
     __tablename__ = "exam_types"
@@ -70,7 +76,7 @@ class RoleExamType(db.Model, ModelMixin):
 
     __tablename__ = "role_exam_types"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True)
     exam_type_id = db.Column(
         db.Integer(), db.ForeignKey("exam_types.id", ondelete="CASCADE")
     )
