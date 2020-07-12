@@ -36,18 +36,9 @@
       "\t"
     ],
     "verification": [
-      {
-        "code": "rearranged_difference(972882)",
-        "result": 760833
-      },
-      {
-        "code": "rearranged_difference(3320707)",
-        "result": 7709823
-      },
-      {
-        "code": "rearranged_difference(90010)",
-        "result": 90981
-      }
+      "assert rearranged_difference(972882) == 760833",
+      "assert rearranged_difference(3320707) == 7709823",
+      "assert rearranged_difference(90010) == 90981"
     ]
   }
 ]
