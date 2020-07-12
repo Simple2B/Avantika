@@ -9,7 +9,7 @@ class BaseConfig(object):
     APP_NAME = "Practice Coding"
     DEBUG_TB_ENABLED = False
     SECRET_KEY = os.environ.get(
-        "SECRET_KEY", "Ensure you set a secret key, this is important!"
+        "SECRET_KEY", b'\t\xa3\xe8\xc74\xd6\xe6\xf8\x06A\x07\x11\xf8K\x10\xe9K\xbdw\x87\xce\xc6\xf3\x00'
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     WTF_CSRF_ENABLED = False
