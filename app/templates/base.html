@@ -26,10 +26,10 @@
       <div class="sidebar-heading">{{ config.APP_NAME }}</div>
       <div class="list-group list-group-flush">
         <a href="#" class="list-group-item list-group-item-action bg-light">Admin Dashboard</a>
-        <a href="{{url_for('exam.exam')}}" class="list-group-item list-group-item-action bg-light">Python Basics</a>
-        <a href="{{url_for('exam.exam')}}" class="list-group-item list-group-item-action bg-light">Python Advanced</a>
-        <a href="{{url_for('exam.exam')}}" class="list-group-item list-group-item-action bg-light">Java Basic</a>
-        <a href="{{url_for('exam.exam')}}" class="list-group-item list-group-item-action bg-light">HTML, CSS, JS</a>
+        <a href="{{url_for('exam.exam', exam_id=1)}}" class="list-group-item list-group-item-action bg-light">Python Basics</a>
+        <a href="{{url_for('exam.exam', exam_id=1)}}" class="list-group-item list-group-item-action bg-light">Python Advanced</a>
+        <a href="{{url_for('exam.exam', exam_id=1)}}" class="list-group-item list-group-item-action bg-light">Java Basic</a>
+        <a href="{{url_for('exam.exam', exam_id=1)}}" class="list-group-item list-group-item-action bg-light">HTML, CSS, JS</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
       </div>

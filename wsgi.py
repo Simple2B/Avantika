@@ -4,7 +4,7 @@ import click
 
 from app import create_app, db, models, forms
 from app.auth.models import User
-from app.exam.models import Exam
+from app.utils import load_all_exams
 
 app = create_app()
 
@@ -17,10 +17,7 @@ def get_context():
 
 
 def load_exams():
-    with open('exams.json', 'r') as f:
-        for exam in json.load(f):
-            if not Exam.query.filter(Exam.name == exam['name']).first():
-                Exam(name=exam['name']).from_dict(**exam).save()
+    load_all_exams()
 
 
 @app.cli.command()

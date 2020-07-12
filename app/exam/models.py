@@ -1,4 +1,5 @@
 import enum
+import json
 from sqlalchemy import Enum
 
 from app import db
@@ -11,7 +12,7 @@ class Exam(db.Model, ModelMixin):
 
     class Language(enum.Enum):
         py = "python"
-        java = "admin"
+        java = "java"
         js = "javascript"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -46,3 +47,10 @@ class Exam(db.Model, ModelMixin):
             "\n".join(args["template"]) if "template" in args else ""
         )
         return self
+
+    @staticmethod
+    def load_all_exams():
+        with open('exams.json', 'r') as f:
+            for exam in json.load(f):
+                if not Exam.query.filter(Exam.name == exam['name']).first():
+                    Exam(name=exam['name']).from_dict(**exam).save()

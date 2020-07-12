@@ -8,6 +8,3 @@ class ModelMixin(object):
         db.session.add(self)
         db.session.commit()
         return self
-
-
-# Add your own utility classes and functions here.
