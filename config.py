@@ -10,7 +10,7 @@ class BaseConfig(object):
     USER_ENABLE_EMAIL = False  # TODO: rethink of it
     DEBUG_TB_ENABLED = False
     SECRET_KEY = os.environ.get(
-        "SECRET_KEY", b'\t\xa3\xe8\xc74\xd6\xe6\xf8\x06A\x07\x11\xf8K\x10\xe9K\xbdw\x87\xce\xc6\xf3\x00'
+        "SECRET_KEY", '\t\xa3\xe8\xc74\xd6\xe6\xf8\x06A\x07\x11\xf8K\x10\xe9K\xbdw\x87\xce\xc6\xf3\x00'
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     WTF_CSRF_ENABLED = False

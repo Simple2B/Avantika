@@ -1,0 +1,81 @@
+[{
+        "href": "dashboard.index",
+        "name": "Admin Dashboard",
+        "roles": [
+            "Admin"
+        ]
+    },
+    {
+        "href": "exam.exam",
+        "name": "Python Basic",
+        "roles": [
+            "Admin",
+            "Student_PB_reg",
+            "Student_PB_prem",
+            "Student_PB_prem_outsider",
+            "Student_PI_reg",
+            "Student_PI_prem",
+            "Student_PI_prem_outsider",
+            "Student_PA_reg",
+            "Student_PA_prem",
+            "Student_PA_prem_outsider"
+        ]
+    },
+    {
+        "href": "exam.exam",
+        "name": "Python Intermediate",
+        "roles": [
+            "Admin",
+            "Student_PI_reg",
+            "Student_PI_prem",
+            "Student_PI_prem_outsider",
+            "Student_PA_reg",
+            "Student_PA_prem",
+            "Student_PA_prem_outsider"
+        ]
+    },
+    {
+        "href": "exam.exam",
+        "name": "Python Advanced",
+        "roles": [
+            "Admin",
+            "Student_PA_reg",
+            "Student_PA_prem",
+            "Student_PA_prem_outsider"
+        ]
+    },
+    {
+        "href": "exam.exam",
+        "name": "Java Basic",
+        "roles": [
+            "Admin",
+            "Student_J_reg",
+            "Student_J_pre",
+            "Student_J_pre_outsider"
+        ]
+    },
+    {
+        "href": "exam.exam",
+        "name": "HTML, CSS, JS",
+        "roles": [
+            "Admin",
+            "Student_HTML_reg",
+            "Student_HTML_prem",
+            "Student_HTML_prem_outsider"
+        ]
+    },
+    {
+        "href": "exam.exam",
+        "name": "Profile",
+        "roles": [
+            "Admin"
+        ]
+    },
+    {
+        "href": "exam.exam",
+        "name": "Status",
+        "roles": [
+            "Admin"
+        ]
+    }
+]

@@ -3,8 +3,7 @@ import click
 
 from app import create_app, db, models, forms
 from app.auth.models import User, Role, UserRoles
-from app.exam.models import ExamType, RoleExamType
-from app.utils import load_all_exams
+from app.exam.models import Exam, ExamType, RoleExamType
 
 app = create_app()
 
@@ -17,7 +16,7 @@ def get_context():
 
 
 def load_exams():
-    load_all_exams()
+    Exam.load_all_exams()
 
 
 @app.cli.command()
