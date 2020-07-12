@@ -1,8 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+  @media only screen and (max-width: 950px) {
+    #login {
+      width: 80% !important;
+    }
+  }
+
+  @media only screen and (max-width: 800px) {
+    #login {
+      width: 100% !important;
+    }
+  }
+</style>
 <div class="container py-4">
-  <div class="card w-50 mx-auto">
+  <div id='login' class="card w-50 mx-auto">
     <div class="card-header">
       <h4 class="card-title">Login</h4>
     </div>
@@ -17,7 +30,6 @@
           {{form.password(class='form-control')}}
         </div>
         {{form.submit(class='btn btn-primary')}}
-        <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a>.</p>
       </form>
     </div>
   </div>

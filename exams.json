@@ -1,5 +1,4 @@
-[
-  {
+[{
     "name": "Py-Exam 1",
     "lang": "py",
     "instruction": [
@@ -34,6 +33,119 @@
     "template": [
       "def rearranged_difference(num):",
       "\t"
+    ],
+    "exam_type": "Python Basics reg"
+  },
+  {
+    "name": "Py-Exam 2",
+    "lang": "py",
+    "instruction": [
+      "Create a function that takes in n, a, b and returns the number",
+      "nth power that lie in the range [a, b], inclusive.",
+      "",
+      "Examples",
+      "power_ranger(2, 49, 65) ➞ 2",
+      "# 2 squares (n^2) lie between 49 and 65, 49 (7^2) and 64 (8^2)",
+      "",
+      "power_ranger(3, 1, 27) ➞ 3",
+      "# 3 cubes (n^3) lie between 1 and 27, 1 (1^3), 8 (2^3) and 27 (3^3)",
+      "",
+      "power_ranger(10, 1, 5) ➞ 1",
+      "# 1 value raised to the 10th power lies between 1 and 5, 1 (1^10)",
+      "",
+      "power_ranger(5, 31, 33) ➞ 1",
+      "",
+      "power_ranger(4, 250, 1300) ➞ 3"
+    ],
+    "solution": [
+      "def power_ranger(power, minimum, maximum):",
+      "\timport math",
+      "\tl = list(range(minimum, maximum+1))",
+      "\tx = []",
+      "\tfor i in l:",
+      "\t\tv = i ** (1 / float(power))",
+      "\t\tif math.floor(v) == math.ceil(v):",
+      "\t\t\tx.append(v)",
+      "\t\treturn len(x)",
+      "",
+      "",
+      "",
+      "x = ['a','b','c']",
+      "x.insert(1,'hello')",
+      "print(x)"
+    ],
+    "template": [
+      "def power_ranger(power, minimum, maximum):",
+      "\t"
+    ],
+    "exam_type": "Python Basics prem"
+  },
+  {
+    "name": "Py-Exam 3",
+    "lang": "py",
+    "instruction": [
+      "Create a function which adds spaces before every capital in a word.",
+      "Uncapitalize the whole string afterwards.",
+      "",
+      "Examples",
+      "cap_space('helloWorld') ➞ 'hello world'",
+      "",
+      "cap_space('iLoveMyTeapot') ➞ 'i love my teapot'",
+      "",
+      "cap_space('stayIndoors') ➞ 'stay indoors'",
+      ".isUpper() 'a'.isUpper() --> False",
+      ".isLower() 'a'.isLower() --> True",
+      "",
+      "x = ['a','b','c']",
+      "x.insert(1,'hello')",
+      "input.insert(i-1,' ')",
+      "becomes x = ['a', 'hello', 'b','c']"
+    ],
+    "solution": [
+      "def cap_space(txt):",
+      "\tres = ''",
+      "\tfor c in txt:",
+      "\t\tif c.isupper():",
+      "\t\t\tres += ' ' + c",
+      "\t\telse:",
+      "\t\t\tres += c",
+      "\treturn res.lower()"
+    ],
+    "template": [
+      "def cap_space(txt):",
+      "\t"
+    ],
+    "exam_type": "Python Inter"
+  },
+  {
+    "name": "Py-Exam 4",
+    "lang": "py",
+    "instruction": [
+      "The iterated square root of a number is the number of times the square root function must be applied to bring the number strictly under 2.",
+      "",
+      "Given an integer, return its iterated square root. Return 'invalid' if it is negative.",
+      "",
+      "Examples",
+      "i_sqrt(1) ➞ 0",
+      "",
+      "i_sqrt(2) ➞ 1",
+      "",
+      "i_sqrt(7) ➞ 2",
+      "",
+      "i_sqrt(27) ➞ 3",
+      "",
+      "i_sqrt(256) ➞ 4"
+    ],
+    "solution": [
+      "def i_sqrt(n):",
+      "\tif n < 0: return 'invalid'",
+      "\tcount = 0",
+      "\twhile n >= 2:",
+      "\t\tn **= 0.5",
+      "\t\tn **= 0.5",
+      "\t\tcount += 1",
+      "\treturn count"
     ]
+
   }
 ]

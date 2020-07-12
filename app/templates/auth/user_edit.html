@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+<style>
+    @media only screen and (max-width: 950px) {
+        #login {
+            width: 80% !important;
+        }
+    }
+
+    @media only screen and (max-width: 800px) {
+        #login {
+            width: 100% !important;
+        }
+    }
+</style>
+
+{% block content %}
+<div class="container py-4">
+    <div class="card w-50 mx-auto">
+        <div class="card-header">
+            <h4 class="card-title">Edit User</h4>
+        </div>
+        <div class="card-body">
+            <form class="form" role="form" action="{{ url_for('auth.edit_user', user_id=form.user_id.data) }}"
+                method="post">
+                {{form.user_id()}}
+                <div class="form-group">
+                    {{form.username.label}}
+                    {{form.username(class='form-control')}}
+                    {% for error in form.errors.username %}
+                    <small class="text-danger">{{error}}</small>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{form.password.label}}
+                    {{form.password(class='form-control')}}
+                    {% for error in form.errors.password %}
+                    <small class="text-danger">{{error}}</small>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{form.password_confirmation.label}}
+                    {{form.password_confirmation(class='form-control')}}
+                    {% for error in form.errors.password_confirmation %}
+                    <small class="text-danger">{{error}}</small>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{form.role.label}}
+                    {{form.role(class='form-control')}}
+                    {% for error in form.errors.role %}
+                    <small class="text-danger">{{error}}</small>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{form.active.label}}
+                    {{form.active(class='form-control')}}
+                    {% for error in form.errors.active %}
+                    <small class="text-danger">{{error}}</small>
+                    {% endfor %}
+                </div>
+                {{form.submit(class='btn btn-primary', value="Save")}}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
