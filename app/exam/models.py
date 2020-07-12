@@ -64,6 +64,7 @@ class Exam(db.Model, ModelMixin):
                 if not Exam.query.filter(Exam.name == exam['name']).first():
                     Exam(name=exam['name']).from_dict(**exam).save()
 
+
 class ExamType(db.Model, ModelMixin):
     """
     It represents a type of exam like: regular, premium

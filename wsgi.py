@@ -1,10 +1,9 @@
 #!/user/bin/env python
-import json
 import click
 
 from app import create_app, db, models, forms
 from app.auth.models import User, Role, UserRoles
-from app.exam.models import Exam, ExamType, RoleExamType
+from app.exam.models import ExamType, RoleExamType
 from app.utils import load_all_exams
 
 app = create_app()
