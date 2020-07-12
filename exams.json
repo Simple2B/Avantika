@@ -145,7 +145,114 @@
       "\t\tn **= 0.5",
       "\t\tcount += 1",
       "\treturn count"
-    ]
+    ],
+    "template": [
+      "def i_sqrt(n):",
+      "\t"
+    ],
+    "exam_type": "Python Inter"
+  },
+  {
+    "name": "Py-Exam 5",
+    "lang": "py",
+    "instruction": [
+      "The volume of a spherical shell is the difference between the enclosed volume of the outer",
+      "sphere and the enclosed volume of the inner sphere:",
+      "",
+      "Volume of Inner Sphere Formula",
+      "",
+      "V = 4/3 * pi * (R^3 - r^3)",
+      "",
+      "Create a function that takes r1 and r2 as arguments and returns the volume of a spherical shell",
+      "rounded to the nearest thousandth.",
+      "",
+      "To get pi: from math import pi"
+    ],
+    "solution": [
+      "from math import pi",
+      "def vol_shell(r1, r2):",
+      "\tv = 4/3*pi*(r1**3 - r2**3)",
+      "\treturn round(abs(v), 3)",
+      "vol_shell(3,5)"
+    ],
+    "template": [
+      "from math import pi",
+      "def vol_shell(r1, r2):"
+    ],
+    "exam_type": "Python Inter"
+  },
+
+  {
+    "name": "Py-Exam 6",
+    "lang": "py",
+    "instruction": [
+      "Given an integer, create a function that returns the next prime. If the number is prime, return the",
+      "number itself.",
+      "",
+      "Examples next_prime(12) ➞ 13",
+      "",
+      "next_prime(24) ➞ 29",
+      "",
+      "next_prime(11) ➞ 11",
+      "",
+      "note - 11 is a prime, so we return the number itself."
+    ],
+    "solution": [
+      "def next_prime(num):",
+      "\tfor i in range(2,num):",
+      "\t\tprint(num,i)",
+      "\t\tif i == num-1:",
+      "\t\t\treturn num",
+      "\t\tif num%i == 0:",
+      "\t\t\treturn next_prime(num+1)",
+      "next_prime(7)"
+    ],
+    "template": [
+      "def next_prime(num):",
+      "\t"
+    ],
+    "exam_type": "Python adv"
+  },
+  {
+    "name": "Py-Exam 6",
+    "lang": "py",
+    "instruction": [
+      "One cause for speeding is the desire to shorten the time spent traveling. While in long distance",
+      "trips speeding does save an appreciable amount of time, the same cannot be said about short",
+      "distance trips.",
+      "",
+      "Create a function that calculates the amount of time saved (in minutes) were you traveling with an",
+      "average speed that is above the speed-limit as compared to traveling with an average speed exactly",
+      "at the speed-limit.",
+      "",
+      "Examples The paramater&#39;s format is as follows: (speed limit, avg speed, distance traveled at avg",
+      "speed)",
+      "",
+      "time_saved(80, 90, 40) ➞ 3.3",
+      "",
+      "time_saved(80, 90, 4000) ➞ 333.3",
+      "",
+      "time_saved(80, 100, 40 ) ➞ 6.0",
+      "",
+      "time_saved(80, 100, 10) ➞ 1.5"
+    ],
+    "solution": [
+      "def time_saved(s_lim, s_avg, d):",
+      "\tnorm_time = (d / s_lim) * 60",
+      "\tfast_time = (d / s_avg) * 60",
+      "\tworth = norm_time - fast_time",
+      "\treturn round(worth, 1)",
+      "time_saved(45,55,100)"
+    ],
+    "template": [
+      "def time_saved(s_lim, s_avg, d):",
+      "\t"
+    ],
+    "exam_type": "Python adv"
+  },
+  {
 
   }
+
+
 ]
