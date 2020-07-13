@@ -12,7 +12,7 @@ class Exam(db.Model, ModelMixin):
 
     class Language(enum.Enum):
         py = "python"
-        java = "admin"
+        java = "java"
         js = "javascript"
 
     id = db.Column(db.Integer, primary_key=True)

@@ -66,13 +66,8 @@
       "\t\tv = i ** (1 / float(power))",
       "\t\tif math.floor(v) == math.ceil(v):",
       "\t\t\tx.append(v)",
-      "\t\treturn len(x)",
-      "",
-      "",
-      "",
-      "x = ['a','b','c']",
-      "x.insert(1,'hello')",
-      "print(x)"
+      "\treturn len(x)"
+
     ],
     "template": [
       "def power_ranger(power, minimum, maximum):",
@@ -142,7 +137,6 @@
       "\tcount = 0",
       "\twhile n >= 2:",
       "\t\tn **= 0.5",
-      "\t\tn **= 0.5",
       "\t\tcount += 1",
       "\treturn count"
     ],
@@ -172,8 +166,7 @@
       "from math import pi",
       "def vol_shell(r1, r2):",
       "\tv = 4/3*pi*(r1**3 - r2**3)",
-      "\treturn round(abs(v), 3)",
-      "vol_shell(3,5)"
+      "\treturn round(abs(v), 3)"
     ],
     "template": [
       "from math import pi",
@@ -204,8 +197,7 @@
       "\t\tif i == num-1:",
       "\t\t\treturn num",
       "\t\tif num%i == 0:",
-      "\t\t\treturn next_prime(num+1)",
-      "next_prime(7)"
+      "\t\t\treturn next_prime(num+1)"
     ],
     "template": [
       "def next_prime(num):",
@@ -241,8 +233,7 @@
       "\tnorm_time = (d / s_lim) * 60",
       "\tfast_time = (d / s_avg) * 60",
       "\tworth = norm_time - fast_time",
-      "\treturn round(worth, 1)",
-      "time_saved(45,55,100)"
+      "\treturn round(worth, 1)"
     ],
     "template": [
       "def time_saved(s_lim, s_avg, d):",
@@ -251,8 +242,170 @@
     "exam_type": "Python adv"
   },
   {
+    "name": "Py-Exam 7",
+    "lang": "py",
+    "instruction": [
+      "Create a function that returns the number of characters shared between two words.",
+      "Examples shared_letters(&quot;apple&quot;, &quot;meaty&quot;) ➞ 2",
+      "#Since 'ea' is shared between 'apple' and 'meaty'.",
+      "",
+      "shared_letters('fan', 'forsook') ➞ 1",
+      "shared_letters('spout', 'shout') ➞ 4"
+    ],
+    "solution": [
+      "def shared_letters(txt1, txt2):",
+      "\ts = 0",
+      "\tfor i in set(txt1):",
+      "\t\tif i in txt2:",
+      "\t\t\ts += 1",
+      "\treturn s"
+    ],
+    "template": [
+      "def shared_letters(txt1, txt2):",
+      "\t"
+    ],
+    "exam_type": "Python adv prem"
+  },
+  {
+    "name": "Py-Exam 8",
+    "lang": "py",
+    "instruction": [
+      "In each input list, every number repeats at least once, except for two. Write a function that",
+      "returns the two unique numbers.",
+      "",
+      "Examples return_unique([1, 9, 8, 8, 7, 6, 1, 6]) ➞ [9, 7]",
+      "",
+      "return_unique([5, 5, 2, 4, 4, 4, 9, 9, 9, 1]) ➞ [2, 1]",
+      "",
+      "return_unique([9, 5, 6, 8, 7, 7, 1, 1, 1, 1, 1, 9, 8]) ➞ [5, 6]"
+    ],
+    "solution": [
+      "def return_unique(lst):",
+      "\tresult = []",
+      "\tfor i in range(len(lst)):",
+      "\t\tif lst.count(lst[i]) == 1:",
+      "\t\t\tresult.append(lst[i])",
+      "\treturn result"
+    ],
+    "template": [
+      "def return_unique(lst):",
+      "\t"
+    ],
+    "exam_type": "Python adv prem"
+  },
+  {
+    "name": "Py-Exam 9",
+    "lang": "py",
+    "instruction": [
+      "Create a function that takes in one multi digit integer parameter. Find the maximum and",
+      "minimum number that can be created from that integer parameter and subtract the minimum from",
+      "the max.",
+      "",
+      "Ex: minMinusMax(7492) —&gt; max: 9742, min: 2479 —&gt; function should output 7,263"
+    ],
+    "solution": [
+      "def rearranged_difference(num):",
+      "\tlst = list(str(num))",
+      "\tlst.sort()",
+      "\t# l_min = lst",
+      "\tnum_min = int(\"\".join(lst))",
+      "\tlst.reverse()",
+      "\t# l_max = lst",
+      "\tnum_max = int(\"\".join(lst))",
+      "\tnum_max = int(''.join(lst))",
+      "\treturn num_max - num_min"
+    ],
+    "template": [
+      "def rearranged_difference(num):",
+      "\t"
+    ],
+    "exam_type": "Python adv prem"
+  },
+  {
+    "name": "Py-Exam 10",
+    "lang": "py",
+    "instruction": [
+      "Create a rock, paper, scissors game. The user will enter one of the three options and the",
+      "computer will randomly choose an option. Use this logic to decide who the winner is: Rock beats",
+      "scissors Paper beats rock Scissors beats paper"
+    ],
+    "solution": [
+      "import random",
+      "print(\"\"Welcome! Let's play rock paper scissors!!!\"\")",
+      "playerName = input(\"What is your name?\").title()",
+      "print(\"\"Best of luck\"\" + playerName)",
+      "uPoints = 0",
+      "compPoints = 0",
+      "choices = [\"\"paper\"\", \"\"scissors\"\", \"\"rock\"\"]",
+      "computer = random.randint(0, len(choices))",
+      "condition = False",
+      "while condition == False:",
+      "\tplay = input(\"\"Choose rock, paper or scissors.If you would like to end the game, enter 'quit':\"\")",
+      "\tif play.lower() == \"\"quit:\"\"",
+      "\t\tcondition = True",
+      "\t\tbreak",
+      "\tif play == computer:",
+      "\t\tprint(\"\"It's a Tie\"\")",
+      "\telif play.lower() == \"\"rock:\"\"",
+      "\t\tif computer == \"\"paper:\"\"",
+      "\t\t\tprint(\"\"computer Wins\"\")",
+      "\t\t\tcompPoints += 1",
+      "\t\telse:",
+      "\t\t\tprint(playerName + \"\"Wins\"\")",
+      "\t\t\tuPoints += 1",
+      "\telif play.lower() == \"\"paper:\"\"",
+      "\t\tif computer == \"\"rock:\"\"",
+      "\t\t\tprint(playerName + \"\"Wins\"\")",
+      "\t\t\tuPoints += 1",
+      "\t\telse:",
+      "\t\t\tprint(\"\"Computer Wins\"\")",
+      "\t\t\tcompPoints += 1",
+      "\telif play.lower() == \"\"scissors:\"\"",
+      "\t\tif computer == \"\"rock:\"\"",
+      "\t\t\tprint(\"\"Computer Wins\"\")",
+      "\t\t\tcompPoints += 1",
+      "\t\telse:",
+      "\t\t\tprint(playerName + \"\"Wins\"\")",
+      "\t\tuPoints += 1",
+      "\telse:",
+      "\t\tprint(\"\"Please choose rock, paper, or scissors.\"\")",
+      "print(playerName + \"\"had\"\" + str(uPoints)+ \"\"points.\"\")",
+      "print(\"\"The computer had \"\" + str(compPoints)+ \"\"points.\"\")",
+      "if uPoints > compPoints:",
+      "\tprint(playerName + \"\"wins\"\")",
+      "elif uPoints == compPoints:",
+      "\tprint(\"\"It's a tie!\"\")",
+      "else:",
+      "\tprint(\"\"Computer Wins\"\")"
+    ],
+    "template": [
+      "import random",
+      "",
+      "",
+      "print(\"\"Welcome! Let's play rock paper scissors!!!\"\")"
+    ],
+    "exam_type": "Python adv prem"
+  },
+  {
+    "name": "Java-Exam 1",
+    "lang": "java",
+    "instruction": [
+      "Suppose a monthly car insurance premium is $200 if the driver is age 25 or younger and",
+      "$125 if the driver is age 26 or older. Ask the user their age and display the correct cost for them."
+    ],
+    "solution": [
+      "import java.util.Scanner;",
+      "public class decisions_carInsurance{",
+      "public static void main(String[]args){",
+      "int user;",
+      "Scanner scan = new Scanner(System.in);",
+      "System.out.println('enter your age');",
+      "user = scan.nextInt();",
+      "if (user<=25)",
+      "\tSystem.out.println('Your car insurance cost is $200');",
+      "else",
+      "\tSystem.out.println(&quot;Your car insurance cost is $125&quot;); }}"
+    ]
 
   }
-
-
 ]
