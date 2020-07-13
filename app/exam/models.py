@@ -22,6 +22,7 @@ class Exam(db.Model, ModelMixin):
     instruction = db.Column(db.String(1024), nullable=False)
     solution = db.Column(db.String(1024), nullable=False)
     template = db.Column(db.String(1024), nullable=False)
+    verification = db.Column(db.String(1024), nullable=True)
     type_id = db.Column(db.Integer(), db.ForeignKey("exam_types.id"))
     exam_type = db.relationship("ExamType")
 
@@ -52,9 +53,8 @@ class Exam(db.Model, ModelMixin):
             ).first()
         else:
             log(log.ERROR, "Exam [%s] has not type", self.name)
-        # очень не уверенна что так должно быть, тут надо что бы имя которое мы получили с джейсона соответствоаало id
-        # в  ExamType
-        # TODO exam_type_id
+        if "verification" in args:
+            self.verification = "\n".join(args["verification"])
         return self
 
     @staticmethod

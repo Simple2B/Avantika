@@ -23,4 +23,4 @@ def client():
 
 def test_py_exam_check_answer(client):
     for exam in Exam.query.filter(Exam.lang == Exam.Language.py).all():
-        assert check_answer(exam, exam.solution)
+        assert check_answer(exam, exam.solution), f"Bad solution in [{exam.name}]"

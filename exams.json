@@ -34,7 +34,12 @@
       "def rearranged_difference(num):",
       "\t"
     ],
-    "exam_type": "Python Basics reg"
+    "exam_type": "Python Basics reg",
+    "verification": [
+      "assert rearranged_difference(972882) == 760833",
+      "assert rearranged_difference(3320707) == 7709823",
+      "assert rearranged_difference(90010) == 90981"
+    ]
   },
   {
     "name": "Py-Exam 2",
@@ -56,6 +61,13 @@
       "power_ranger(5, 31, 33) ➞ 1",
       "",
       "power_ranger(4, 250, 1300) ➞ 3"
+    ],
+    "verification": [
+      "assert power_ranger(2, 49, 65) == 2",
+      "assert power_ranger(3, 1, 27) == 3",
+      "assert power_ranger(10, 1, 5) == 1",
+      "assert power_ranger(5, 31, 33) == 1",
+      "assert power_ranger(4, 250, 1300) == 3"
     ],
     "solution": [
       "def power_ranger(power, minimum, maximum):",
@@ -101,6 +113,11 @@
       "input.insert(i-1,' ')",
       "becomes x = ['a', 'hello', 'b','c']"
     ],
+    "verification": [
+      "assert cap_space('helloWorld') == 'hello world'",
+      "assert cap_space('iLoveMyTeapot') == 'i love my teapot'",
+      "assert cap_space('stayIndoors') == 'stay indoors"
+    ],
     "solution": [
       "def cap_space(txt):",
       "\tres = ''",
@@ -135,6 +152,13 @@
       "i_sqrt(27) ➞ 3",
       "",
       "i_sqrt(256) ➞ 4"
+    ],
+    "verification": [
+      "assert i_sqrt(1) == 0",
+      "assert i_sqrt(2) == 1",
+      "assert i_sqrt(7) == 2",
+      "assert i_sqrt(27) == 3",
+      "assert i_sqrt(256) == 4"
     ],
     "solution": [
       "def i_sqrt(n):",
