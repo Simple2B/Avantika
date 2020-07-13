@@ -405,7 +405,13 @@
       "\tSystem.out.println('Your car insurance cost is $200');",
       "else",
       "\tSystem.out.println(&quot;Your car insurance cost is $125&quot;); }}"
-    ]
+    ],
+    "template": [
+      "import java.util.Scanner;",
+      "public class decisions_carInsurance{",
+      "public static void main(String[]args){"
+    ],
+    "exam_type": "Java Basics reg"
 
   }
 ]
