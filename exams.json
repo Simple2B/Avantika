@@ -111,7 +111,7 @@
     "verification": [
       "assert cap_space('helloWorld') == 'hello world'",
       "assert cap_space('iLoveMyTeapot') == 'i love my teapot'",
-      "assert cap_space('stayIndoors') == 'stay indoors"
+      "assert cap_space('stayIndoors') == 'stay indoors'"
     ],
     "solution": [
       "def cap_space(txt):",
@@ -346,71 +346,6 @@
     "exam_type": "Python adv prem"
   },
   {
-    "name": "Py-Exam 10",
-    "lang": "py",
-    "instruction": [
-      "Create a rock, paper, scissors game. The user will enter one of the three options and the",
-      "computer will randomly choose an option. Use this logic to decide who the winner is: Rock beats",
-      "scissors Paper beats rock Scissors beats paper"
-    ],
-    "solution": [
-      "import random",
-      "print(\"\"Welcome! Let's play rock paper scissors!!!\"\")",
-      "playerName = input(\"What is your name?\").title()",
-      "print(\"\"Best of luck\"\" + playerName)",
-      "uPoints = 0",
-      "compPoints = 0",
-      "choices = [\"\"paper\"\", \"\"scissors\"\", \"\"rock\"\"]",
-      "computer = random.randint(0, len(choices))",
-      "condition = False",
-      "while condition == False:",
-      "\tplay = input(\"\"Choose rock, paper or scissors.If you would like to end the game, enter 'quit':\"\")",
-      "\tif play.lower() == \"\"quit:\"\"",
-      "\t\tcondition = True",
-      "\t\tbreak",
-      "\tif play == computer:",
-      "\t\tprint(\"\"It's a Tie\"\")",
-      "\telif play.lower() == \"\"rock:\"\"",
-      "\t\tif computer == \"\"paper:\"\"",
-      "\t\t\tprint(\"\"computer Wins\"\")",
-      "\t\t\tcompPoints += 1",
-      "\t\telse:",
-      "\t\t\tprint(playerName + \"\"Wins\"\")",
-      "\t\t\tuPoints += 1",
-      "\telif play.lower() == \"\"paper:\"\"",
-      "\t\tif computer == \"\"rock:\"\"",
-      "\t\t\tprint(playerName + \"\"Wins\"\")",
-      "\t\t\tuPoints += 1",
-      "\t\telse:",
-      "\t\t\tprint(\"\"Computer Wins\"\")",
-      "\t\t\tcompPoints += 1",
-      "\telif play.lower() == \"\"scissors:\"\"",
-      "\t\tif computer == \"\"rock:\"\"",
-      "\t\t\tprint(\"\"Computer Wins\"\")",
-      "\t\t\tcompPoints += 1",
-      "\t\telse:",
-      "\t\t\tprint(playerName + \"\"Wins\"\")",
-      "\t\tuPoints += 1",
-      "\telse:",
-      "\t\tprint(\"\"Please choose rock, paper, or scissors.\"\")",
-      "print(playerName + \"\"had\"\" + str(uPoints)+ \"\"points.\"\")",
-      "print(\"\"The computer had \"\" + str(compPoints)+ \"\"points.\"\")",
-      "if uPoints > compPoints:",
-      "\tprint(playerName + \"\"wins\"\")",
-      "elif uPoints == compPoints:",
-      "\tprint(\"\"It's a tie!\"\")",
-      "else:",
-      "\tprint(\"\"Computer Wins\"\")"
-    ],
-    "template": [
-      "import random",
-      "",
-      "",
-      "print(\"\"Welcome! Let's play rock paper scissors!!!\"\")"
-    ],
-    "exam_type": "Python adv prem"
-  },
-  {
     "name": "Java-Exam 1",
     "lang": "java",
     "instruction": [
@@ -437,5 +372,96 @@
     ],
     "exam_type": "Java Basics reg"
 
+  },
+  {
+    "name": "Java-Exam 3",
+    "lang": "java",
+    "instruction": [
+      "Write a for loop that runs from 1-10 (both inclusive) and will break when i equals 5."
+    ],
+    "solution": [
+      "public class BreakExample {",
+      "public static void main(String[] args) {",
+      "for(int i=1;i&lt;=10;i++){",
+      "if(i==5){",
+      "break;",
+      "}",
+      "System.out.println(i);",
+      "}",
+      "}",
+      "}"
+    ],
+    "template": [
+      "public class BreakExample {",
+      "public static void main(String[] args) {"
+    ],
+    "exam_type": "Java Basics reg"
+  },
+  {
+    "name": "Java-Exam 4",
+    "lang": "java",
+    "instruction": [
+      "Write a program that will check if state name is in the following list of states or not.",
+      "* If it is in the list, then print '___ is in the list' and ___ should be filled with that state's name.",
+      "* Else print '___ is not in the list'.",
+      "*",
+      "* \"Alaska\",\"California\", \"Illinios\",\"Oregon\",\"Texas\",\"Wisconsin\",\"Wyoming\""
+    ],
+    "solution": [
+      "public class FindState",
+      "{",
+      "public static void main(String[] args)",
+      "{",
+      "String[] states = { \"Alaska\",\"California\", \"Illinios\",\"Oregon\",\"Texas\",\"Wisconsin\",\"Wyoming\";};",
+      "String firstState = \"Illinios\";",
+      "String secondState =\"Ohio\";",
+      "int x;",
+      "boolean found = false;",
+      "for (x=0;x<states.length;++x)",
+      "if (firstState.equals(states[x]))",
+      "found = true;",
+      "if (found)",
+      "System.out.println(firstState + \" is in the list\");",
+      "else",
+      "System.out.println(firstState + \" is not on the list\");",
+      "found = false;",
+      "for (x = 0; x<states.length; ++x)",
+      "if (secondState.equals(states[x]))",
+      "found = true;",
+      "if (found)",
+      "System.out.println(secondState + \"is in the list\");",
+      "else",
+      "System.out.println(secondState + \"is not on the list\");",
+      "}",
+      "}"
+    ],
+    "template": [
+      "public class BreakExample {",
+      "public static void main(String[] args) {"
+    ],
+    "exam_type": "Java Basics reg"
+  },
+  {
+    "name": "Java-Exam 4",
+    "lang": "java",
+    "instruction": [
+      "Copy the array list 'a','b','c','d','e','f','g','h','i','n','j','k','l' into another list."
+    ],
+    "solution": [
+      "public class CopyArray",
+      "{",
+      "public static void main(String[] args) {",
+      "char[] copyFrom = {'a','b','c','d','e','f','g','h','i','n','j','k','l'};",
+      "char[] copyTo = new char[7];",
+      "System.arraycopy(copyFrom, 2, copyTo, 0, 7);",
+      "System.out.println(new String(copyTo));",
+      "}",
+      "}"
+    ],
+    "template": [
+      "public class BreakExample {",
+      "public static void main(String[] args) {"
+    ],
+    "exam_type": "Java Basics reg"
   }
 ]

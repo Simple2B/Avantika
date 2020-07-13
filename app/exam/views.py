@@ -14,8 +14,10 @@ def exam(exam_id):
     if form.validate_on_submit():
         exam = Exam.query.filter(Exam.id == form.exam_id.data).first()
         assert exam
-        check_answer(exam, form.code.data)
-        flash(f"Exam '{exam.name}'.", "success")
+        if check_answer(exam, form.code.data):
+            flash(f"Exam '{exam.name}'.", "success")
+        else:
+            flash(f"Exam '{exam.name}'.", "danger")
         return redirect(url_for("exam.exam", exam_id=exam_id))
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
