@@ -186,6 +186,11 @@
       "",
       "To get pi: from math import pi"
     ],
+    "verification": [
+      "assert vol_shell(3,5) == 410.501",
+      "assert vol_shell(2,8) == 2111.150",
+      "assert vol_shell(1,2) == 29.322"
+    ],
     "solution": [
       "from math import pi",
       "def vol_shell(r1, r2):",
@@ -213,6 +218,11 @@
       "next_prime(11) ➞ 11",
       "",
       "note - 11 is a prime, so we return the number itself."
+    ],
+    "verification": [
+      "assert next_prime(12) == 13",
+      "assert next_prime(24) == 29",
+      "assert next_prime(11) == 11"
     ],
     "solution": [
       "def next_prime(num):",
@@ -252,6 +262,12 @@
       "",
       "time_saved(80, 100, 10) ➞ 1.5"
     ],
+    "verification": [
+      "assert time_saved(80, 90, 40) == 3.3",
+      "assert time_saved(80, 90, 4000) == 333.3",
+      "assert time_saved(80, 100, 40) == 6.0",
+      "assert time_saved(80, 100, 10) == 1.5"
+    ],
     "solution": [
       "def time_saved(s_lim, s_avg, d):",
       "\tnorm_time = (d / s_lim) * 60",
@@ -270,11 +286,16 @@
     "lang": "py",
     "instruction": [
       "Create a function that returns the number of characters shared between two words.",
-      "Examples shared_letters(&quot;apple&quot;, &quot;meaty&quot;) ➞ 2",
+      "Examples shared_letters('apple', 'meaty') ➞ 2",
       "#Since 'ea' is shared between 'apple' and 'meaty'.",
       "",
       "shared_letters('fan', 'forsook') ➞ 1",
       "shared_letters('spout', 'shout') ➞ 4"
+    ],
+    "verification": [
+      "assert shared_letters('apple', 'meaty') == 2",
+      "assert shared_letters('fan', 'forsook') == 1",
+      "assert shared_letters('spout', 'shout') == 4"
     ],
     "solution": [
       "def shared_letters(txt1, txt2):",
@@ -303,6 +324,11 @@
       "",
       "return_unique([9, 5, 6, 8, 7, 7, 1, 1, 1, 1, 1, 9, 8]) ➞ [5, 6]"
     ],
+    "verification": [
+      "assert return_unique([1, 9, 8, 8, 7, 6, 1, 6]) == [9, 7]",
+      "assert return_unique([5, 5, 2, 4, 4, 4, 9, 9, 9, 1]) == [2, 1]",
+      "assert return_unique([9, 5, 6, 8, 7, 7, 1, 1, 1, 1, 1, 9, 8]) == [5, 6]"
+    ],
     "solution": [
       "def return_unique(lst):",
       "\tresult = []",
@@ -325,7 +351,12 @@
       "minimum number that can be created from that integer parameter and subtract the minimum from",
       "the max.",
       "",
-      "Ex: minMinusMax(7492) —&gt; max: 9742, min: 2479 —&gt; function should output 7,263"
+      "Ex: minMinusMax(7492) —> max: 9742, min: 2479 —>; function should output 7,263"
+    ],
+    "verification": [
+      "assert rearranged_difference(7492) == 7263",
+      "assert rearranged_difference(2681) == 7353",
+      "assert rearranged_difference(8212) == 6993"
     ],
     "solution": [
       "def rearranged_difference(num):",
