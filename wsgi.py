@@ -3,7 +3,7 @@ import click
 
 from app import create_app, db, models, forms
 from app.auth.models import User, Role, UserRoles
-from app.exam.models import Exam, ExamType, RoleExamType
+from app.exam.models import Exam, ExamLevels, RoleExamLevels
 
 app = create_app()
 
@@ -41,69 +41,69 @@ def create_db():
     create_role("Student_HTML_prem")
     create_role("Student_HTML_prem_outsider")
     # create all exam types
-    create_exam_type("Python Basics reg")
-    create_exam_type("Python Basics prem")
-    create_exam_type("Python Inter")
-    create_exam_type("Python Inter Prem")
-    create_exam_type("Python adv")
-    create_exam_type("Python adv prem")
-    create_exam_type("Java Basics reg")
-    create_exam_type("Java Basics prem")
-    create_exam_type("HTML, CSS, JS reg")
-    create_exam_type("HTML, CSS, JS prem")
+    create_exam_level("Python Basics reg")
+    create_exam_level("Python Basics prem")
+    create_exam_level("Python Inter")
+    create_exam_level("Python Inter Prem")
+    create_exam_level("Python adv")
+    create_exam_level("Python adv prem")
+    create_exam_level("Java Basics reg")
+    create_exam_level("Java Basics prem")
+    create_exam_level("HTML, CSS, JS reg")
+    create_exam_level("HTML, CSS, JS prem")
     # create all connection exam_type with role
     # Python Basics reg
-    connect_exam_type_role("Python Basics reg", "Admin")
-    connect_exam_type_role("Python Basics reg", "Student_PB_reg")
-    connect_exam_type_role("Python Basics reg", "Student_PB_prem")
-    connect_exam_type_role("Python Basics reg", "Student_PI_reg")
-    connect_exam_type_role("Python Basics reg", "Student_PI_prem")
-    connect_exam_type_role("Python Basics reg", "Student_PA_reg")
-    connect_exam_type_role("Python Basics reg", "Student_PA_prem")
+    connect_exam_level_role("Python Basics reg", "Admin")
+    connect_exam_level_role("Python Basics reg", "Student_PB_reg")
+    connect_exam_level_role("Python Basics reg", "Student_PB_prem")
+    connect_exam_level_role("Python Basics reg", "Student_PI_reg")
+    connect_exam_level_role("Python Basics reg", "Student_PI_prem")
+    connect_exam_level_role("Python Basics reg", "Student_PA_reg")
+    connect_exam_level_role("Python Basics reg", "Student_PA_prem")
     # Python Basics prem
-    connect_exam_type_role("Python Basics prem", "Admin")
-    connect_exam_type_role("Python Basics prem", "Student_PB_prem")
-    connect_exam_type_role("Python Basics prem", "Student_PB_prem_outsider")
-    connect_exam_type_role("Python Basics prem", "Student_PI_prem")
-    connect_exam_type_role("Python Basics prem", "Student_PI_prem_outsider")
-    connect_exam_type_role("Python Basics prem", "Student_PA_prem")
-    connect_exam_type_role("Python Basics prem", "Student_PA_prem_outsider")
+    connect_exam_level_role("Python Basics prem", "Admin")
+    connect_exam_level_role("Python Basics prem", "Student_PB_prem")
+    connect_exam_level_role("Python Basics prem", "Student_PB_prem_outsider")
+    connect_exam_level_role("Python Basics prem", "Student_PI_prem")
+    connect_exam_level_role("Python Basics prem", "Student_PI_prem_outsider")
+    connect_exam_level_role("Python Basics prem", "Student_PA_prem")
+    connect_exam_level_role("Python Basics prem", "Student_PA_prem_outsider")
     # Python Inter
-    connect_exam_type_role("Python Inter", "Admin")
-    connect_exam_type_role("Python Inter", "Student_PI_reg")
-    connect_exam_type_role("Python Inter", "Student_PI_prem")
-    connect_exam_type_role("Python Inter", "Student_PA_reg")
-    connect_exam_type_role("Python Inter", "Student_PA_prem")
+    connect_exam_level_role("Python Inter", "Admin")
+    connect_exam_level_role("Python Inter", "Student_PI_reg")
+    connect_exam_level_role("Python Inter", "Student_PI_prem")
+    connect_exam_level_role("Python Inter", "Student_PA_reg")
+    connect_exam_level_role("Python Inter", "Student_PA_prem")
     # Python Inter Prem
-    connect_exam_type_role("Python Inter Prem", "Admin")
-    connect_exam_type_role("Python Inter Prem", "Student_PI_prem")
-    connect_exam_type_role("Python Inter Prem", "Student_PI_prem_outsider")
-    connect_exam_type_role("Python Inter Prem", "Student_PA_prem")
-    connect_exam_type_role("Python Inter Prem", "Student_PA_prem_outsider")
+    connect_exam_level_role("Python Inter Prem", "Admin")
+    connect_exam_level_role("Python Inter Prem", "Student_PI_prem")
+    connect_exam_level_role("Python Inter Prem", "Student_PI_prem_outsider")
+    connect_exam_level_role("Python Inter Prem", "Student_PA_prem")
+    connect_exam_level_role("Python Inter Prem", "Student_PA_prem_outsider")
     # Python adv
-    connect_exam_type_role("Python adv", "Admin")
-    connect_exam_type_role("Python adv", "Student_PA_reg")
-    connect_exam_type_role("Python adv", "Student_PA_prem")
+    connect_exam_level_role("Python adv", "Admin")
+    connect_exam_level_role("Python adv", "Student_PA_reg")
+    connect_exam_level_role("Python adv", "Student_PA_prem")
     # Python adv prem
-    connect_exam_type_role("Python adv prem", "Admin")
-    connect_exam_type_role("Python adv prem", "Student_PA_prem")
-    connect_exam_type_role("Python adv prem", "Student_PA_prem_outsider")
+    connect_exam_level_role("Python adv prem", "Admin")
+    connect_exam_level_role("Python adv prem", "Student_PA_prem")
+    connect_exam_level_role("Python adv prem", "Student_PA_prem_outsider")
     # Java Basics reg
-    connect_exam_type_role("Java Basics reg", "Admin")
-    connect_exam_type_role("Java Basics reg", "Student_J_reg")
-    connect_exam_type_role("Java Basics reg", "Student_J_pre")
+    connect_exam_level_role("Java Basics reg", "Admin")
+    connect_exam_level_role("Java Basics reg", "Student_J_reg")
+    connect_exam_level_role("Java Basics reg", "Student_J_pre")
     # Java Basics prem
-    connect_exam_type_role("Java Basics prem", "Admin")
-    connect_exam_type_role("Java Basics prem", "Student_J_pre")
-    connect_exam_type_role("Java Basics prem", "Student_J_pre_outsider")
+    connect_exam_level_role("Java Basics prem", "Admin")
+    connect_exam_level_role("Java Basics prem", "Student_J_pre")
+    connect_exam_level_role("Java Basics prem", "Student_J_pre_outsider")
     # HTML, CSS, JS reg
-    connect_exam_type_role("HTML, CSS, JS reg", "Admin")
-    connect_exam_type_role("HTML, CSS, JS reg", "Student_HTML_reg")
-    connect_exam_type_role("HTML, CSS, JS reg", "Student_HTML_prem")
+    connect_exam_level_role("HTML, CSS, JS reg", "Admin")
+    connect_exam_level_role("HTML, CSS, JS reg", "Student_HTML_reg")
+    connect_exam_level_role("HTML, CSS, JS reg", "Student_HTML_prem")
     # HTML, CSS, JS prem
-    connect_exam_type_role("HTML, CSS, JS prem", "Admin")
-    connect_exam_type_role("HTML, CSS, JS prem", "Student_HTML_prem")
-    connect_exam_type_role("HTML, CSS, JS prem", "Student_HTML_prem_outsider")
+    connect_exam_level_role("HTML, CSS, JS prem", "Admin")
+    connect_exam_level_role("HTML, CSS, JS prem", "Student_HTML_prem")
+    connect_exam_level_role("HTML, CSS, JS prem", "Student_HTML_prem_outsider")
     # create users
     create_user("admin", "admin", "Admin")
     create_user("admin2", "admin", "Admin")
@@ -146,24 +146,24 @@ def create_role(role_name):
         user_role.save()
 
 
-def create_exam_type(exam_type):
-    user_exam_type = ExamType.query.filter(ExamType.name == exam_type).first()
-    if not user_exam_type:
-        user_exam_type = ExamType(name=exam_type)
-        user_exam_type.save()
+def create_exam_level(exam_level):
+    user_exam_level = ExamLevels.query.filter(ExamLevels.name == exam_level).first()
+    if not user_exam_level:
+        user_exam_level = ExamLevels(name=exam_level)
+        user_exam_level.save()
 
 
-def connect_exam_type_role(exam_type, role_name):
-    the_exam_type = ExamType.query.filter(ExamType.name == exam_type).first()
-    assert the_exam_type
+def connect_exam_level_role(exam_level, role_name):
+    the_exam_level = ExamLevels.query.filter(ExamLevels.name == exam_level).first()
+    assert the_exam_level
     the_role = Role.query.filter(Role.name == role_name).first()
     assert the_role
-    the_connect = RoleExamType.query.filter(
-        RoleExamType.exam_type_id == the_exam_type.id,
-        RoleExamType.role_id == the_role.id,
+    the_connect = RoleExamLevels.query.filter(
+        RoleExamLevels.exam_level_id == the_exam_level.id,
+        RoleExamLevels.role_id == the_role.id,
     ).first()
     if not the_connect:
-        RoleExamType(exam_type_id=the_exam_type.id, role_id=the_role.id).save()
+        RoleExamLevels(exam_level_id=the_exam_level.id, role_id=the_role.id).save()
 
 
 @app.cli.command()

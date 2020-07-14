@@ -23,8 +23,8 @@ class Exam(db.Model, ModelMixin):
     solution = db.Column(db.String(1024), nullable=False)
     template = db.Column(db.String(1024), nullable=False)
     verification = db.Column(db.String(1024), nullable=True)
-    type_id = db.Column(db.Integer(), db.ForeignKey("exam_types.id"))
-    exam_type = db.relationship("ExamType")
+    type_id = db.Column(db.Integer(), db.ForeignKey("exam_levels.id"))
+    exam_level = db.relationship("ExamLevels")
 
     def __repr__(self):
         return f"<Exam: {self.name}>"
@@ -36,7 +36,7 @@ class Exam(db.Model, ModelMixin):
             instruction=self.instruction.split("\n"),
             solution=self.solution.split("\n"),
             template=self.template.split("\n"),
-            exam_type=self.exam_type.name,
+            exam_level=self.exam_level.name,
         )
 
     def from_dict(self, **args):
@@ -47,9 +47,9 @@ class Exam(db.Model, ModelMixin):
         )
         self.solution = "\n".join(args["solution"]) if "solution" in args else ""
         self.template = "\n".join(args["template"]) if "template" in args else ""
-        if "exam_type" in args:
-            self.exam_type = ExamType.query.filter(
-                ExamType.name == args["exam_type"]
+        if "exam_level" in args:
+            self.exam_level = ExamLevels.query.filter(
+                ExamLevels.name == args["exam_level"]
             ).first()
         else:
             log(log.ERROR, "Exam [%s] has not type", self.name)
@@ -59,33 +59,33 @@ class Exam(db.Model, ModelMixin):
 
     @staticmethod
     def load_all_exams():
-        with open('exams.json', 'r') as f:
+        with open("exams.json", "r") as f:
             for exam in json.load(f):
-                if not Exam.query.filter(Exam.name == exam['name']).first():
-                    Exam(name=exam['name']).from_dict(**exam).save()
+                if not Exam.query.filter(Exam.name == exam["name"]).first():
+                    Exam(name=exam["name"]).from_dict(**exam).save()
 
 
-class ExamType(db.Model, ModelMixin):
+class ExamLevels(db.Model, ModelMixin):
     """
     It represents a type of exam like: regular, premium
 
     """
 
-    __tablename__ = "exam_types"
+    __tablename__ = "exam_levels"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True, nullable=False)
 
 
-class RoleExamType(db.Model, ModelMixin):
+class RoleExamLevels(db.Model, ModelMixin):
     """
     Connection of id exam_types with role id of users
     """
 
-    __tablename__ = "role_exam_types"
+    __tablename__ = "role_exam_levels"
 
     id = db.Column(db.Integer(), primary_key=True)
-    exam_type_id = db.Column(
-        db.Integer(), db.ForeignKey("exam_types.id", ondelete="CASCADE")
+    exam_level_id = db.Column(
+        db.Integer(), db.ForeignKey("exam_levels.id", ondelete="CASCADE")
     )
     role_id = db.Column(db.Integer(), db.ForeignKey("roles.id", ondelete="CASCADE"))
