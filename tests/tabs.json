@@ -1,12 +1,12 @@
 [{
-        "href": "dashboard.index",
+        "href": "/dashboard",
         "name": "Admin Dashboard",
         "roles": [
             "Admin"
         ]
     },
     {
-        "href": "exam.exam",
+        "href": "/exam_lang/py",
         "name": "Python Basic",
         "roles": [
             "Admin",
@@ -22,7 +22,7 @@
         ]
     },
     {
-        "href": "exam.exam",
+        "href": "/exam_lang/py",
         "name": "Python Intermediate",
         "roles": [
             "Admin",
@@ -35,7 +35,7 @@
         ]
     },
     {
-        "href": "exam.exam",
+        "href": "/exam_lang/py",
         "name": "Python Advanced",
         "roles": [
             "Admin",
@@ -45,7 +45,7 @@
         ]
     },
     {
-        "href": "exam.exam",
+        "href": "/exam_lang/java",
         "name": "Java Basic",
         "roles": [
             "Admin",
@@ -55,7 +55,7 @@
         ]
     },
     {
-        "href": "exam.exam",
+        "href": "/exam_lang/html",
         "name": "HTML, CSS, JS",
         "roles": [
             "Admin",
@@ -65,14 +65,14 @@
         ]
     },
     {
-        "href": "exam.exam",
+        "href": "/profile",
         "name": "Profile",
         "roles": [
             "Admin"
         ]
     },
     {
-        "href": "exam.exam",
+        "href": "/status",
         "name": "Status",
         "roles": [
             "Admin"

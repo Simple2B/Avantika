@@ -494,5 +494,27 @@
       "public static void main(String[] args) {"
     ],
     "exam_level": "Java Basics reg"
+  },
+  {
+    "name": "HTML-Exam 0",
+    "lang": "html",
+    "instruction": [
+      "Write very simple html page with title \"Hello world!\" "
+    ],
+    "solution": [
+      "<body>",
+      "\t<h1>",
+      "\t\tText",
+      "\t</h1>",
+      "</body>"
+    ],
+    "template": [
+      "<body>",
+      "\t<h1>",
+      "\t\tText",
+      "\t</h1>",
+      "</body>"
+    ],
+    "exam_level": "HTML, CSS, JS"
   }
 ]

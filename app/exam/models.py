@@ -15,6 +15,7 @@ class Exam(db.Model, ModelMixin):
         py = "python"
         java = "java"
         js = "javascript"
+        html = "html"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True, nullable=False)

@@ -19,9 +19,7 @@ def load_exams():
     Exam.load_all_exams()
 
 
-@app.cli.command()
-def create_db():
-    """Create the configured database."""
+def create_database():
     db.create_all()
     # create all roles
     create_role("Admin")
@@ -171,6 +169,19 @@ def connect_exam_level_role(exam_level, role_name):
 def drop_db():
     """Drop the current database."""
     db.drop_all()
+
+
+@app.cli.command()
+def reset_db():
+    """Reset the database."""
+    db.drop_all()
+    create_database()
+
+
+@app.cli.command()
+def create_db():
+    """Create the configured database."""
+    create_database()
 
 
 if __name__ == "__main__":

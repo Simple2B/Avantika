@@ -1,6 +1,7 @@
 import os
 import subprocess
 import tempfile
+from flask import redirect, url_for
 from .models import Exam
 from app.logger import log
 
@@ -43,3 +44,9 @@ def check_answer_java(exam: Exam, code: str):
 
 def check_answer_js(exam: Exam, code: str):
     return True
+
+
+def goto_next_exam(exam_id: int):
+    next_exem_id = exam_id
+    lang = "py"
+    return redirect(url_for(f"exam.exam_{lang}", exam_id=next_exem_id))

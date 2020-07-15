@@ -36,14 +36,14 @@ def test_load_tabs(client):
 
 def create_valid_json():
     json_str = """[{
-        "href": "exam.exam",
+        "href": "/dashboard",
         "name": "Admin Dashboard",
         "roles": [
             "Admin"
         ]
     },
     {
-        "href": "exam.exam",
+        "href": "/exam_lang/py",
         "name": "Python Basic",
         "roles": [
             "Admin",
@@ -59,7 +59,7 @@ def create_valid_json():
         ]
     },
     {
-        "href": "exam.exam",
+        "href": "/exam_lang/py",
         "name": "Python Intermediate",
         "roles": [
             "Admin",
@@ -72,7 +72,7 @@ def create_valid_json():
         ]
     },
     {
-        "href": "exam.exam",
+        "href": "/exam_lang/py",
         "name": "Python Advanced",
         "roles": [
             "Admin",
@@ -88,14 +88,14 @@ def create_valid_json():
 
 def create_invalid_json():
     json_str = """[{
-        "href": "exam.exam",
+        "href": "/dashboard",
         "name": "Admin Dashboard",
         "roles": [
             "Admin"
         ]
     },
     {
-        "href": "exam.exam",
+        "href": "/exam_lang/py",
         "name": "Python Basic",
         "roles": [
             "Admin",
@@ -111,7 +111,7 @@ def create_invalid_json():
         ]
     },
     {
-        "href": "exam.exam",
+        "href": "/exam_lang/py",
         "name": "Python Intermediate",
         "roles": [
             "Admin",
@@ -124,7 +124,7 @@ def create_invalid_json():
         ]
     },
     {
-        "href": "exam.exam",
+        "href": "/exam_lang/py",
         "name": "Python Advanced",
         "roles": [
             "Admin",

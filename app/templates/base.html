@@ -28,7 +28,7 @@
       <div class="sidebar-heading">{{ config.APP_NAME }}</div>
       <div class="list-group list-group-flush">
         {% for tab in tabs %}
-        <a href="{{url_for(tab.href, exam_id=1)}}" class="list-group-item list-group-item-action bg-light">{{ tab.name }}</a>
+        <a href="{{tab.href}}" class="list-group-item list-group-item-action bg-light">{{ tab.name }}</a>
         {% endfor %}
       </div>
     </div>
