@@ -16,8 +16,10 @@
       <small class="text-danger">{{error}}</small>
       {% endfor %}
     </div>
-    {{form.submit(class='btn btn-primary')}}
-    <button class='btn btn-primary' value="Next" name="Next">Next</button>
+    <button class="btn btn-primary " type="submit" name="submit" value="Go">Go</button>
+    <button class="btn btn-primary " type="submit" name="submit" value="Next">Next</button>
+    {#{form.submit(class='btn btn-primary')}#}
+    <!-- <button class='btn btn-primary' value="Next" name="Next">Next</button> -->
   </form>
 </div>
 {% endblock %}

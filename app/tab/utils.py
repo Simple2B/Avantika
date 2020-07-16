@@ -9,10 +9,10 @@ CONFIG_TABS = "tabs.json"
 
 
 def get_allowed_tabs():
-    '''
+    """
     It gets tabs to be displayed on UI looking up the current user's roles.
     It returns an empty or fulfilled array of app.tab.models.Tab.
-    '''
+    """
 
     user_roles = current_user.roles if not current_user.is_anonymous else []
     if len(user_roles) > 0:
@@ -28,10 +28,10 @@ def get_allowed_tabs():
 
 
 def load_tabs():
-    '''
+    """
     It loads a config tabs.json and parses it to an array of app.tab.models.Tab.
     The config tabs.json have to be near the app module.
-    '''
+    """
 
     config_path = os.path.abspath(CONFIG_TABS)
     log(log.INFO, "Tabs config file path: {}".format(config_path))
@@ -39,6 +39,8 @@ def load_tabs():
     try:
         with open(config_path, "r") as f:
             for tab in json.load(f):
+                if "disabled" in tab:
+                    continue
                 tab_objects.append(Tab.from_dict(**tab))
     except OSError as ose:
         log(log.ERROR, "OS error: {}".format(ose))

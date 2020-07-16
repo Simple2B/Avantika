@@ -12,22 +12,29 @@ exam_blueprint = Blueprint("exam", __name__)
 def exam_py(exam_id):
     form = ExamForm(request.form)
     if form.validate_on_submit():
-        if form.submit.label.text == "Next":
+        if request.form["submit"] == "Next":
             return goto_next_exam(exam_id)
         else:
             exam = Exam.query.filter(Exam.id == exam_id).first()
             assert exam
             if check_answer(exam, form.code.data):
-                flash(f"Exam '{exam.name}'.", "success")
+                flash(f"Exam success '{exam.name}'.", "success")
             else:
-                flash(f"Exam '{exam.name}'.", "danger")
-            return redirect(url_for("exam.exam_py", exam_id=exam_id))
+                flash(f"Exam failed '{exam.name}'.", "danger")
+            # return redirect(url_for("exam.exam_py", exam_id=exam_id))
+            return render_template(
+                "exam/exam.html",
+                form=form,
+                instruction_height=(exam.instruction.count("\n") + 2),
+                code_height=(exam.template.count("\n") + 2),
+                tabs=get_allowed_tabs(),
+            )
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
     exam = Exam.query.filter(Exam.id == exam_id).first()
     form.name.data = exam.name
     form.exam_id.data = exam.id
-    form.code.data = exam.template
+    form.code.data = exam.solution
     form.instruction.data = exam.instruction
     return render_template(
         "exam/exam.html",

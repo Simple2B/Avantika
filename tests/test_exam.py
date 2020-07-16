@@ -1,11 +1,12 @@
 import pytest
 from app import db, create_app
 from app.exam.models import Exam
-from app.exam.controller import check_answer
+from app.exam.controller import check_answer, goto_next_exam
 
 
 app = create_app(environment="testing")
-app.config['TESTING'] = True
+app.config["TESTING"] = True
+app.config["SERVER_NAME"] = "localhost.localdomain"
 
 
 @pytest.fixture
@@ -24,3 +25,9 @@ def client():
 def test_py_exam_check_answer(client):
     for exam in Exam.query.filter(Exam.lang == Exam.Language.py).all():
         assert check_answer(exam, exam.solution), f"Bad solution in [{exam.name}]"
+
+
+def test_goto_next_exam(client):
+    res = goto_next_exam(3)
+    assert res
+    assert "4" in res.location
