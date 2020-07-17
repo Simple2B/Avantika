@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, url_for, redirect, flash, request
 
-from .models import Exam
-from .forms import ExamForm
+from .models import Exam, ExamLevels
+from .forms import ExamForm, CreateExamForm
 from .controller import check_answer, goto_next_exam
 from app.tab import get_allowed_tabs
 
@@ -34,7 +34,7 @@ def exam_py(exam_id):
     exam = Exam.query.filter(Exam.id == exam_id).first()
     form.name.data = exam.name
     form.exam_id.data = exam.id
-    form.code.data = exam.solution
+    form.code.data = exam.template
     form.instruction.data = exam.instruction
     return render_template(
         "exam/exam.html",
@@ -76,3 +76,26 @@ def exam_html(exam_id):
         code_height=(exam.template.count("\n") + 2),
         tabs=get_allowed_tabs(),
     )
+
+
+@exam_blueprint.route("/create_exam", methods=["GET", "POST"])
+def create_exam():
+    form = CreateExamForm(request.form)
+    if form.validate_on_submit():
+        # Create new Exam
+        exam = Exam()
+        exam.name = form.name.data
+        level = ExamLevels.query.filter(ExamLevels.name == form.exam_level.data).first()
+        if not level:
+            flash("The level invalid", "danger")
+        exam.type_id = level.id
+        exam.lang = form.lang.data
+        exam.instruction = form.instruction.data
+        exam.solution = form.solution.data
+        exam.template = form.template.data
+        exam.verification = form.verification.data
+        exam.save()
+        return redirect(url_for("dashboard.index"))
+    elif form.is_submitted():
+        flash("The given data was invalid.", "danger")
+    return render_template("exam/create_exam_py.html", form=form)
