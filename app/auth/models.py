@@ -57,7 +57,6 @@ class Role(db.Model, ModelMixin):
 
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(50), unique=True)
-    exam_types = db.relationship("ExamType")
 
 
 class UserRoles(db.Model, ModelMixin):

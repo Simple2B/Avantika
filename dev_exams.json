@@ -1,0 +1,564 @@
+[{
+        "name": "Py-Exam 1",
+        "lang": "py",
+        "instruction": [
+            "Given a number, return the difference between the maximum and minimum possible numbers",
+            "that can be formed when the digits are rearranged.",
+            "",
+            "sort() --> sort an integer list from lowest numbers to highest numbers",
+            "reverse() --> reverses a list",
+            "",
+            "Examples",
+            "rearranged_difference(972882) --> 760833",
+            "# 988722 - 227889 = 760833",
+            "",
+            "rearranged_difference(3320707) --> 7709823",
+            "# 7733200 - 23377 = 7709823",
+            "",
+            "rearranged_difference(90010) --> 90981",
+            "# 91000 - 19 = 90981"
+        ],
+        "solution": [
+            "def rearranged_difference(num):",
+            "\tlst = list(str(num))",
+            "\tlst.sort()",
+            "\t# l_min = lst",
+            "\tnum_min = int(\"\".join(lst))",
+            "\tlst.reverse()",
+            "\t# l_max = lst",
+            "\tnum_max = int(\"\".join(lst))",
+            "\t",
+            "\treturn num_max - num_min"
+        ],
+        "template": [
+            "def rearranged_difference(num):",
+            "\t"
+        ],
+        "exam_level": "Python Basics reg",
+        "verification": [
+            "assert rearranged_difference(972882) == 760833",
+            "assert rearranged_difference(3320707) == 7709823",
+            "assert rearranged_difference(90010) == 90981"
+        ]
+    },
+    {
+        "name": "Py-Exam 2",
+        "lang": "py",
+        "instruction": [
+            "Create a function that takes in n, a, b and returns the number",
+            "nth power that lie in the range [a, b], inclusive.",
+            "",
+            "Examples",
+            "power_ranger(2, 49, 65) ➞ 2",
+            "# 2 squares (n^2) lie between 49 and 65, 49 (7^2) and 64 (8^2)",
+            "",
+            "power_ranger(3, 1, 27) ➞ 3",
+            "# 3 cubes (n^3) lie between 1 and 27, 1 (1^3), 8 (2^3) and 27 (3^3)",
+            "",
+            "power_ranger(10, 1, 5) ➞ 1",
+            "# 1 value raised to the 10th power lies between 1 and 5, 1 (1^10)",
+            "",
+            "power_ranger(5, 31, 33) ➞ 1",
+            "",
+            "power_ranger(4, 250, 1300) ➞ 3"
+        ],
+        "verification": [
+            "assert power_ranger(2, 49, 65) == 2",
+            "assert power_ranger(3, 1, 27) == 3",
+            "assert power_ranger(10, 1, 5) == 1",
+            "assert power_ranger(5, 31, 33) == 1",
+            "assert power_ranger(4, 250, 1300) == 3"
+        ],
+        "solution": [
+            "def power_ranger(power, minimum, maximum):",
+            "\timport math",
+            "\tl = list(range(minimum, maximum+1))",
+            "\tx = []",
+            "\tfor i in l:",
+            "\t\tv = i ** (1 / float(power))",
+            "\t\tif math.floor(v) == math.ceil(v):",
+            "\t\t\tx.append(v)",
+            "\treturn len(x)"
+
+        ],
+        "template": [
+            "def power_ranger(power, minimum, maximum):",
+            "\t"
+        ],
+        "exam_level": "Python Basics prem"
+    },
+    {
+        "name": "Py-Exam 3",
+        "lang": "py",
+        "instruction": [
+            "Create a function which adds spaces before every capital in a word.",
+            "Uncapitalize the whole string afterwards.",
+            "",
+            "Examples",
+            "cap_space('helloWorld') ➞ 'hello world'",
+            "",
+            "cap_space('iLoveMyTeapot') ➞ 'i love my teapot'",
+            "",
+            "cap_space('stayIndoors') ➞ 'stay indoors'",
+            ".isUpper() 'a'.isUpper() --> False",
+            ".isLower() 'a'.isLower() --> True",
+            "",
+            "x = ['a','b','c']",
+            "x.insert(1,'hello')",
+            "input.insert(i-1,' ')",
+            "becomes x = ['a', 'hello', 'b','c']"
+        ],
+        "verification": [
+            "assert cap_space('helloWorld') == 'hello world'",
+            "assert cap_space('iLoveMyTeapot') == 'i love my teapot'",
+            "assert cap_space('stayIndoors') == 'stay indoors'"
+        ],
+        "solution": [
+            "def cap_space(txt):",
+            "\tres = ''",
+            "\tfor c in txt:",
+            "\t\tif c.isupper():",
+            "\t\t\tres += ' ' + c",
+            "\t\telse:",
+            "\t\t\tres += c",
+            "\treturn res.lower()"
+        ],
+        "template": [
+            "def cap_space(txt):",
+            "\t"
+        ],
+        "exam_level": "Python Inter"
+    },
+    {
+        "name": "Py-Exam 4",
+        "lang": "py",
+        "instruction": [
+            "The iterated square root of a number is the number of times the square root function must be applied to bring the number strictly under 2.",
+            "",
+            "Given an integer, return its iterated square root. Return 'invalid' if it is negative.",
+            "",
+            "Examples",
+            "i_sqrt(1) ➞ 0",
+            "",
+            "i_sqrt(2) ➞ 1",
+            "",
+            "i_sqrt(7) ➞ 2",
+            "",
+            "i_sqrt(27) ➞ 3",
+            "",
+            "i_sqrt(256) ➞ 4"
+        ],
+        "verification": [
+            "assert i_sqrt(1) == 0",
+            "assert i_sqrt(2) == 1",
+            "assert i_sqrt(7) == 2",
+            "assert i_sqrt(27) == 3",
+            "assert i_sqrt(256) == 4"
+        ],
+        "solution": [
+            "def i_sqrt(n):",
+            "\tif n < 0: return 'invalid'",
+            "\tcount = 0",
+            "\twhile n >= 2:",
+            "\t\tn **= 0.5",
+            "\t\tcount += 1",
+            "\treturn count"
+        ],
+        "template": [
+            "def i_sqrt(n):",
+            "\t"
+        ],
+        "exam_level": "Python Inter"
+    },
+    {
+        "name": "Py-Exam 5",
+        "lang": "py",
+        "instruction": [
+            "The volume of a spherical shell is the difference between the enclosed volume of the outer",
+            "sphere and the enclosed volume of the inner sphere:",
+            "",
+            "Volume of Inner Sphere Formula",
+            "",
+            "V = 4/3 * pi * (R^3 - r^3)",
+            "",
+            "Create a function that takes r1 and r2 as arguments and returns the volume of a spherical shell",
+            "rounded to the nearest thousandth.",
+            "",
+            "To get pi: from math import pi"
+        ],
+        "verification": [
+            "assert vol_shell(3,5) == 410.501",
+            "assert vol_shell(2,8) == 2111.150",
+            "assert vol_shell(1,2) == 29.322"
+        ],
+        "solution": [
+            "from math import pi",
+            "def vol_shell(r1, r2):",
+            "\tv = 4/3*pi*(r1**3 - r2**3)",
+            "\treturn round(abs(v), 3)"
+        ],
+        "template": [
+            "from math import pi",
+            "def vol_shell(r1, r2):"
+        ],
+        "exam_level": "Python Inter"
+    },
+
+    {
+        "name": "Py-Exam 6",
+        "lang": "py",
+        "instruction": [
+            "Given an integer, create a function that returns the next prime. If the number is prime, return the",
+            "number itself.",
+            "",
+            "Examples next_prime(12) ➞ 13",
+            "",
+            "next_prime(24) ➞ 29",
+            "",
+            "next_prime(11) ➞ 11",
+            "",
+            "note - 11 is a prime, so we return the number itself."
+        ],
+        "verification": [
+            "assert next_prime(12) == 13",
+            "assert next_prime(24) == 29",
+            "assert next_prime(11) == 11"
+        ],
+        "solution": [
+            "def next_prime(num):",
+            "\tfor i in range(2,num):",
+            "\t\tprint(num,i)",
+            "\t\tif i == num-1:",
+            "\t\t\treturn num",
+            "\t\tif num%i == 0:",
+            "\t\t\treturn next_prime(num+1)"
+        ],
+        "template": [
+            "def next_prime(num):",
+            "\t"
+        ],
+        "exam_level": "Python adv"
+    },
+    {
+        "name": "Py-Exam 6",
+        "lang": "py",
+        "instruction": [
+            "One cause for speeding is the desire to shorten the time spent traveling. While in long distance",
+            "trips speeding does save an appreciable amount of time, the same cannot be said about short",
+            "distance trips.",
+            "",
+            "Create a function that calculates the amount of time saved (in minutes) were you traveling with an",
+            "average speed that is above the speed-limit as compared to traveling with an average speed exactly",
+            "at the speed-limit.",
+            "",
+            "Examples The paramater&#39;s format is as follows: (speed limit, avg speed, distance traveled at avg",
+            "speed)",
+            "",
+            "time_saved(80, 90, 40) ➞ 3.3",
+            "",
+            "time_saved(80, 90, 4000) ➞ 333.3",
+            "",
+            "time_saved(80, 100, 40 ) ➞ 6.0",
+            "",
+            "time_saved(80, 100, 10) ➞ 1.5"
+        ],
+        "verification": [
+            "assert time_saved(80, 90, 40) == 3.3",
+            "assert time_saved(80, 90, 4000) == 333.3",
+            "assert time_saved(80, 100, 40) == 6.0",
+            "assert time_saved(80, 100, 10) == 1.5"
+        ],
+        "solution": [
+            "def time_saved(s_lim, s_avg, d):",
+            "\tnorm_time = (d / s_lim) * 60",
+            "\tfast_time = (d / s_avg) * 60",
+            "\tworth = norm_time - fast_time",
+            "\treturn round(worth, 1)"
+        ],
+        "template": [
+            "def time_saved(s_lim, s_avg, d):",
+            "\t"
+        ],
+        "exam_level": "Python adv"
+    },
+    {
+        "name": "Py-Exam 7",
+        "lang": "py",
+        "instruction": [
+            "Create a function that returns the number of characters shared between two words.",
+            "Examples shared_letters('apple', 'meaty') ➞ 2",
+            "#Since 'ea' is shared between 'apple' and 'meaty'.",
+            "",
+            "shared_letters('fan', 'forsook') ➞ 1",
+            "shared_letters('spout', 'shout') ➞ 4"
+        ],
+        "verification": [
+            "assert shared_letters('apple', 'meaty') == 2",
+            "assert shared_letters('fan', 'forsook') == 1",
+            "assert shared_letters('spout', 'shout') == 4"
+        ],
+        "solution": [
+            "def shared_letters(txt1, txt2):",
+            "\ts = 0",
+            "\tfor i in set(txt1):",
+            "\t\tif i in txt2:",
+            "\t\t\ts += 1",
+            "\treturn s"
+        ],
+        "template": [
+            "def shared_letters(txt1, txt2):",
+            "\t"
+        ],
+        "exam_level": "Python adv prem"
+    },
+    {
+        "name": "Py-Exam 8",
+        "lang": "py",
+        "instruction": [
+            "In each input list, every number repeats at least once, except for two. Write a function that",
+            "returns the two unique numbers.",
+            "",
+            "Examples return_unique([1, 9, 8, 8, 7, 6, 1, 6]) ➞ [9, 7]",
+            "",
+            "return_unique([5, 5, 2, 4, 4, 4, 9, 9, 9, 1]) ➞ [2, 1]",
+            "",
+            "return_unique([9, 5, 6, 8, 7, 7, 1, 1, 1, 1, 1, 9, 8]) ➞ [5, 6]"
+        ],
+        "verification": [
+            "assert return_unique([1, 9, 8, 8, 7, 6, 1, 6]) == [9, 7]",
+            "assert return_unique([5, 5, 2, 4, 4, 4, 9, 9, 9, 1]) == [2, 1]",
+            "assert return_unique([9, 5, 6, 8, 7, 7, 1, 1, 1, 1, 1, 9, 8]) == [5, 6]"
+        ],
+        "solution": [
+            "def return_unique(lst):",
+            "\tresult = []",
+            "\tfor i in range(len(lst)):",
+            "\t\tif lst.count(lst[i]) == 1:",
+            "\t\t\tresult.append(lst[i])",
+            "\treturn result"
+        ],
+        "template": [
+            "def return_unique(lst):",
+            "\t"
+        ],
+        "exam_level": "Python adv prem"
+    },
+    {
+        "name": "Py-Exam 9",
+        "lang": "py",
+        "instruction": [
+            "Create a function that takes in one multi digit integer parameter. Find the maximum and",
+            "minimum number that can be created from that integer parameter and subtract the minimum from",
+            "the max.",
+            "",
+            "Ex: minMinusMax(7492) —> max: 9742, min: 2479 —>; function should output 7,263"
+        ],
+        "verification": [
+            "assert rearranged_difference(7492) == 7263",
+            "assert rearranged_difference(2681) == 7353",
+            "assert rearranged_difference(8212) == 6993"
+        ],
+        "solution": [
+            "def rearranged_difference(num):",
+            "\tlst = list(str(num))",
+            "\tlst.sort()",
+            "\t# l_min = lst",
+            "\tnum_min = int(\"\".join(lst))",
+            "\tlst.reverse()",
+            "\t# l_max = lst",
+            "\tnum_max = int(\"\".join(lst))",
+            "\tnum_max = int(''.join(lst))",
+            "\treturn num_max - num_min"
+        ],
+        "template": [
+            "def rearranged_difference(num):",
+            "\t"
+        ],
+        "exam_level": "Python adv prem"
+    },
+    {
+        "name": "Py-Exam 10",
+        "lang": "py",
+        "instruction": [
+            "We have a list a = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89].",
+            "Output all elements which less then chosen number"
+        ],
+        "verification": [
+            "assert less_than() == [1, 1, 2, 3]"
+        ],
+        "solution": [
+            "def less_than():",
+            "\ta = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]",
+            "\tres = []",
+            "\tfor elem in a:",
+            "\t\tif elem < 5:",
+            "\t\t\tres += [elem]",
+            "\treturn res"
+        ],
+        "template": [
+            "def less_than():",
+            "\t"
+        ],
+        "exam_level": "Python Basics reg"
+    },
+    {
+        "name": "Py-Exam 11 test",
+        "lang": "py",
+        "instruction": [
+            "Write function value, than returns 11"
+        ],
+        "verification": [
+            "assert value() == 11"
+        ],
+        "solution": [
+            "def value():",
+            "\treturn 11"
+        ],
+        "template": [
+            "def value():",
+            "\t"
+        ],
+        "exam_level": "Python Basics reg"
+    },
+    {
+        "name": "Java-Exam 1",
+        "lang": "java",
+        "instruction": [
+            "Suppose a monthly car insurance premium is $200 if the driver is age 25 or younger and",
+            "$125 if the driver is age 26 or older. Ask the user their age and display the correct cost for them."
+        ],
+        "solution": [
+            "import java.util.Scanner;",
+            "public class decisions_carInsurance{",
+            "public static void main(String[]args){",
+            "int user;",
+            "Scanner scan = new Scanner(System.in);",
+            "System.out.println('enter your age');",
+            "user = scan.nextInt();",
+            "if (user<=25)",
+            "\tSystem.out.println('Your car insurance cost is $200');",
+            "else",
+            "\tSystem.out.println(&quot;Your car insurance cost is $125&quot;); }}"
+        ],
+        "template": [
+            "import java.util.Scanner;",
+            "public class decisions_carInsurance{",
+            "public static void main(String[]args){"
+        ],
+        "exam_level": "Java Basics reg"
+
+    },
+    {
+        "name": "Java-Exam 3",
+        "lang": "java",
+        "instruction": [
+            "Write a for loop that runs from 1-10 (both inclusive) and will break when i equals 5."
+        ],
+        "solution": [
+            "public class BreakExample {",
+            "public static void main(String[] args) {",
+            "for(int i=1;i&lt;=10;i++){",
+            "if(i==5){",
+            "break;",
+            "}",
+            "System.out.println(i);",
+            "}",
+            "}",
+            "}"
+        ],
+        "template": [
+            "public class BreakExample {",
+            "public static void main(String[] args) {"
+        ],
+        "exam_level": "Java Basics reg"
+    },
+    {
+        "name": "Java-Exam 4",
+        "lang": "java",
+        "instruction": [
+            "Write a program that will check if state name is in the following list of states or not.",
+            "* If it is in the list, then print '___ is in the list' and ___ should be filled with that state's name.",
+            "* Else print '___ is not in the list'.",
+            "*",
+            "* \"Alaska\",\"California\", \"Illinios\",\"Oregon\",\"Texas\",\"Wisconsin\",\"Wyoming\""
+        ],
+        "solution": [
+            "public class FindState",
+            "{",
+            "public static void main(String[] args)",
+            "{",
+            "String[] states = { \"Alaska\",\"California\", \"Illinios\",\"Oregon\",\"Texas\",\"Wisconsin\",\"Wyoming\";};",
+            "String firstState = \"Illinios\";",
+            "String secondState =\"Ohio\";",
+            "int x;",
+            "boolean found = false;",
+            "for (x=0;x<states.length;++x)",
+            "if (firstState.equals(states[x]))",
+            "found = true;",
+            "if (found)",
+            "System.out.println(firstState + \" is in the list\");",
+            "else",
+            "System.out.println(firstState + \" is not on the list\");",
+            "found = false;",
+            "for (x = 0; x<states.length; ++x)",
+            "if (secondState.equals(states[x]))",
+            "found = true;",
+            "if (found)",
+            "System.out.println(secondState + \"is in the list\");",
+            "else",
+            "System.out.println(secondState + \"is not on the list\");",
+            "}",
+            "}"
+        ],
+        "template": [
+            "public class BreakExample {",
+            "public static void main(String[] args) {"
+        ],
+        "exam_level": "Java Basics reg"
+    },
+    {
+        "name": "Java-Exam 4",
+        "lang": "java",
+        "instruction": [
+            "Copy the array list 'a','b','c','d','e','f','g','h','i','n','j','k','l' into another list."
+        ],
+        "solution": [
+            "public class CopyArray",
+            "{",
+            "public static void main(String[] args) {",
+            "char[] copyFrom = {'a','b','c','d','e','f','g','h','i','n','j','k','l'};",
+            "char[] copyTo = new char[7];",
+            "System.arraycopy(copyFrom, 2, copyTo, 0, 7);",
+            "System.out.println(new String(copyTo));",
+            "}",
+            "}"
+        ],
+        "template": [
+            "public class BreakExample {",
+            "public static void main(String[] args) {"
+        ],
+        "exam_level": "Java Basics reg"
+    },
+    {
+        "name": "HTML-Exam 0",
+        "lang": "html",
+        "instruction": [
+            "Write very simple html page with title \"Hello world!\" "
+        ],
+        "solution": [
+            "<body>",
+            "\t<h1>",
+            "\t\tText",
+            "\t</h1>",
+            "</body>"
+        ],
+        "template": [
+            "<body>",
+            "\t<h1>",
+            "\t\tText",
+            "\t</h1>",
+            "</body>"
+        ],
+        "exam_level": "HTML, CSS, JS"
+    }
+]

@@ -1,23 +1,37 @@
 from flask import Blueprint, render_template, url_for, redirect, flash, request
 
-from .models import Exam
-from .forms import ExamForm
+from .models import Exam, ExamLevels
+from .forms import ExamForm, CreateExamForm
+from .controller import check_answer, goto_next_exam
 from app.tab import get_allowed_tabs
 
 exam_blueprint = Blueprint("exam", __name__)
 
 
-@exam_blueprint.route("/exam", methods=["GET", "POST"])
-def exam():
+@exam_blueprint.route("/exam/py/<exam_id>", methods=["GET", "POST"])
+def exam_py(exam_id):
     form = ExamForm(request.form)
     if form.validate_on_submit():
-        exam = Exam.query.filter(Exam.id == form.exam_id.data).first()
-        assert exam
-        flash(f"Exam '{exam.name}'.", "success")
-        return redirect(url_for("exam.exam"))
+        if request.form["submit"] == "Next":
+            return goto_next_exam(exam_id)
+        else:
+            exam = Exam.query.filter(Exam.id == exam_id).first()
+            assert exam
+            if check_answer(exam, form.code.data):
+                flash(f"Exam success '{exam.name}'.", "success")
+            else:
+                flash(f"Exam failed '{exam.name}'.", "danger")
+            # return redirect(url_for("exam.exam_py", exam_id=exam_id))
+            return render_template(
+                "exam/exam.html",
+                form=form,
+                instruction_height=(exam.instruction.count("\n") + 2),
+                code_height=(exam.template.count("\n") + 2),
+                tabs=get_allowed_tabs(),
+            )
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
-    exam = Exam.query.first()
+    exam = Exam.query.filter(Exam.id == exam_id).first()
     form.name.data = exam.name
     form.exam_id.data = exam.id
     form.code.data = exam.template
@@ -29,3 +43,59 @@ def exam():
         code_height=(exam.template.count("\n") + 2),
         tabs=get_allowed_tabs(),
     )
+
+
+@exam_blueprint.route("/exam_lang/<lang>")
+def exam_lang(lang):
+    exam = Exam.query.filter(Exam.lang == lang).first()
+    return redirect(url_for(f"exam.exam_{lang}", exam_id=exam.id))
+
+
+@exam_blueprint.route("/exam/html/<exam_id>", methods=["GET", "POST"])
+def exam_html(exam_id):
+    form = ExamForm(request.form)
+    exam = Exam.query.filter(Exam.id == exam_id).first()
+    if form.validate_on_submit():
+        return render_template(
+            "exam/exam_html_css.html",
+            form=form,
+            instruction_height=(exam.instruction.count("\n") + 2),
+            code_height=(exam.template.count("\n") + 2),
+            tabs=get_allowed_tabs(),
+        )
+    elif form.is_submitted():
+        flash("The given data was invalid.", "danger")
+    form.name.data = exam.name
+    form.exam_id.data = exam.id
+    form.code.data = exam.template
+    form.instruction.data = exam.instruction
+    return render_template(
+        "exam/exam_html_css.html",
+        form=form,
+        instruction_height=(exam.instruction.count("\n") + 2),
+        code_height=(exam.template.count("\n") + 2),
+        tabs=get_allowed_tabs(),
+    )
+
+
+@exam_blueprint.route("/create_exam", methods=["GET", "POST"])
+def create_exam():
+    form = CreateExamForm(request.form)
+    if form.validate_on_submit():
+        # Create new Exam
+        exam = Exam()
+        exam.name = form.name.data
+        level = ExamLevels.query.filter(ExamLevels.name == form.exam_level.data).first()
+        if not level:
+            flash("The level invalid", "danger")
+        exam.type_id = level.id
+        exam.lang = form.lang.data
+        exam.instruction = form.instruction.data
+        exam.solution = form.solution.data
+        exam.template = form.template.data
+        exam.verification = form.verification.data
+        exam.save()
+        return redirect(url_for("dashboard.index"))
+    elif form.is_submitted():
+        flash("The given data was invalid.", "danger")
+    return render_template("exam/create_exam_py.html", form=form)

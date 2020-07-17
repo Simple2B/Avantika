@@ -22,6 +22,7 @@ def client():
     with app.test_client() as client:
         app_ctx = app.app_context()
         app_ctx.push()
+        db.drop_all()
         db.create_all()
         create_user(LOGIN_ADMIN, PASSW_ADMIN, ROLE_ADMIN)
         create_user(LOGIN_STUDENT, PASSW_STUDENT, ROLE_STUDENT)
