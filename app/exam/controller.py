@@ -30,7 +30,7 @@ def check_answer_py(exam: Exam, code: str):
                 f.write("\n")
                 f.write(exam.verification)
                 f.write("\n")
-        cmd = ["python", test_file_path]
+        cmd = ["python3", test_file_path]
         test_process = subprocess.run(cmd, capture_output=True)
         if test_process.stderr:
             for error_line in test_process.stderr.decode().split("\n"):
