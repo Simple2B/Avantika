@@ -60,7 +60,7 @@ class Exam(db.Model, ModelMixin):
 
     @staticmethod
     def load_all_exams():
-        with open("exams.json", "r") as f:
+        with open("dev_exams.json", "r") as f:
             for exam in json.load(f):
                 if not Exam.query.filter(Exam.name == exam["name"]).first():
                     Exam(name=exam["name"]).from_dict(**exam).save()

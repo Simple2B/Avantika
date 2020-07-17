@@ -103,9 +103,9 @@ def create_database():
     connect_exam_level_role("HTML, CSS, JS prem", "Student_HTML_prem")
     connect_exam_level_role("HTML, CSS, JS prem", "Student_HTML_prem_outsider")
     # create users
-    create_user("admin", "admin", "Admin")
-    create_user("admin2", "admin", "Admin")
-    create_user("admin3", "admin", "Admin")
+    create_user("admin", "1234", "Admin")
+    create_user("admin2", "1234", "Admin")
+    create_user("admin3", "1234", "Admin")
     create_user("student_PB_reg", "student", "Student_PB_reg")
     create_user("student_PB_prem", "student", "Student_PB_prem")
     create_user("student_PB_prem_outsider", "student", "Student_PB_prem_outsider")
