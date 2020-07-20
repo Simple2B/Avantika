@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, url_for, redirect, flash, request
+from flask_user import roles_required
 
 from .models import Exam, ExamLevels
 from .forms import ExamForm, CreateExamForm
@@ -79,6 +80,7 @@ def exam_html(exam_id):
 
 
 @exam_blueprint.route("/create_exam", methods=["GET", "POST"])
+@roles_required("Admin")
 def create_exam():
     form = CreateExamForm(request.form)
     if form.validate_on_submit():
@@ -99,3 +101,17 @@ def create_exam():
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
     return render_template("exam/create_exam_py.html", form=form)
+
+
+@exam_blueprint.route("/delete_exam/<exam_id>", methods=["GET"])
+@roles_required("Admin")
+def delete_exam(exam_id):
+    exam_id = int(exam_id)
+    exam = Exam.query.filter(Exam.id == exam_id).first()
+    if exam:
+        exam.delete()
+    else:
+        flash("Wrong exam id", "danger")
+    return redirect(
+        url_for("dashboard.index")
+    )  # куда лучше редеректить после удаления?
