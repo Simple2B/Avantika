@@ -100,7 +100,9 @@ def create_exam():
         return redirect(url_for("dashboard.index"))
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
-    return render_template("exam/create_exam_py.html", form=form)
+    return render_template(
+        "exam/create_exam_py.html", form=form, post_action=url_for("exam.create_exam")
+    )
 
 
 @exam_blueprint.route("/delete_exam/<exam_id>", methods=["GET"])
@@ -109,9 +111,47 @@ def delete_exam(exam_id):
     exam_id = int(exam_id)
     exam = Exam.query.filter(Exam.id == exam_id).first()
     if exam:
-        exam.delete()
+        exam.deleted = True
+        exam.save()
     else:
         flash("Wrong exam id", "danger")
     return redirect(
         url_for("dashboard.index")
     )  # куда лучше редеректить после удаления?
+
+
+@exam_blueprint.route("/exam_edit/<exam_id>", methods=["GET", "POST"])
+@roles_required("Admin")
+def edit_exam(exam_id):
+    exam_id = int(exam_id)
+    exam = Exam.query.filter(Exam.id == exam_id).first()
+    if exam is None:
+        flash("Wrong exam id.", "danger")
+        return redirect(url_for("dashboard.index"))
+    form = CreateExamForm(request.form)
+    if form.validate_on_submit():
+        exam.name = form.name.data
+        level = ExamLevels.query.filter(ExamLevels.name == form.exam_level.data).first()
+        if not level:
+            flash("The level invalid", "danger")
+        exam.type_id = level.id
+        exam.lang = form.lang.data
+        exam.instruction = form.instruction.data
+        exam.solution = form.solution.data
+        exam.template = form.template.data
+        exam.verification = form.verification.data
+        exam.save()
+        return redirect(url_for("dashboard.index"))
+    else:
+        form.name.data = exam.name
+        form.lang.data = exam.lang
+        form.exam_level.data = exam.exam_level.name
+        form.instruction.data = exam.instruction
+        form.template.data = exam.template
+        form.solution.data = exam.solution
+        form.verification.data = exam.verification
+    return render_template(
+        "exam/create_exam_py.html",
+        form=form,
+        post_action=url_for("exam.edit_exam", exam_id=exam_id),
+    )

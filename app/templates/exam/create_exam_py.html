@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container py-4">
-    <form class="form" role="form" action="{{ url_for('exam.create_exam') }}" method="post">
+    <form class="form" role="form" action="{{ post_action }}" method="post">
         <div class="form-group">
             {{form.name.label}}
             {{form.name(class='form-control')}}

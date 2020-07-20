@@ -24,6 +24,7 @@ class Exam(db.Model, ModelMixin):
     solution = db.Column(db.String(1024), nullable=False)
     template = db.Column(db.String(1024), nullable=False)
     verification = db.Column(db.String(1024), nullable=True)
+    deleted = db.Column(db.Boolean, default=False)
     type_id = db.Column(db.Integer(), db.ForeignKey("exam_levels.id"))
     exam_level = db.relationship("ExamLevels")
 
