@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, url_for, redirect, flash, request
-from flask_user import roles_required
+from flask_user import roles_required, current_user
 
 from .models import Exam, ExamLevels
 from .forms import ExamForm, CreateExamForm
 from .controller import check_answer, goto_next_exam
+from app.result.controller import go_pass_exam, next_to_pass_exam
 from app.tab import get_allowed_tabs
 
 exam_blueprint = Blueprint("exam", __name__)
@@ -14,12 +15,17 @@ def exam_py(exam_id):
     form = ExamForm(request.form)
     if form.validate_on_submit():
         if request.form["submit"] == "Next":
+            exam = Exam.query.filter(Exam.id == exam_id).first()
+            user = current_user
+            next_to_pass_exam(exam_id=exam.id, user_id=user.id)
             return goto_next_exam(exam_id)
         else:
             exam = Exam.query.filter(Exam.id == exam_id).first()
             assert exam
             if check_answer(exam, form.code.data):
                 flash(f"Exam success '{exam.name}'.", "success")
+                user = current_user
+                go_pass_exam(exam_id=exam.id, user_id=user.id)
             else:
                 flash(f"Exam failed '{exam.name}'.", "danger")
             # return redirect(url_for("exam.exam_py", exam_id=exam_id))
