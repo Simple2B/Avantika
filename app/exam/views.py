@@ -115,9 +115,7 @@ def delete_exam(exam_id):
         exam.save()
     else:
         flash("Wrong exam id", "danger")
-    return redirect(
-        url_for("dashboard.index")
-    )  # куда лучше редеректить после удаления?
+    return redirect(url_for("dashboard.index"))
 
 
 @exam_blueprint.route("/exam_edit/<exam_id>", methods=["GET", "POST"])
