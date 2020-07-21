@@ -35,6 +35,9 @@ def go_pass_exam(exam_id: int, user_id: int):
     return redirect(url_for(f"exam.exam_{lang.name}"))
 
 
+"""Function witch connect with button 'Go', and do field 'passed', true or false"""
+
+
 def next_to_pass_exam(exam_id: int, user_id: int):
     # Переводим полученные значения в инт
     exam_id = int(exam_id)
