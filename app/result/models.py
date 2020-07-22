@@ -4,10 +4,9 @@ from app.utils import ModelMixin
 
 # from app.logger import log
 
-""" Model of results exam must have this field: id, passed (true/false), exam_id, user_id"""
-
 
 class Result(db.Model, ModelMixin):
+    """ Model of results exam must have this field: id, passed (true/false), exam_id, user_id """
 
     __tablename__ = "results"
 

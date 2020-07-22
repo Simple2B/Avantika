@@ -28,8 +28,6 @@ def next_to_pass_exam(exam_id: int, user_id: int):
     # Переводим полученные значения в инт
     exam_id = int(exam_id)
     user_id = int(user_id)
-    # находим в таблице результатов соответсвующий экзаменну и текущему пользователю результат прохождения экзаменна
-    # (возможно тут лучше будет использовать current_user)
     the_passed = Result.query.filter(
         Result.exam_id == exam_id, Result.user_id == user_id
     ).first()
