@@ -1,0 +1,38 @@
+[
+    {
+        "id": 0,
+        "question": [
+            "What is the output of this code:",
+            "def printAllElements(listOne):",
+            "\tfor i in range (len(listOne)):",
+            "\t\tlistOne[i] = str(listOne[i])+ \"changed\"",
+            "\treturn(listOne)",
+            "printAllElements([1,6,3,8])"
+        ],
+        "answers": [
+            "a. nothing prints",
+            "b. nothing",
+            "c. no",
+            "d. none"
+        ],
+        "correct_index": 0
+    },
+    {
+        "id": 1,
+        "question": [
+            "What is the output of this code:",
+            "x = \"abcdef\"",
+            "i = \"a\"",
+            "while i in x:",
+            "\tx = x[:-1]",
+            "\tprint(i, end = \"\")"
+        ],
+        "answers": [
+            "a. a a a",
+            "b. nothing",
+            "c. abcdef",
+            "d. a a a a a a"
+        ],
+        "correct_index": 3
+    }
+]
