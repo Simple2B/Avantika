@@ -17,10 +17,12 @@ def go_pass_exam(exam_id: int, user_id: int):
         log(log.WARNING, "EXAM ALREADY NOT PASSED: %s", exam_id)
         the_passed = Result(exam_id=exam_id, user_id=user_id)
         the_passed.passed = True
+        the_passed.save()
     passed = the_passed.passed
     if passed is False:
         log(log.INFO, "EXAM PASSED: %s", exam_id)
         passed = True
+        the_passed.save()
 
 
 def next_to_pass_exam(exam_id: int, user_id: int):
