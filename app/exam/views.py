@@ -1,10 +1,12 @@
 from flask import Blueprint, render_template, url_for, redirect, flash, request
 from flask_user import roles_required
 
+
 from .models import Exam, ExamLevels
 from .forms import ExamForm, CreateExamForm
 from .controller import check_answer, goto_next_exam
 from app.tab import get_allowed_tabs
+from app.logger import log
 
 exam_blueprint = Blueprint("exam", __name__)
 
@@ -124,9 +126,11 @@ def delete_exam(exam_id):
 @roles_required("Admin")
 def edit_exam(exam_id):
     exam_id = int(exam_id)
+    log(log.DEBUG, "edit exam: [%d]", exam_id)
     exam = Exam.query.filter(Exam.id == exam_id).first()
     if exam is None:
         flash("Wrong exam id.", "danger")
+        log(log.WARNING, "NONEXISTENT EXAM [%d]", exam_id)
         return redirect(url_for("dashboard.index"))
     form = CreateExamForm(request.form)
     if form.validate_on_submit():
@@ -134,6 +138,7 @@ def edit_exam(exam_id):
         level = ExamLevels.query.filter(ExamLevels.name == form.exam_level.data).first()
         if not level:
             flash("The level invalid", "danger")
+            log(log.WARNING, "NONEXISTENT LEVEL %s", form.exam_level.data)
         exam.type_id = level.id
         exam.lang = form.lang.data
         exam.instruction = form.instruction.data
