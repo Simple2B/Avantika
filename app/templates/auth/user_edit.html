@@ -1,8 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    @media only screen and (max-width: 950px) {
+        #edit_user {
+            width: 80% !important;
+        }
+    }
+
+    @media only screen and (max-width: 800px) {
+        #edit_user {
+            width: 100% !important;
+        }
+    }
+</style>
 <div class="container py-4">
-    <div class="card w-50 mx-auto">
+    <div id=edit_user class="card w-50 mx-auto">
         <div class="card-header">
             <h4 class="card-title">Edit User</h4>
         </div>
