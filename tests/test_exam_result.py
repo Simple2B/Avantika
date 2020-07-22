@@ -2,6 +2,8 @@ import pytest
 from app import db, create_app
 from app.exam.models import Exam
 
+# from app.result.models import Result
+
 # from app.auth.models import User
 from app.result.controller import go_pass_exam, next_to_pass_exam
 
@@ -28,7 +30,15 @@ def client():
 def test_result_exam_passed_go(client):
     # user = User.query.all()[0]
     # exam = Exam.query.all()[0]
-    go_pass_exam(exam_id=1, user_id=1)
+    # exam_id = 1
+    # user_id = 1
+    go_pass_exam(1, 1)
+    # the_passed = Result.query.filter(
+    #     Result.exam_id == exam_id, Result.user_id == user_id
+    # )
+    # passed = the_passed.passed
+    # if passed:
+    #     return 1
 
 
 def test_result_exam_passed_next(client):

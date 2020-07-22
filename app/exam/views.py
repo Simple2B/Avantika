@@ -118,6 +118,7 @@ def delete_exam(exam_id):
     exam = Exam.query.filter(Exam.id == exam_id).first()
     if exam:
         exam.deleted = True
+        flash(f"Exam {exam.name} deleted", "success")
         exam.save()
     else:
         flash("Wrong exam id", "danger")

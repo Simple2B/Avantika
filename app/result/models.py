@@ -13,6 +13,6 @@ class Result(db.Model, ModelMixin):
     id = db.Column(db.Integer, primary_key=True)
     exam_id = db.Column(db.Integer(), db.ForeignKey("exams.id"))
     user_id = db.Column(db.Integer(), db.ForeignKey("users.id"))
-    passed = db.Column(db.Boolean, default=False)
+    passed = db.Column(db.Boolean)
     exam = db.relationship("Exam")
     user = db.relationship("User")

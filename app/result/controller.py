@@ -1,10 +1,8 @@
 from .models import Result
-
-# from app.logger import log
+from app.logger import log
 
 
 def go_pass_exam(exam_id: int, user_id: int):
-
     """Function witch connect with button 'Go', and do field 'passed', true or false"""
     # Переводим полученные значения в инт
     exam_id = int(exam_id)
@@ -16,15 +14,17 @@ def go_pass_exam(exam_id: int, user_id: int):
     ).first()
     if not the_passed:
         # Создать новый инстанс БД
+        log(log.WARNING, "EXAM ALREADY NOT PASSED: %s", exam_id)
         the_passed = Result(exam_id=exam_id, user_id=user_id)
-    the_passed.passed = True
+        the_passed.passed = True
     passed = the_passed.passed
     if passed is False:
+        log(log.INFO, "EXAM PASSED: %s", exam_id)
         passed = True
 
 
 def next_to_pass_exam(exam_id: int, user_id: int):
-    """Function witch connect with button 'Go', and do field 'passed', true or false"""
+    """Function witch connect with button 'Next', and do field 'passed', true or false"""
     # Переводим полученные значения в инт
     exam_id = int(exam_id)
     user_id = int(user_id)
@@ -33,5 +33,6 @@ def next_to_pass_exam(exam_id: int, user_id: int):
     ).first()
     if not the_passed:
         # Создать новый инстанс БД
+        log(log.ERROR, "EXAM NOT PASSED: %s", exam_id)
         the_passed = Result(exam_id=exam_id, user_id=user_id)
     the_passed.passed = False
