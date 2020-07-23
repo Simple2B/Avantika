@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template, url_for, redirect, flash, request
-from flask_user import roles_required
+from flask_user import roles_required, current_user
 
 
 from .models import Exam, ExamLevels
 from .forms import ExamForm, CreateExamForm
 from .controller import check_answer, goto_next_exam
+from app.result.controller import go_pass_exam, next_to_pass_exam
 from app.tab import get_allowed_tabs
 from app.logger import log
 
@@ -16,12 +17,17 @@ def exam_py(exam_id):
     form = ExamForm(request.form)
     if form.validate_on_submit():
         if request.form["submit"] == "Next":
+            exam = Exam.query.filter(Exam.id == exam_id).first()
+            user = current_user
+            next_to_pass_exam(exam_id=exam.id, user_id=user.id)
             return goto_next_exam(exam_id)
         else:
             exam = Exam.query.filter(Exam.id == exam_id).first()
             assert exam
             if check_answer(exam, form.code.data):
                 flash(f"Exam success '{exam.name}'.", "success")
+                user = current_user
+                go_pass_exam(exam_id=exam.id, user_id=user.id)
             else:
                 flash(f"Exam failed '{exam.name}'.", "danger")
             # return redirect(url_for("exam.exam_py", exam_id=exam_id))
@@ -114,12 +120,11 @@ def delete_exam(exam_id):
     exam = Exam.query.filter(Exam.id == exam_id).first()
     if exam:
         exam.deleted = True
+        flash(f"Exam {exam.name} deleted", "success")
         exam.save()
     else:
         flash("Wrong exam id", "danger")
-    return redirect(
-        url_for("dashboard.index")
-    )  # куда лучше редеректить после удаления?
+    return redirect(url_for("dashboard.index"))
 
 
 @exam_blueprint.route("/exam_edit/<exam_id>", methods=["GET", "POST"])
@@ -147,14 +152,13 @@ def edit_exam(exam_id):
         exam.verification = form.verification.data
         exam.save()
         return redirect(url_for("dashboard.index"))
-    else:
-        form.name.data = exam.name
-        form.lang.data = exam.lang
-        form.exam_level.data = exam.exam_level.name
-        form.instruction.data = exam.instruction
-        form.template.data = exam.template
-        form.solution.data = exam.solution
-        form.verification.data = exam.verification
+    form.name.data = exam.name
+    form.lang.data = exam.lang
+    form.exam_level.data = exam.exam_level.name
+    form.instruction.data = exam.instruction
+    form.template.data = exam.template
+    form.solution.data = exam.solution
+    form.verification.data = exam.verification
     return render_template(
         "exam/create_exam_py.html",
         form=form,

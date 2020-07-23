@@ -20,6 +20,7 @@ def create_app(environment="development"):
     from app.auth.models import User, AnonymousUser
     from app.exam.views import exam_blueprint
     from app.dashboard.views import dashboard_blueprint
+    from app.result.views import result_blueprint
 
     # Instantiate app.
     app = Flask(__name__)
@@ -38,6 +39,7 @@ def create_app(environment="development"):
     app.register_blueprint(main_blueprint)
     app.register_blueprint(exam_blueprint)
     app.register_blueprint(dashboard_blueprint)
+    app.register_blueprint(result_blueprint)
 
     # Set up flask login.
     @login_manager.user_loader
