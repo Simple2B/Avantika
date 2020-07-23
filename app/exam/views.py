@@ -147,14 +147,13 @@ def edit_exam(exam_id):
         exam.verification = form.verification.data
         exam.save()
         return redirect(url_for("dashboard.index"))
-    else:
-        form.name.data = exam.name
-        form.lang.data = exam.lang
-        form.exam_level.data = exam.exam_level.name
-        form.instruction.data = exam.instruction
-        form.template.data = exam.template
-        form.solution.data = exam.solution
-        form.verification.data = exam.verification
+    form.name.data = exam.name
+    form.lang.data = exam.lang
+    form.exam_level.data = exam.exam_level.name
+    form.instruction.data = exam.instruction
+    form.template.data = exam.template
+    form.solution.data = exam.solution
+    form.verification.data = exam.verification
     return render_template(
         "exam/create_exam_py.html",
         form=form,
