@@ -3,7 +3,7 @@ import click
 
 from app import create_app, db, models, forms
 from app.auth.models import User, Role, UserRoles
-from app.exam.models import Exam, ExamLevels, RoleExamLevels
+from app.exam.models import Exam, ExamLevel, RoleExamLevel
 
 app = create_app()
 
@@ -145,23 +145,23 @@ def create_role(role_name):
 
 
 def create_exam_level(exam_level):
-    user_exam_level = ExamLevels.query.filter(ExamLevels.name == exam_level).first()
+    user_exam_level = ExamLevel.query.filter(ExamLevel.name == exam_level).first()
     if not user_exam_level:
-        user_exam_level = ExamLevels(name=exam_level)
+        user_exam_level = ExamLevel(name=exam_level)
         user_exam_level.save()
 
 
 def connect_exam_level_role(exam_level, role_name):
-    the_exam_level = ExamLevels.query.filter(ExamLevels.name == exam_level).first()
+    the_exam_level = ExamLevel.query.filter(ExamLevel.name == exam_level).first()
     assert the_exam_level
     the_role = Role.query.filter(Role.name == role_name).first()
     assert the_role
-    the_connect = RoleExamLevels.query.filter(
-        RoleExamLevels.exam_level_id == the_exam_level.id,
-        RoleExamLevels.role_id == the_role.id,
+    the_connect = RoleExamLevel.query.filter(
+        RoleExamLevel.exam_level_id == the_exam_level.id,
+        RoleExamLevel.role_id == the_role.id,
     ).first()
     if not the_connect:
-        RoleExamLevels(exam_level_id=the_exam_level.id, role_id=the_role.id).save()
+        RoleExamLevel(exam_level_id=the_exam_level.id, role_id=the_role.id).save()
 
 
 @app.cli.command()

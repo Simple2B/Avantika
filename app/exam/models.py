@@ -26,7 +26,7 @@ class Exam(db.Model, ModelMixin):
     verification = db.Column(db.String(1024), nullable=True)
     deleted = db.Column(db.Boolean, default=False)
     type_id = db.Column(db.Integer(), db.ForeignKey("exam_levels.id"))
-    exam_level = db.relationship("ExamLevels")
+    exam_level = db.relationship("ExamLevel")
 
     def __repr__(self):
         return f"<Exam: {self.name}>"
@@ -50,8 +50,8 @@ class Exam(db.Model, ModelMixin):
         self.solution = "\n".join(args["solution"]) if "solution" in args else ""
         self.template = "\n".join(args["template"]) if "template" in args else ""
         if "exam_level" in args:
-            self.exam_level = ExamLevels.query.filter(
-                ExamLevels.name == args["exam_level"]
+            self.exam_level = ExamLevel.query.filter(
+                ExamLevel.name == args["exam_level"]
             ).first()
         else:
             log(log.ERROR, "Exam [%s] has not type", self.name)
@@ -67,7 +67,7 @@ class Exam(db.Model, ModelMixin):
                     Exam(name=exam["name"]).from_dict(**exam).save()
 
 
-class ExamType(db.Model, ModelMixin):
+class ExamLevel(db.Model, ModelMixin):
     """
     It represents a type of exam like: regular, premium
     """
@@ -78,7 +78,7 @@ class ExamType(db.Model, ModelMixin):
     name = db.Column(db.String(60), unique=True, nullable=False)
 
 
-class RoleExamLevels(db.Model, ModelMixin):
+class RoleExamLevel(db.Model, ModelMixin):
     """
     Connection of id exam_types with role id of users
     """

@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, url_for, redirect, flash, request
 from flask_user import roles_required, current_user
 
-from .models import Exam, ExamLevels
+from .models import Exam, ExamLevel
 from .forms import ExamForm, CreateExamForm
 from .controller import check_answer, goto_next_exam
 from app.result.controller import go_pass_exam, next_to_pass_exam
@@ -93,7 +93,7 @@ def create_exam():
         # Create new Exam
         exam = Exam()
         exam.name = form.name.data
-        level = ExamLevels.query.filter(ExamLevels.name == form.exam_level.data).first()
+        level = ExamLevel.query.filter(ExamLevel.name == form.exam_level.data).first()
         if not level:
             flash("The level invalid", "danger")
         exam.type_id = level.id
@@ -136,7 +136,7 @@ def edit_exam(exam_id):
     form = CreateExamForm(request.form)
     if form.validate_on_submit():
         exam.name = form.name.data
-        level = ExamLevels.query.filter(ExamLevels.name == form.exam_level.data).first()
+        level = ExamLevel.query.filter(ExamLevel.name == form.exam_level.data).first()
         if not level:
             flash("The level invalid", "danger")
         exam.type_id = level.id
