@@ -34,7 +34,7 @@ def test_result_exam_passed_go(client):
     the_passed = Result.query.filter(
         exam_id == Result.exam_id, user_id == Result.user_id
     ).first()
-    return the_passed.passed
+    assert the_passed.passed
 
 
 def test_result_exam_passed_next(client):
@@ -44,4 +44,4 @@ def test_result_exam_passed_next(client):
     the_passed = Result.query.filter(
         exam_id == Result.exam_id, user_id == Result.user_id
     ).first()
-    return the_passed.passed
+    assert not the_passed.passed

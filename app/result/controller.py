@@ -38,3 +38,4 @@ def next_to_pass_exam(exam_id: int, user_id: int):
         log(log.ERROR, "EXAM NOT PASSED: %s", exam_id)
         the_passed = Result(exam_id=exam_id, user_id=user_id)
     the_passed.passed = False
+    the_passed.save()
