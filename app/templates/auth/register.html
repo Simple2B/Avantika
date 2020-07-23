@@ -1,22 +1,21 @@
 {% extends 'base.html' %}
 
+{% block content %}
 <style>
   @media only screen and (max-width: 950px) {
-    #login {
+    #register {
       width: 80% !important;
     }
   }
 
   @media only screen and (max-width: 800px) {
-    #login {
+    #register {
       width: 100% !important;
     }
   }
 </style>
-
-{% block content %}
 <div class="container py-4">
-  <div class="card w-50 mx-auto">
+  <div id="register" class="card w-50 mx-auto">
     <div class="card-header">
       <h4 class="card-title">Register</h4>
     </div>

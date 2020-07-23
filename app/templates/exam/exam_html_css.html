@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container py-4">
+  <form class="form" role="form" action="{{ url_for('exam.exam_html', exam_id=form.exam_id.data) }}" method="post">
+    {{form.exam_id}}
+    {{form.name(class='form-control', readonly=True)}}
+    <div class="form-group">
+      {{form.instruction(class='form-control', readonly=True, rows=instruction_height)}}
+    </div>
+    <div class="form-group">
+      {{form.code.label}}
+      {{form.code(class='form-control', rows=code_height)}}
+      <p><strong>Live Demo : </strong></p>
+      <div class="codepen" data-prefill data-height="400" data-theme-id="1" data-default-tab="html,result">
+        {#{form.code(class='form-control', rows=code_height, data_lang="html")}#}
+        <pre data-lang="html">{{form.code.data}}</pre>
+      </div>
+    </div>
+    <script async src="/static/js/codepen.js"></script>
+    {{form.submit(class='btn btn-primary')}}
+    <button class='btn btn-primary' value="Next" name="Next">Next</button>
+  </form>
+</div>
+{% endblock %}

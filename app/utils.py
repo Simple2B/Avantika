@@ -12,6 +12,3 @@ class ModelMixin(object):
         db.session.delete(self)
         db.session.commit()
         return self
-
-
-# Add your own utility classes and functions here.
