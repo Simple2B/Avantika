@@ -39,19 +39,16 @@ class Exam(db.Model, ModelMixin):
         self.instruction = (
             "\n".join(args["instruction"]) if "instruction" in args else ""
         )
-        self.solution = (
-            "\n".join(args["solution"]) if "solution" in args else ""
-        )
-        self.template = (
-            "\n".join(args["template"]) if "template" in args else ""
-        )
+        self.solution = "\n".join(args["solution"]) if "solution" in args else ""
+        self.template = "\n".join(args["template"]) if "template" in args else ""
         return self
 
 
 class ExamType(db.Model, ModelMixin):
-    '''
+    """
     It represents a type of exam like: regular, premium
-    '''
+    """
+
     __tablename__ = "exam_types"
 
     id = db.Column(db.Integer, primary_key=True)

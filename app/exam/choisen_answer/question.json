@@ -1,0 +1,22 @@
+[
+    {
+        "id": 0,
+        "lang": "py",
+        "exam_level": "",
+        "question": [
+            "What is the output of this code:",
+            "def printAllElements(listOne):",
+            "\tfor i in range (len(listOne)):",
+            "\t\tlistOne[i] = str(listOne[i])+ \"changed\"",
+            "\treturn(listOne)",
+            "printAllElements([1,6,3,8])"
+        ],
+        "answers": [
+            "a. nothing prints",
+            "b. nothing",
+            "c. no",
+            "d. none"
+        ],
+        "correct_index": 0
+    }
+]
