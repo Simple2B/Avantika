@@ -49,8 +49,6 @@ class Exam(db.Model, ModelMixin):
         )
         self.solution = "\n".join(args["solution"]) if "solution" in args else ""
         self.template = "\n".join(args["template"]) if "template" in args else ""
-<<<<<<< HEAD
-=======
         if "exam_level" in args:
             self.exam_level = ExamLevels.query.filter(
                 ExamLevels.name == args["exam_level"]
@@ -59,7 +57,6 @@ class Exam(db.Model, ModelMixin):
             log(log.ERROR, "Exam [%s] has not type", self.name)
         if "verification" in args:
             self.verification = "\n".join(args["verification"])
->>>>>>> lika/feature/exam_passed
         return self
 
     @staticmethod
@@ -70,22 +67,12 @@ class Exam(db.Model, ModelMixin):
                     Exam(name=exam["name"]).from_dict(**exam).save()
 
 
-<<<<<<< HEAD
 class ExamType(db.Model, ModelMixin):
     """
     It represents a type of exam like: regular, premium
     """
 
     __tablename__ = "exam_types"
-=======
-class ExamLevels(db.Model, ModelMixin):
-    """
-    It represents a type of exam like: regular, premium
-
-    """
-
-    __tablename__ = "exam_levels"
->>>>>>> lika/feature/exam_passed
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True, nullable=False)
