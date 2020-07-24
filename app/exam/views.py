@@ -30,13 +30,30 @@ def exam_py(exam_id):
             else:
                 flash(f"Exam failed '{exam.name}'.", "danger")
             # return redirect(url_for("exam.exam_py", exam_id=exam_id))
-            return render_template(
-                "exam/exam.html",
-                form=form,
-                instruction_height=(exam.instruction.count("\n") + 2),
-                code_height=(exam.template.count("\n") + 2),
-                tabs=get_allowed_tabs(),
-            )
+            if exam.exam_type == Exam.Type.code:
+                return render_template(
+                    "exam/exam.html",
+                    form=form,
+                    instruction_height=(exam.instruction.count("\n") + 2),
+                    code_height=(exam.template.count("\n") + 2),
+                    tabs=get_allowed_tabs(),
+                )
+            elif exam.exam_type == Exam.Type.choise:
+                return render_template(
+                    "exam/exam_choise.html",
+                    form=form,
+                    instruction_height=(exam.instruction.count("\n") + 2),
+                    code_height=(exam.template.count("\n") + 2),
+                    tabs=get_allowed_tabs(),
+                )
+            else:
+                return render_template(
+                    "exam/exam.html",
+                    form=form,
+                    instruction_height=(exam.instruction.count("\n") + 2),
+                    code_height=(exam.template.count("\n") + 2),
+                    tabs=get_allowed_tabs(),
+                )
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
     exam = Exam.query.filter(Exam.id == exam_id).first()

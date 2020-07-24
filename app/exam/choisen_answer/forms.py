@@ -1,13 +1,20 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, HiddenField, TextAreaField, SelectField
+from wtforms import (
+    StringField,
+    SubmitField,
+    HiddenField,
+    TextAreaField,
+    SelectField,
+    RadioField,
+)
 from wtforms.validators import DataRequired, Length
 
 
 class ChoiseExamForm(FlaskForm):
     exam_id = HiddenField("id", validators=[DataRequired()])
     name = StringField("Exam:", validators=[DataRequired(), Length(5, 30)])
-    question = TextAreaField("Instruction")
-    answers = TextAreaField("Code")
+    instruction = TextAreaField("Instruction")
+    answers = RadioField("Answer")
     submit = SubmitField("Go")
 
 
@@ -30,7 +37,7 @@ class ChoiseCreateExamForm(FlaskForm):
             ("Python adv prem", "Python adv prem"),
         ],
     )
-    question = TextAreaField("Instruction")
-    answers = TextAreaField("Solution")
+    instruction = TextAreaField("Instruction")
+    answers = RadioField("Answer")
     correct_index = TextAreaField("Template")
     submit = SubmitField("Create")

@@ -49,7 +49,7 @@ def create_database():
     create_exam_level("Java Basics prem")
     create_exam_level("HTML, CSS, JS reg")
     create_exam_level("HTML, CSS, JS prem")
-    # create all connection exam_type with role
+    # create all connection exam_level with role
     # Python Basics reg
     connect_exam_level_role("Python Basics reg", "Admin")
     connect_exam_level_role("Python Basics reg", "Student_PB_reg")
