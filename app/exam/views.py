@@ -3,6 +3,7 @@ from flask_user import roles_required, current_user
 
 from .models import Exam, ExamLevel
 from .forms import ExamForm, CreateExamForm
+from .choisen_answer.forms import ChoiseExamForm
 from .controller import check_answer, goto_next_exam
 from app.result.controller import go_pass_exam, next_to_pass_exam
 from app.tab import get_allowed_tabs
@@ -13,15 +14,20 @@ exam_blueprint = Blueprint("exam", __name__)
 
 @exam_blueprint.route("/exam/py/<exam_id>", methods=["GET", "POST"])
 def exam_py(exam_id):
-    form = ExamForm(request.form)
+    exam = Exam.query.filter(Exam.id == exam_id).first()
+    if exam.exam_type == Exam.Type.code:
+        form = ExamForm(request.form)
+    else:
+        form = ChoiseExamForm(request.form)
+        form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
     if form.validate_on_submit():
         if request.form["submit"] == "Next":
-            exam = Exam.query.filter(Exam.id == exam_id).first()
+            # exam = Exam.query.filter(Exam.id == exam_id).first()
             user = current_user
             next_to_pass_exam(exam_id=exam.id, user_id=user.id)
             return goto_next_exam(exam_id)
         else:
-            exam = Exam.query.filter(Exam.id == exam_id).first()
+            # exam = Exam.query.filter(Exam.id == exam_id).first()
             assert exam
             if check_answer(exam, form.code.data):
                 flash(f"Exam success '{exam.name}'.", "success")
@@ -56,16 +62,27 @@ def exam_py(exam_id):
                 )
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
-    exam = Exam.query.filter(Exam.id == exam_id).first()
+
+    if exam.exam_type == Exam.Type.code:
+        form.name.data = exam.name
+        form.exam_id.data = exam.id
+        form.code.data = exam.template
+        form.instruction.data = exam.instruction
+        return render_template(
+            "exam/exam.html",
+            form=form,
+            instruction_height=(exam.instruction.count("\n") + 2),
+            code_height=(exam.template.count("\n") + 2),
+            tabs=get_allowed_tabs(),
+        )
     form.name.data = exam.name
     form.exam_id.data = exam.id
-    form.code.data = exam.template
+    form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
     form.instruction.data = exam.instruction
     return render_template(
-        "exam/exam.html",
+        "exam/exam_choise.html",
         form=form,
         instruction_height=(exam.instruction.count("\n") + 2),
-        code_height=(exam.template.count("\n") + 2),
         tabs=get_allowed_tabs(),
     )
 

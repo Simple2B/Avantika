@@ -11,10 +11,10 @@ from wtforms.validators import DataRequired, Length
 
 
 class ChoiseExamForm(FlaskForm):
-    exam_id = HiddenField("id", validators=[DataRequired()])
-    name = StringField("Exam:", validators=[DataRequired(), Length(5, 30)])
+    exam_id = HiddenField("id")
+    name = StringField("Exam:")
     instruction = TextAreaField("Instruction")
-    answers = RadioField("Answer")
+    answer = RadioField("Answer")
     submit = SubmitField("Go")
 
 
@@ -38,6 +38,6 @@ class ChoiseCreateExamForm(FlaskForm):
         ],
     )
     instruction = TextAreaField("Instruction")
-    answers = RadioField("Answer")
+    answers = TextAreaField("Answer")
     correct_index = TextAreaField("Template")
     submit = SubmitField("Create")
