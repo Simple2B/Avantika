@@ -33,7 +33,7 @@ class Exam(db.Model, ModelMixin):
     type_id = db.Column(db.Integer(), db.ForeignKey("exam_levels.id"))
     exam_level = db.relationship("ExamLevel")
     answer = db.Column(db.String(1024))
-    correct_index = db.Column(db.String(60))
+    correct_answer = db.Column(db.String(60))
 
     def __repr__(self):
         return f"<Exam: {self.name}>"
@@ -48,7 +48,7 @@ class Exam(db.Model, ModelMixin):
             template=self.template.split("\n"),
             exam_level=self.exam_level.name,
             answer=self.answer.split("\n"),
-            correct_index=self.correct_index,
+            correct_answer=self.correct_answer.name,
         )
 
     def from_dict(self, **args):
@@ -71,7 +71,7 @@ class Exam(db.Model, ModelMixin):
                 self.verification = "\n".join(args["verification"])
         elif self.exam_type == Exam.Type.choise.name:
             self.answer = "\n".join(args["answers"]) if "answers" in args else ""
-            self.correct_index = args["correct_index"]
+            self.correct_answer = args["correct_answer"]
             if "exam_level" in args:
                 self.exam_level = ExamLevel.query.filter(
                     ExamLevel.name == args["exam_level"]

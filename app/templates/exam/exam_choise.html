@@ -9,19 +9,19 @@
         <div class="form-group">
             {{form.instruction(class='form-control', readonly=True, rows=instruction_height)}}
         </div>
-        <div class="form-group">
+        <div class="radio">
             {{form.answer.label}}
-            {{form.answer(class='form-control', rows=code_height)}}
-            {% for error in form.errors.code %}
-            <small class="text-danger">{{error}}</small>
-            {% endfor %}
+            {{form.answer}}
         </div>
-        <button class="btn btn-primary " type="submit" name="submit" value="Go">Go</button>
-        <button class="btn btn-primary " type="submit" name="submit" value="Next">Next</button>
-        {% if current_user.roles[0].name == 'Admin'%}
-        <a class="btn btn-primary" href="{{ url_for('exam.delete_exam', exam_id=form.exam_id.data)}}">Delete Exam</a>
-        <a class="btn btn-primary" href="{{ url_for('exam.edit_exam', exam_id=form.exam_id.data)}}">Edit Exam</a>
-        {% endif %}
+        <div style="margin-top: 5%;">
+            <button class="btn btn-primary " type="submit" name="submit" value="Go">Go</button>
+            <button class="btn btn-primary " type="submit" name="submit" value="Next">Next</button>
+            {% if current_user.roles[0].name == 'Admin'%}
+            <a class="btn btn-primary" href="{{ url_for('exam.delete_exam', exam_id=form.exam_id.data)}}">Delete
+                Exam</a>
+            <a class="btn btn-primary" href="{{ url_for('exam.edit_exam', exam_id=form.exam_id.data)}}">Edit Exam</a>
+            {% endif %}
+        </div>
     </form>
 </div>
 {% endblock %}

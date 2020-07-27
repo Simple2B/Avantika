@@ -4,7 +4,7 @@ from flask_user import roles_required, current_user
 from .models import Exam, ExamLevel
 from .forms import ExamForm, CreateExamForm
 from .choisen_answer.forms import ChoiseExamForm
-from .controller import check_answer, goto_next_exam
+from .controller import check_answer, goto_next_exam, check_answer_choise
 from app.result.controller import go_pass_exam, next_to_pass_exam
 from app.tab import get_allowed_tabs
 from app.logger import log
@@ -29,10 +29,18 @@ def exam_py(exam_id):
         else:
             # exam = Exam.query.filter(Exam.id == exam_id).first()
             assert exam
-            if check_answer(exam, form.code.data):
+            if exam.exam_type == Exam.Type.code:
+                check_answer(exam, form.code.data)
                 flash(f"Exam success '{exam.name}'.", "success")
                 user = current_user
                 go_pass_exam(exam_id=exam.id, user_id=user.id)
+            elif exam.exam_type == Exam.Type.choise:
+                if check_answer_choise(exam.id, form.answer.data) is True:
+                    flash(f"Exam success '{exam.name}'.", "success")
+                    user = current_user
+                    go_pass_exam(exam_id=exam.id, user_id=user.id)
+                else:
+                    flash(f"Exam failed '{exam.name}'.", "danger")
             else:
                 flash(f"Exam failed '{exam.name}'.", "danger")
             # return redirect(url_for("exam.exam_py", exam_id=exam_id))
@@ -49,7 +57,6 @@ def exam_py(exam_id):
                     "exam/exam_choise.html",
                     form=form,
                     instruction_height=(exam.instruction.count("\n") + 2),
-                    code_height=(exam.template.count("\n") + 2),
                     tabs=get_allowed_tabs(),
                 )
             else:
