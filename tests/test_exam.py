@@ -1,8 +1,7 @@
 import pytest
 from app import db, create_app
 from app.exam.models import Exam
-from app.exam.controller import check_answer, goto_next_exam, check_answer_choise
-
+from app.exam.controller import check_answer, goto_next_exam
 
 app = create_app(environment="testing")
 app.config["TESTING"] = True
@@ -31,9 +30,3 @@ def test_goto_next_exam(client):
     res = goto_next_exam(3)
     assert res
     assert "4" in res.location
-
-
-def test_check_answer_choise(client):
-    exam = Exam.query.all()[18]
-    check_answer_choise(exam, 2)
-    return 1
