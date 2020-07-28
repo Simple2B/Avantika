@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <form class="form" role="form" action="{{ post_action }}" method="post">
+        <div class="form-group">
+            {{form.name.label}}
+            {{form.name(class='form-control')}}
+        </div>
+        <div class="form-group">
+            {{form.lang.label}}
+            {{form.lang(class='form-control')}}
+        </div>
+        <div class="form-group">
+            {{form.exam_type.label}}
+            {{form.exam_type(class='form-control')}}
+        </div>
+        <div class="form-group">
+            {{form.exam_level.label}}
+            {{form.exam_level(class='form-control')}}
+        </div>
+        <div class="form-group">
+            {{form.instruction.label}}
+            {{form.instruction(class='form-control', rows=5)}}
+        </div>
+        <div class="form-group">
+            {{form.answer.label}}
+            {{form.answer(class='form-control')}}
+        </div>
+        <div class="form-group">
+            {{form.correct_answer.label}}
+            {{form.correct_answer(class='form-control')}}
+        </div>
+        <div style="margin-top: 1%;">
+            {{form.submit(class='btn btn-primary', value="Create")}}
+        </div>
+    </form>
+</div>
+{% endblock %}

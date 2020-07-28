@@ -25,7 +25,7 @@ class ChoiseCreateExamForm(FlaskForm):
         default="py",
         choices=[("py", "python"), ("java", "java"), ("html", "html")],
     )
-
+    exam_type = SelectField("Type", default="choise", choices=[("choise", "choise")])
     exam_level = SelectField(
         "Exam Level:",
         choices=[
@@ -38,6 +38,6 @@ class ChoiseCreateExamForm(FlaskForm):
         ],
     )
     instruction = TextAreaField("Instruction")
-    answers = TextAreaField("Answer")
-    correct_answer = TextAreaField("Template")
+    answer = TextAreaField("Answer")
+    correct_answer = TextAreaField("Correct Answer")
     submit = SubmitField("Create")

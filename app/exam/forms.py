@@ -18,7 +18,7 @@ class CreateExamForm(FlaskForm):
         default="py",
         choices=[("py", "python"), ("java", "java"), ("html", "html")],
     )
-
+    exam_type = SelectField("Type", default="code", choices=[("code", "code")])
     exam_level = SelectField(
         "Exam Level:",
         choices=[

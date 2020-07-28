@@ -26,14 +26,14 @@ class Exam(db.Model, ModelMixin):
     lang = db.Column(Enum(Language), default=Language.py)
     exam_type = db.Column(Enum(Type), default=Type.code)
     instruction = db.Column(db.String(1024), nullable=False)
-    solution = db.Column(db.String(1024))
-    template = db.Column(db.String(1024))
-    verification = db.Column(db.String(1024))
+    solution = db.Column(db.String(1024), nullable=True)
+    template = db.Column(db.String(1024), nullable=True)
+    verification = db.Column(db.String(1024), nullable=True)
     deleted = db.Column(db.Boolean, default=False)
     type_id = db.Column(db.Integer(), db.ForeignKey("exam_levels.id"))
+    answer = db.Column(db.String(1024), nullable=True)
+    correct_answer = db.Column(db.String(60), nullable=True)
     exam_level = db.relationship("ExamLevel")
-    answer = db.Column(db.String(1024))
-    correct_answer = db.Column(db.String(60))
 
     def __repr__(self):
         return f"<Exam: {self.name}>"

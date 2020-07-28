@@ -87,7 +87,6 @@ def exam_py(exam_id):
             "exam/exam.html",
             form=form,
             instruction_height=(exam.instruction.count("\n") + 2),
-            code_height=(exam.template.count("\n") + 2),
             tabs=get_allowed_tabs(),
         )
     form.name.data = exam.name
@@ -144,33 +143,6 @@ def exam_html(exam_id):
 @exam_blueprint.route("/create_exam", methods=["GET", "POST"])
 @roles_required("Admin")
 def create_exam():
-    form = ChoiseCreateExamForm(request.form)
-    if form.validate_on_submit():
-        # Create new Exam
-        exam = Exam()
-        exam.name = form.name.data
-        level = ExamLevel.query.filter(ExamLevel.name == form.exam_level.data).first()
-        if not level:
-            flash("The level invalid", "danger")
-        exam.type_id = level.id
-        exam.lang = form.lang.data
-        exam.instruction = form.instruction.data
-        exam.answer = form.answers.data
-        exam.correct_answer = form.correct_answer.data
-        exam.save()
-        return redirect(url_for("dashboard.index"))
-    elif form.is_submitted():
-        flash("The given data was invalid.", "danger")
-    return render_template(
-        "exam/create_exam_choise.html",
-        form=form,
-        post_action=url_for("exam.create_choise_exam"),
-    )
-
-
-@exam_blueprint.route("/create_choise_exam", methods=["GET", "POST"])
-@roles_required("Admin")
-def create_choise_exam():
     form = CreateExamForm(request.form)
     if form.validate_on_submit():
         # Create new Exam
@@ -180,15 +152,46 @@ def create_choise_exam():
         if not level:
             flash("The level invalid", "danger")
         exam.type_id = level.id
+        exam.exam_type = form.exam_type.data
         exam.lang = form.lang.data
         exam.instruction = form.instruction.data
-
+        exam.solution = form.solution.data
+        exam.template = form.template.data
+        exam.verification = form.verification.data
         exam.save()
         return redirect(url_for("dashboard.index"))
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
     return render_template(
-        "exam/create_exam_py.html", form=form, post_action=url_for("exam.create_exam")
+        "exam/create_exam_py.html", form=form, post_action=url_for("exam.create_exam"),
+    )
+
+
+@exam_blueprint.route("/create_choise_exam", methods=["GET", "POST"])
+@roles_required("Admin")
+def create_choise_exam():
+    form = ChoiseCreateExamForm(request.form)
+    if form.validate_on_submit():
+        # Create new Exam
+        exam = Exam()
+        exam.name = form.name.data
+        level = ExamLevel.query.filter(ExamLevel.name == form.exam_level.data).first()
+        if not level:
+            flash("The level invalid", "danger")
+        exam.type_id = level.id
+        exam.exam_type = form.exam_type.data
+        exam.lang = form.lang.data
+        exam.instruction = form.instruction.data
+        exam.answer = form.answer.data
+        exam.correct_answer = form.correct_answer.data
+        exam.save()
+        return redirect(url_for("dashboard.index"))
+    elif form.is_submitted():
+        flash("The given data was invalid.", "danger")
+    return render_template(
+        "exam/create_exam_choise.html",
+        form=form,
+        post_action=url_for("exam.create_choise_exam"),
     )
 
 
