@@ -1,4 +1,5 @@
-[{
+[
+  {
     "name": "Py-Exam 1",
     "lang": "py",
     "instruction": [
@@ -34,7 +35,7 @@
       "def rearranged_difference(num):",
       "\t"
     ],
-    "exam_type": "Python Basics reg",
+    "exam_level": "Python Basics reg",
     "verification": [
       "assert rearranged_difference(972882) == 760833",
       "assert rearranged_difference(3320707) == 7709823",
@@ -84,7 +85,7 @@
       "def power_ranger(power, minimum, maximum):",
       "\t"
     ],
-    "exam_type": "Python Basics prem"
+    "exam_level": "Python Basics prem"
   },
   {
     "name": "Py-Exam 3",
@@ -126,7 +127,7 @@
       "def cap_space(txt):",
       "\t"
     ],
-    "exam_type": "Python Inter"
+    "exam_level": "Python Inter"
   },
   {
     "name": "Py-Exam 4",
@@ -164,6 +165,5 @@
       "\t\tcount += 1",
       "\treturn count"
     ]
-
   }
 ]

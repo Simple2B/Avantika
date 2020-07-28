@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <form class="form" role="form" action="{{ url_for('exam.exam_py', exam_id=form.exam_id.data) }}" method="post">
+        {{form.exam_id}}
+        {{form.name(class='form-control', readonly=True)}}
+        <!-- </div> -->
+        <div class="form-group">
+            {{form.instruction(class='form-control', readonly=True, rows=instruction_height)}}
+        </div>
+        <table class="radio">
+            {% for subfield in form.answer %}
+            <tr>
+                <td>{{ subfield }}</td>
+                <td>{{ subfield.label }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div style="margin-top: 5%;">
+            <button class="btn btn-primary " type="submit" name="submit" value="Go">Go</button>
+            <button class="btn btn-primary " type="submit" name="submit" value="Next">Next</button>
+            {% if current_user.roles[0].name == 'Admin'%}
+            <a class="btn btn-primary" href="{{ url_for('exam.delete_exam', exam_id=form.exam_id.data)}}">Delete
+                Exam</a>
+            <a class="btn btn-primary" href="{{ url_for('exam.edit_exam', exam_id=form.exam_id.data)}}">Edit Exam</a>
+            {% endif %}
+        </div>
+    </form>
+</div>
+{% endblock %}

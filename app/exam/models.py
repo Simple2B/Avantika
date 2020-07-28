@@ -17,16 +17,23 @@ class Exam(db.Model, ModelMixin):
         js = "javascript"
         html = "html"
 
+    class Type(enum.Enum):
+        choise = "choise"
+        code = "code"
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True, nullable=False)
     lang = db.Column(Enum(Language), default=Language.py)
+    exam_type = db.Column(Enum(Type), default=Type.code)
     instruction = db.Column(db.String(1024), nullable=False)
-    solution = db.Column(db.String(1024), nullable=False)
-    template = db.Column(db.String(1024), nullable=False)
+    solution = db.Column(db.String(1024), nullable=True)
+    template = db.Column(db.String(1024), nullable=True)
     verification = db.Column(db.String(1024), nullable=True)
     deleted = db.Column(db.Boolean, default=False)
     type_id = db.Column(db.Integer(), db.ForeignKey("exam_levels.id"))
-    exam_level = db.relationship("ExamLevels")
+    answer = db.Column(db.String(1024), nullable=True)
+    correct_answer = db.Column(db.String(60), nullable=True)
+    exam_level = db.relationship("ExamLevel")
 
     def __repr__(self):
         return f"<Exam: {self.name}>"
@@ -35,28 +42,42 @@ class Exam(db.Model, ModelMixin):
         return dict(
             name=self.name,
             lang=self.lang.name,
+            type=self.exam_type.name,
             instruction=self.instruction.split("\n"),
             solution=self.solution.split("\n"),
             template=self.template.split("\n"),
             exam_level=self.exam_level.name,
+            answer=self.answer.split("\n"),
+            correct_answer=self.correct_answer.name,
         )
 
     def from_dict(self, **args):
         self.name = args["name"]
+        self.exam_type = args["type"]
         self.lang = Exam.Language[args["lang"]] if "lang" in args else Exam.Language.py
         self.instruction = (
             "\n".join(args["instruction"]) if "instruction" in args else ""
         )
-        self.solution = "\n".join(args["solution"]) if "solution" in args else ""
-        self.template = "\n".join(args["template"]) if "template" in args else ""
-        if "exam_level" in args:
-            self.exam_level = ExamLevels.query.filter(
-                ExamLevels.name == args["exam_level"]
-            ).first()
-        else:
-            log(log.ERROR, "Exam [%s] has not type", self.name)
-        if "verification" in args:
-            self.verification = "\n".join(args["verification"])
+        if self.exam_type == Exam.Type.code.name:
+            self.solution = "\n".join(args["solution"]) if "solution" in args else ""
+            self.template = "\n".join(args["template"]) if "template" in args else ""
+            if "exam_level" in args:
+                self.exam_level = ExamLevel.query.filter(
+                    ExamLevel.name == args["exam_level"]
+                ).first()
+            else:
+                log(log.ERROR, "Exam [%s] has not type", self.name)
+            if "verification" in args:
+                self.verification = "\n".join(args["verification"])
+        elif self.exam_type == Exam.Type.choise.name:
+            self.answer = "\n".join(args["answers"]) if "answers" in args else ""
+            self.correct_answer = args["correct_answer"]
+            if "exam_level" in args:
+                self.exam_level = ExamLevel.query.filter(
+                    ExamLevel.name == args["exam_level"]
+                ).first()
+            else:
+                log(log.ERROR, "Exam [%s] has not type", self.name)
         return self
 
     @staticmethod
@@ -67,10 +88,9 @@ class Exam(db.Model, ModelMixin):
                     Exam(name=exam["name"]).from_dict(**exam).save()
 
 
-class ExamLevels(db.Model, ModelMixin):
+class ExamLevel(db.Model, ModelMixin):
     """
     It represents a type of exam like: regular, premium
-
     """
 
     __tablename__ = "exam_levels"
@@ -79,9 +99,9 @@ class ExamLevels(db.Model, ModelMixin):
     name = db.Column(db.String(60), unique=True, nullable=False)
 
 
-class RoleExamLevels(db.Model, ModelMixin):
+class RoleExamLevel(db.Model, ModelMixin):
     """
-    Connection of id exam_types with role id of users
+    Connection of id exam_levels with role id of users
     """
 
     __tablename__ = "role_exam_levels"
@@ -91,3 +111,17 @@ class RoleExamLevels(db.Model, ModelMixin):
         db.Integer(), db.ForeignKey("exam_levels.id", ondelete="CASCADE")
     )
     role_id = db.Column(db.Integer(), db.ForeignKey("roles.id", ondelete="CASCADE"))
+
+
+# class Answer(db.Model, ModelMixin):
+#     """
+#     Connection with exam, answers and correct_index
+#     """
+
+#     __tablename__ = "answers"
+
+#     id = db.Column(db.Integer(), primary_key=True)
+#     exam_id = db.Column(db.Integer(), db.ForeignKey("exams.id"))
+#     exam = db.relationship("Exam")
+#     name = db.Column(db.String(120), nullable=False)
+#     correct_index = db.Column(db.String(60), nullable=False)

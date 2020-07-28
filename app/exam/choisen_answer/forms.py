@@ -1,24 +1,31 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, HiddenField, TextAreaField, SelectField
+from wtforms import (
+    StringField,
+    SubmitField,
+    HiddenField,
+    TextAreaField,
+    SelectField,
+    RadioField,
+)
 from wtforms.validators import DataRequired, Length
 
 
-class ExamForm(FlaskForm):
-    exam_id = HiddenField("id", validators=[DataRequired()])
-    name = StringField("Exam:", validators=[DataRequired(), Length(5, 30)])
+class ChoiseExamForm(FlaskForm):
+    exam_id = HiddenField("id")
+    name = StringField("Exam:")
     instruction = TextAreaField("Instruction")
-    code = TextAreaField("Code")
+    answer = RadioField("Answer")
     submit = SubmitField("Go")
 
 
-class CreateExamForm(FlaskForm):
+class ChoiseCreateExamForm(FlaskForm):
     name = StringField("Exam:", validators=[DataRequired(), Length(5, 30)])
     lang = SelectField(
         "Lang",
         default="py",
         choices=[("py", "python"), ("java", "java"), ("html", "html")],
     )
-    exam_type = SelectField("Type", default="code", choices=[("code", "code")])
+    exam_type = SelectField("Type", default="choise", choices=[("choise", "choise")])
     exam_level = SelectField(
         "Exam Level:",
         choices=[
@@ -31,7 +38,6 @@ class CreateExamForm(FlaskForm):
         ],
     )
     instruction = TextAreaField("Instruction")
-    solution = TextAreaField("Solution")
-    template = TextAreaField("Template")
-    verification = TextAreaField("Verification")
+    answer = TextAreaField("Answer")
+    correct_answer = StringField("Correct Answer")
     submit = SubmitField("Create")
