@@ -219,31 +219,66 @@ def edit_exam(exam_id):
         flash("Wrong exam id.", "danger")
         log(log.WARNING, "NONEXISTENT EXAM [%d]", exam_id)
         return redirect(url_for("dashboard.index"))
-    form = CreateExamForm(request.form)
-    if form.validate_on_submit():
-        exam.name = form.name.data
-        level = ExamLevel.query.filter(ExamLevel.name == form.exam_level.data).first()
-        if not level:
-            flash("The level invalid", "danger")
-            log(log.WARNING, "NONEXISTENT LEVEL %s", form.exam_level.data)
-        exam.type_id = level.id
-        exam.lang = form.lang.data
-        exam.instruction = form.instruction.data
-        exam.solution = form.solution.data
-        exam.template = form.template.data
-        exam.verification = form.verification.data
-        exam.save()
-        return redirect(url_for("dashboard.index"))
+    if exam.exam_type == Exam.Type.code:
+        form = CreateExamForm(request.form)
+        if form.validate_on_submit():
+            exam.name = form.name.data
+            level = ExamLevel.query.filter(
+                ExamLevel.name == form.exam_level.data
+            ).first()
+            if not level:
+                flash("The level invalid", "danger")
+                log(log.WARNING, "NONEXISTENT LEVEL %s", form.exam_level.data)
+            exam.type_id = level.id
+            exam.exam_type = form.exam_type.data
+            exam.lang = form.lang.data
+            exam.instruction = form.instruction.data
+            exam.solution = form.solution.data
+            exam.template = form.template.data
+            exam.verification = form.verification.data
+            exam.save()
+            return redirect(url_for("dashboard.index"))
+        else:
+            form.name.data = exam.name
+            form.lang.data = exam.lang
+            form.exam_type.data = exam.exam_type
+            form.exam_level.data = exam.exam_level.name
+            form.instruction.data = exam.instruction
+            form.template.data = exam.template
+            form.solution.data = exam.solution
+            form.verification.data = exam.verification
+        return render_template(
+            "exam/create_exam_py.html",
+            form=form,
+            post_action=url_for("exam.edit_exam", exam_id=exam_id),
+        )
     else:
-        form.name.data = exam.name
-        form.lang.data = exam.lang
-        form.exam_level.data = exam.exam_level.name
-        form.instruction.data = exam.instruction
-        form.template.data = exam.template
-        form.solution.data = exam.solution
-        form.verification.data = exam.verification
-    return render_template(
-        "exam/create_exam_py.html",
-        form=form,
-        post_action=url_for("exam.edit_exam", exam_id=exam_id),
-    )
+        form = ChoiseCreateExamForm(request.form)
+        form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
+        if form.validate_on_submit():
+            exam.name = form.name.data
+            level = ExamLevel.query.filter(
+                ExamLevel.name == form.exam_level.data
+            ).first()
+            if not level:
+                flash("The level invalid", "danger")
+                log(log.WARNING, "NONEXISTENT LEVEL %s", form.exam_level.data)
+            exam.type_id = level.id
+            exam.exam_type = form.exam_type.data
+            exam.instruction = form.instruction.data
+            exam.answer = form.answer.data
+            exam.correct_answer = form.correct_answer.data
+            exam.save()
+            return redirect(url_for("dashboard.index"))
+        else:
+            form.name.data = exam.name
+            form.exam_level.data = exam.exam_level.name
+            form.exam_type.data = exam.exam_type
+            form.instruction.data = exam.instruction
+            form.answer.data = exam.answer
+            form.correct_answer.data = exam.correct_answer
+        return render_template(
+            "exam/create_exam_choise.html",
+            form=form,
+            post_action=url_for("exam.edit_exam", exam_id=exam_id),
+        )
