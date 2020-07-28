@@ -39,5 +39,5 @@ class ChoiseCreateExamForm(FlaskForm):
     )
     instruction = TextAreaField("Instruction")
     answers = TextAreaField("Answer")
-    correct_index = TextAreaField("Template")
+    correct_answer = TextAreaField("Template")
     submit = SubmitField("Create")

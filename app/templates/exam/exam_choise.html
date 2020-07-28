@@ -9,10 +9,15 @@
         <div class="form-group">
             {{form.instruction(class='form-control', readonly=True, rows=instruction_height)}}
         </div>
-        <div class="radio">
-            {{form.answer.label}}
-            {{form.answer}}
-        </div>
+        <table class="radio">
+
+            {% for subfield in form.answer %}
+            <tr>
+                <td>{{ subfield }}</td>
+                <td>{{ subfield.label }}</td>
+            </tr>
+            {% endfor %}
+        </table>
         <div style="margin-top: 5%;">
             <button class="btn btn-primary " type="submit" name="submit" value="Go">Go</button>
             <button class="btn btn-primary " type="submit" name="submit" value="Next">Next</button>
