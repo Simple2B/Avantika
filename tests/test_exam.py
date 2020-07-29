@@ -22,8 +22,24 @@ def client():
 
 
 def test_py_exam_check_answer(client):
-    for exam in Exam.query.filter(Exam.lang == Exam.Language.py).all():
+    all_exams = (
+        Exam.query.filter(Exam.lang == Exam.Language.py)
+        .filter(Exam.exam_type == Exam.Type.code)
+        .all()
+    )
+    for exam in all_exams:
         assert check_answer(exam, exam.solution), f"Bad solution in [{exam.name}]"
+
+
+def test_py_exam_sleep_in_code(client):
+    exam = (
+        Exam.query.filter(Exam.lang == Exam.Language.py)
+        .filter(Exam.exam_type == Exam.Type.code)
+        .first()
+    )
+    code_with_sleep = "from time import sleep\nsleep(5)\n"
+    code_text = code_with_sleep + exam.solution
+    assert not check_answer(exam, code_text), "Test passed with sleep(5)"
 
 
 def test_goto_next_exam(client):
