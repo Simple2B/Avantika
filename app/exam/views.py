@@ -38,12 +38,14 @@ def exam_py(exam_id):
             # exam = Exam.query.filter(Exam.id == exam_id).first()
             assert exam
             if exam.exam_type == Exam.Type.code:
-                check_answer(exam, form.code.data)
-                flash(f"Exam success '{exam.name}'.", "success")
-                user = current_user
-                go_pass_exam(exam_id=exam.id, user_id=user.id)
+                if check_answer(exam, form.code.data):
+                    flash(f"Exam success '{exam.name}'.", "success")
+                    user = current_user
+                    go_pass_exam(exam_id=exam.id, user_id=user.id)
+                else:
+                    flash(f"Exam failed '{exam.name}'.", "danger")
             elif exam.exam_type == Exam.Type.choise:
-                if check_answer_choise(exam.id, form.answer.data) is True:
+                if check_answer_choise(exam.id, form.answer.data):
                     flash(f"Exam success '{exam.name}'.", "success")
                     user = current_user
                     go_pass_exam(exam_id=exam.id, user_id=user.id)

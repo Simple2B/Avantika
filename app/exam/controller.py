@@ -8,15 +8,16 @@ from app.logger import log
 
 def check_answer(exam: Exam, code: str):
     """check exam result"""
+    exam_lang = exam.lang.name
     MAP = {
-        Exam.Language.py: check_answer_py,
-        Exam.Language.java: check_answer_java,
-        Exam.Language.js: check_answer_js,
+        Exam.Language.py.name: check_answer_py,
+        Exam.Language.java.name: check_answer_java,
+        Exam.Language.js.name: check_answer_js,
     }
-    if exam.lang not in MAP:
-        log(log.ERROR, "unknown exam language: [%s]", exam.lang)
+    if exam_lang not in MAP:
+        log(log.ERROR, "unknown exam language: [%s]", exam_lang)
         return True
-    return MAP[exam.lang](exam, code)
+    return MAP[exam_lang](exam, code)
 
 
 def check_answer_py(exam: Exam, code: str):
@@ -31,12 +32,16 @@ def check_answer_py(exam: Exam, code: str):
                 f.write(exam.verification)
                 f.write("\n")
         cmd = ["python3", test_file_path]
-        test_process = subprocess.run(cmd, capture_output=True)
-        if test_process.stderr:
-            for error_line in test_process.stderr.decode().split("\n"):
-                log(log.WARNING, "EXAM ERROR: %s", error_line)
+        try:
+            test_process = subprocess.run(cmd, capture_output=True, timeout=1)
+            if test_process.stderr:
+                for error_line in test_process.stderr.decode().split("\n"):
+                    log(log.WARNING, "EXAM ERROR: %s", error_line)
+                return False
+            return test_process.returncode == 0
+        except subprocess.TimeoutExpired:
+            log(log.WARNING, "EXAM TIMEOUT: Exam:[]", exam.name)
             return False
-        return test_process.returncode == 0
 
 
 def check_answer_java(exam: Exam, code: str):
