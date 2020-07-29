@@ -3,7 +3,13 @@ from flask_login import login_user, logout_user, login_required
 from flask_user import roles_required
 
 from .models import User, Role, UserRoles
-from .forms import LoginForm, RegistrationForm, UserEditForm, UNCHANGED_PASSWORD
+from .forms import (
+    LoginForm,
+    RegistrationForm,
+    UserEditForm,
+    ChangePasswordForm,
+    UNCHANGED_PASSWORD,
+)
 from app.logger import log
 
 auth_blueprint = Blueprint("auth", __name__)
@@ -119,3 +125,26 @@ def edit_user(user_id):
         form.active.data = "Active" if user.active else "Not Active"
         form.close_button = url_for("dashboard.index")
     return render_template("auth/user_edit.html", form=form)
+
+
+@auth_blueprint.route("/change_password/<user_id>", methods=["GET", "POST"])
+def change_password(user_id):
+    user_id = int(user_id)
+    user = User.query.filter(User.id == user_id).first()
+    user_name = user.username
+    form = ChangePasswordForm(request.form)
+    if form.validate_on_submit():
+        if User.authenticate(user_name, form.password.data):
+            user.password = form.new_password.data
+            flash("Password successful changed!", "success")
+            log(log.INFO, "User %d changed password!", user_id)
+            user.save()
+            return redirect(url_for("auth.login"))
+        else:
+            flash("Wrong current password.", "danger")
+            log(log.ERROR, "Wrong current password: %s", form.password.data)
+            return redirect(url_for("user.change_password"))
+    else:
+        form.user_id.data = user_id
+        form.password.data = user.password
+    return render_template("auth/change_password.html", form=form)

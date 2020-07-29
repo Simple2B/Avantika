@@ -77,3 +77,15 @@ class UserEditForm(RegistrationForm):
         pass
 
     submit = SubmitField("Save")
+
+
+class ChangePasswordForm(FlaskForm):
+    user_id = HiddenField("user_id", validators=[DataRequired()])
+    password = PasswordField("Current Password", default=UNCHANGED_PASSWORD)
+    new_password = PasswordField("New Password", default=UNCHANGED_PASSWORD)
+    password_confirmation = PasswordField(
+        "Confirm Password",
+        validators=[EqualTo("new_password", message="Can't confirm password.")],
+        default=UNCHANGED_PASSWORD,
+    )
+    submit = SubmitField("Save")
