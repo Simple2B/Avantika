@@ -2,7 +2,9 @@
 
 {% block content %}
 <link rel="stylesheet" href="/static/css/jquery.dataTables.min.css">
-<h3 style="margin-bottom: 1%;">Username: {{ current_user.username }}</h3>
+<h3 style="margin-bottom: 1%;">Username: <a
+        href="{{ url_for('auth.change_password', user_id=user.id)}}">{{ current_user.username }}</a>
+</h3>
 <table id="theTable" class="table table-striped table-sm" cellspacing="0" width="100%">
     <thead class="black white-text bg-secondary">
         <tr>
