@@ -6,7 +6,7 @@ base_dir = os.path.dirname(os.path.abspath(__file__))
 class BaseConfig(object):
     """Base configuration."""
 
-    APP_NAME = "Red Bear Technologies 2020"
+    APP_NAME = "Red Bear Technologies"
     USER_ENABLE_EMAIL = False  # TODO: rethink of it
     DEBUG_TB_ENABLED = False
     SECRET_KEY = os.environ.get(
