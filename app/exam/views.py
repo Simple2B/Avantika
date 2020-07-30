@@ -137,8 +137,8 @@ def exam_html(exam_id):
         )
     )
     # response.set_cookie("SameSite", "None", max_age=60 * 60 * 24, secure=True)
-    response.set_cookie("SameSite", "Bubu")
-    response.set_cookie("UserName", "Kolya")
+    # response.set_cookie("SameSite", "Bubu")
+    # response.set_cookie("UserName", "Kolya")
     return response
 
 
@@ -286,18 +286,16 @@ def edit_exam(exam_id):
         )
 
 
-@exam_blueprint.route("/show_solution/<exam_id>", methods=["GET", "POST"])
+@exam_blueprint.route("/show_solution/<exam_id>", methods=["GET"])
 def show_solution(exam_id):
     exam_id = int(exam_id)
     form = SolutionForm(request.form)
     exam = Exam.query.filter(Exam.id == exam_id).first()
-    if form.validate_on_submit():
-        exam.template = form.code.data
-    else:
-        form.name.data = exam.name
-        form.instruction.data = exam.instruction
-        form.code.data = exam.template
-        form.solution.data = exam.solution
+    form.exam_id.data = exam_id
+    form.name.data = exam.name
+    form.instruction.data = exam.instruction
+    form.code.data = exam.template
+    form.solution.data = exam.solution
     return render_template(
         "exam/show_solution.html",
         form=form,
