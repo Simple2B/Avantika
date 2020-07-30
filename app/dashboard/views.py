@@ -18,6 +18,10 @@ def index():
 @dashboard_blueprint.route("/exam_dashboard")
 @roles_required("Admin")
 def list_of_exam():
-    exams = Exam.query.all()
+    exams = (
+        Exam.query.filter(Exam.deleted == False)  # noqa E712
+        .order_by(Exam.id.desc())
+        .all()
+    )
     tabs = get_allowed_tabs()
     return render_template("dashboard/exam_dashboard.html", tabs=tabs, exams=exams)

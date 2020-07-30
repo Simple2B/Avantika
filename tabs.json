@@ -1,14 +1,14 @@
 [
     {
         "href": "/dashboard",
-        "name": "Users Dashboard",
+        "name": "Users",
         "roles": [
             "Admin"
         ]
     },
     {
         "href": "/exam_dashboard",
-        "name": "Exam Dashboard",
+        "name": "Questions",
         "roles": [
             "Admin"
         ]

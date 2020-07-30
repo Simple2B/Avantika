@@ -5,24 +5,24 @@
 <table id="theTable" class="table table-striped table-sm" cellspacing="0" width="100%">
     <thead class="black white-text bg-secondary">
         <tr>
+            <th scope="col">№</th>
             <th scope="col">Name</th>
             <th scope="col">Language</th>
-            <th scope="col">Exam_Type</th>
-            <th scope="col">Exam_Level</th>
-            <th scope="col">Active</th>
+            <th scope="col">Type</th>
+            <th scope="col">Level</th>
             <th>Delete</th>
         </tr>
     </thead>
     <tbody>
         {% for exam in exams %}
         <tr>
+            <td>{{exam.id}}</td>
             <td><a href="{{ url_for('exam.edit_exam', exam_id=exam.id)}}">{{exam.name}}</a></td>
-            <td>{{exam.lang.name}}</td>
+            <td>{{exam.lang.value}}</td>
             <td>{{exam.exam_type.name}}</td>
             <td>{{exam.exam_level.name}}</td>
-            <td>{{exam.deleted}}</td>
             <td style="text-align: center;"><a href="{{ url_for('exam.delete_exam', exam_id=exam.id)}}"
-                    class="user_delete_button btn-sm btn-outline-danger">&#10006</a>
+                    class="exam_delete_button btn-sm btn-outline-danger">&#10006</a>
             </td>
         </tr>
         {% endfor %}
@@ -35,7 +35,9 @@
     {% block scripts %}
     <script>
         $(document).ready(function () {
-            $('#theTable').DataTable();
+            $('#theTable').DataTable()({
+                "order": [[0, "desc"]]
+            });
         });
     </script>
     {% endblock %}
