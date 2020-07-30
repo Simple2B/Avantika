@@ -88,3 +88,19 @@ def goto_next_exam(exam_id: int):
         index += 1
 
     return redirect(url_for(f"exam.exam_{lang.name}", exam_id=next_exam.id))
+
+
+def goto_next_exam(exam_id: int):
+    exam_id = int(exam_id)
+    the_exam = Exam.query.filter(Exam.id == exam_id).first()
+    type_id = the_exam.type_id
+    lang = the_exam.lang
+    # Взять все экзаменны по заданому языку
+    exams = (
+        Exam.query.filter(Exam.lang == lang)
+        .filter(Exam.type_id == type_id)
+        .filter(Exam.deleted != True)  # noqa F712
+        .all()
+    )
+
+    return redirect(url_for(f"exam.exam_{lang.name}", exam_id=prev_exam.id))
