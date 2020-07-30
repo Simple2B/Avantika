@@ -1,7 +1,14 @@
 [
     {
         "href": "/dashboard",
-        "name": "Admin Dashboard",
+        "name": "Users",
+        "roles": [
+            "Admin"
+        ]
+    },
+    {
+        "href": "/exam_dashboard",
+        "name": "Questions",
         "roles": [
             "Admin"
         ]

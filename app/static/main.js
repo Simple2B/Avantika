@@ -18,6 +18,18 @@ $(document).ready(function () {
         }
     });
 
+    $(".exam_delete_button").click(function (e) {
+
+        if (confirm('Do you want delete the exam?')) {
+            // Save it!
+            console.log('Delete exam aproved');
+        } else {
+            // Do nothing!
+            console.log('Delete exam canceled');
+            e.preventDefault();
+        }
+    });
+
     $("#code").keydown(e => {
         function insertAtCaret(text, textarea) {
             var scrollPos = textarea.scrollTop;
