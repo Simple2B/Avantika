@@ -10,7 +10,7 @@ from flask import (
 from flask_user import roles_required, current_user
 
 from .models import Exam, ExamLevel
-from .forms import ExamForm, CreateExamForm
+from .forms import ExamForm, CreateExamForm, SolutionForm
 from .choisen_answer.forms import ChoiseExamForm, ChoiseCreateExamForm
 from .controller import check_answer, goto_next_exam, check_answer_choise
 from app.result.controller import go_pass_exam, next_to_pass_exam
@@ -284,3 +284,23 @@ def edit_exam(exam_id):
             form=form,
             post_action=url_for("exam.edit_exam", exam_id=exam_id),
         )
+
+
+@exam_blueprint.route("/show_solution/<exam_id>", methods=["GET", "POST"])
+def show_solution(exam_id):
+    exam_id = int(exam_id)
+    form = SolutionForm(request.form)
+    exam = Exam.query.filter(Exam.id == exam_id).first()
+    if form.validate_on_submit():
+        exam.template = form.code.data
+    else:
+        form.name.data = exam.name
+        form.instruction.data = exam.instruction
+        form.code.data = exam.template
+        form.solution.data = exam.solution
+    return render_template(
+        "exam/show_solution.html",
+        form=form,
+        instruction_height=(exam.instruction.count("\n") + 2),
+        code_height=(exam.template.count("\n") + 2),
+    )
