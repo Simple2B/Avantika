@@ -12,7 +12,12 @@ from flask_user import roles_required, current_user
 from .models import Exam, ExamLevel
 from .forms import ExamForm, CreateExamForm
 from .choisen_answer.forms import ChoiseExamForm, ChoiseCreateExamForm
-from .controller import check_answer, goto_next_exam, check_answer_choise
+from .controller import (
+    check_answer,
+    goto_next_exam,
+    check_answer_choise,
+    goto_prev_exam,
+)
 from app.result.controller import go_pass_exam, next_to_pass_exam
 from app.tab import get_allowed_tabs
 from app.logger import log
@@ -34,8 +39,9 @@ def exam_py(exam_id):
             user = current_user
             next_to_pass_exam(exam_id=exam.id, user_id=user.id)
             return goto_next_exam(exam_id)
+        elif request.form["submit"] == "Prev":
+            return goto_prev_exam(exam_id)
         else:
-            # exam = Exam.query.filter(Exam.id == exam_id).first()
             assert exam
             if exam.exam_type == Exam.Type.code:
                 if check_answer(exam, form.code.data):
