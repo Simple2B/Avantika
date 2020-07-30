@@ -42,7 +42,6 @@ def exam_py(exam_id):
         elif request.form["submit"] == "Prev":
             return goto_prev_exam(exam_id)
         else:
-            # exam = Exam.query.filter(Exam.id == exam_id).first()
             assert exam
             if exam.exam_type == Exam.Type.code:
                 if check_answer(exam, form.code.data):

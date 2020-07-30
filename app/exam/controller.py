@@ -70,8 +70,6 @@ def goto_next_exam(exam_id: int):
         .filter(Exam.deleted != True)  # noqa F712
         .all()
     )
-    # Найти экзамен на котором стоит пользователь and get next follow
-    # first_exam = exams[0]  # first exam for make loop
     found_current = False
     next_exam = None
     index = 0
@@ -90,7 +88,7 @@ def goto_next_exam(exam_id: int):
     return redirect(url_for(f"exam.exam_{lang.name}", exam_id=next_exam.id))
 
 
-def goto_next_exam(exam_id: int):
+def goto_prev_exam(exam_id: int):
     exam_id = int(exam_id)
     the_exam = Exam.query.filter(Exam.id == exam_id).first()
     type_id = the_exam.type_id
@@ -103,4 +101,20 @@ def goto_next_exam(exam_id: int):
         .all()
     )
 
-    return redirect(url_for(f"exam.exam_{lang.name}", exam_id=prev_exam.id))
+    found_current = False
+    next_exam = None
+    index = 0
+    exams.reverse()
+    for exam in exams:
+        if found_current:
+            next_exam = exam
+            break
+        if exam.id == exam_id:
+            found_current = True
+            if index >= (len(exams) - 1):
+                first_exam = exams[0]
+                next_exam = first_exam
+                break
+        index += 1
+
+    return redirect(url_for(f"exam.exam_{lang.name}", exam_id=next_exam.id))
