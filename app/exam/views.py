@@ -10,7 +10,7 @@ from flask import (
 from flask_user import roles_required, current_user
 
 from .models import Exam, ExamLevel
-from .forms import ExamForm, CreateExamForm
+from .forms import ExamForm, CreateExamForm, SolutionForm
 from .choisen_answer.forms import ChoiseExamForm, ChoiseCreateExamForm
 from .controller import (
     check_answer,
@@ -143,8 +143,8 @@ def exam_html(exam_id):
         )
     )
     # response.set_cookie("SameSite", "None", max_age=60 * 60 * 24, secure=True)
-    response.set_cookie("SameSite", "Bubu")
-    response.set_cookie("UserName", "Kolya")
+    # response.set_cookie("SameSite", "Bubu")
+    # response.set_cookie("UserName", "Kolya")
     return response
 
 
@@ -290,3 +290,21 @@ def edit_exam(exam_id):
             form=form,
             post_action=url_for("exam.edit_exam", exam_id=exam_id),
         )
+
+
+@exam_blueprint.route("/show_solution/<exam_id>", methods=["GET"])
+def show_solution(exam_id):
+    exam_id = int(exam_id)
+    form = SolutionForm(request.form)
+    exam = Exam.query.filter(Exam.id == exam_id).first()
+    form.exam_id.data = exam_id
+    form.name.data = exam.name
+    form.instruction.data = exam.instruction
+    form.code.data = exam.template
+    form.solution.data = exam.solution
+    return render_template(
+        "exam/show_solution.html",
+        form=form,
+        instruction_height=(exam.instruction.count("\n") + 2),
+        code_height=(exam.template.count("\n") + 2),
+    )

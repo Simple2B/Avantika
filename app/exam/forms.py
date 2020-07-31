@@ -35,3 +35,7 @@ class CreateExamForm(FlaskForm):
     template = TextAreaField("Template")
     verification = TextAreaField("Verification")
     submit = SubmitField("Create")
+
+
+class SolutionForm(ExamForm):
+    solution = TextAreaField("Solution")
