@@ -9,16 +9,18 @@
             <th scope="col">Role</th>
             <th scope="col">Registered</th>
             <th scope="col">Active</th>
+            <th scope="col">Edit</th>
             <th>Delete</th>
         </tr>
     </thead>
     <tbody>
         {% for user in users %}
         <tr>
-            <td><a href="{{ url_for('auth.edit_user', user_id=user.id)}}">{{user.username}}</a></td>
+            <td><a href="{{ url_for('result.result_for_admin', user_id=user.id )}}">{{user.username}}</a></td>
             <td>{% for role in user.roles %} {{ role.name }} {% endfor %}</td>
             <td>{{user.created_at}}</td>
             <td>{{user.active}}</td>
+            <td><a href="{{ url_for('auth.edit_user', user_id=user.id)}}">Edit</a></td>
             <td style="text-align: center;"><a href="{{ url_for('auth.delete_user', user_id=user.id)}}"
                     class="user_delete_button btn-sm btn-outline-danger">&#10006</a>
             </td>
