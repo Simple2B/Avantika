@@ -257,7 +257,7 @@
             "average speed that is above the speed-limit as compared to traveling with an average speed exactly",
             "at the speed-limit.",
             "",
-            "Examples The paramater&#39;s format is as follows: (speed limit, avg speed, distance traveled at avg",
+            "Examples The paramater's format is as follows: (speed limit, avg speed, distance traveled at avg",
             "speed)",
             "",
             "time_saved(80, 90, 40) ➞ 3.3",
@@ -434,12 +434,10 @@
     {
         "name": "Java-Exam 1",
         "lang": "java",
-        "type": "code",
+        "type": "choise",
         "instruction": [
             "Suppose a monthly car insurance premium is $200 if the driver is age 25 or younger and",
-            "$125 if the driver is age 26 or older. Ask the user their age and display the correct cost for them."
-        ],
-        "solution": [
+            "$125 if the driver is age 26 or older. What is the correct cost for user if her age equal 20?",
             "import java.util.Scanner;",
             "public class decisions_carInsurance{",
             "public static void main(String[]args){",
@@ -450,13 +448,47 @@
             "if (user<=25)",
             "\tSystem.out.println('Your car insurance cost is $200');",
             "else",
-            "\tSystem.out.println(&quot;Your car insurance cost is $125&quot;); }}"
+            "\tSystem.out.println('Your car insurance cost is $125'); }}"
         ],
-        "template": [
+        "answers": [
+            "a. 200",
+            "b. 125",
+            "c. 300",
+            "d. 20"
+        ],
+        "correct_answer": "a. 200",
+        "exam_level": "Java Basics reg"
+    },
+    {
+        "name": "Java-Exam 2",
+        "lang": "java",
+        "type": "choise",
+        "instruction": [
+            "What is will in display if user enter character 'e', and than 'h'",
             "import java.util.Scanner;",
-            "public class decisions_carInsurance{",
-            "public static void main(String[]args){"
+            "public class vowel {",
+            "public static void main (String [] args){",
+            "String user;",
+            "Scanner scan = new Scanner(System.in);",
+            "Scanner scan = new Scanner(System.in);",
+            "System.out.println('enter a letter');",
+            "user = scan.nextLine();",
+            "",
+            "",
+            "if (user.equals('a' | 'e' | 'i' |'o' |'u' |'A' |'E' |'I' |'O' |'U' )){",
+            "System.out.println('yes, this is a vowel');",
+            "}",
+            "else",
+            "{ System.out.println('Error');",
+            "} }}"
         ],
+        "answers": [
+            "a. 'yes, this is a vowel', 'yes, this is a vowel'",
+            "b. 'Error', 'yes, this is a vowel'",
+            "c. 'Error', 'Error'",
+            "d. 'yes, this is a vowel', 'Error' "
+        ],
+        "correct_answer": "d. 'yes, this is a vowel', 'Error' ",
         "exam_level": "Java Basics reg"
     },
     {

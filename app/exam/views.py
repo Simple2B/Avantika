@@ -115,6 +115,89 @@ def exam_lang(lang):
     return redirect(url_for(f"exam.exam_{lang}", exam_id=exam.id))
 
 
+@exam_blueprint.route("/exam/java/<exam_id>", methods=["GET", "POST"])
+def exam_java(exam_id):
+    exam = Exam.query.filter(Exam.id == exam_id).first()
+    if exam.exam_type == Exam.Type.code:
+        form = ExamForm(request.form)
+    else:
+        form = ChoiseExamForm(request.form)
+        form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
+    if form.validate_on_submit():
+        if request.form["submit"] == "Next":
+            user = current_user
+            next_to_pass_exam(exam_id=exam.id, user_id=user.id)
+            return goto_next_exam(exam_id)
+        elif request.form["submit"] == "Prev":
+            return goto_prev_exam(exam_id)
+        else:
+            assert exam
+            if exam.exam_type == Exam.Type.code:
+                if check_answer(exam, form.code.data):
+                    flash(f"Exam success '{exam.name}'.", "success")
+                    user = current_user
+                    go_pass_exam(exam_id=exam.id, user_id=user.id)
+                else:
+                    flash(f"Exam failed '{exam.name}'.", "danger")
+            elif exam.exam_type == Exam.Type.choise:
+                if check_answer_choise(exam.id, form.answer.data):
+                    flash(f"Exam success '{exam.name}'.", "success")
+                    user = current_user
+                    go_pass_exam(exam_id=exam.id, user_id=user.id)
+                else:
+                    flash(f"Exam failed '{exam.name}'.", "danger")
+            else:
+                flash(f"Exam failed '{exam.name}'.", "danger")
+            # return redirect(url_for("exam.exam_py", exam_id=exam_id))
+            if exam.exam_type == Exam.Type.code:
+                return render_template(
+                    "exam/exam.html",
+                    form=form,
+                    instruction_height=(exam.instruction.count("\n") + 2),
+                    code_height=(exam.template.count("\n") + 2),
+                    tabs=get_allowed_tabs(),
+                )
+            elif exam.exam_type == Exam.Type.choise:
+                return render_template(
+                    "exam/exam_choise.html",
+                    form=form,
+                    instruction_height=(exam.instruction.count("\n") + 2),
+                    tabs=get_allowed_tabs(),
+                )
+            else:
+                return render_template(
+                    "exam/exam.html",
+                    form=form,
+                    instruction_height=(exam.instruction.count("\n") + 2),
+                    code_height=(exam.template.count("\n") + 2),
+                    tabs=get_allowed_tabs(),
+                )
+    elif form.is_submitted():
+        flash("The given data was invalid.", "danger")
+
+    if exam.exam_type == Exam.Type.code:
+        form.name.data = exam.name
+        form.exam_id.data = exam.id
+        form.code.data = exam.template
+        form.instruction.data = exam.instruction
+        return render_template(
+            "exam/exam.html",
+            form=form,
+            instruction_height=(exam.instruction.count("\n") + 2),
+            tabs=get_allowed_tabs(),
+        )
+    form.name.data = exam.name
+    form.exam_id.data = exam.id
+    form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
+    form.instruction.data = exam.instruction
+    return render_template(
+        "exam/exam_choise.html",
+        form=form,
+        instruction_height=(exam.instruction.count("\n") + 2),
+        tabs=get_allowed_tabs(),
+    )
+
+
 @exam_blueprint.route("/exam/html/<exam_id>", methods=["GET", "POST"])
 def exam_html(exam_id):
     form = ExamForm(request.form)
