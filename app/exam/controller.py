@@ -44,7 +44,22 @@ def check_answer_py(exam: Exam, code: str):
             return False
 
 
+def strip_code(source: str):
+    target = [line[: line.find("//")] for line in source]
+    target = [line.strip() for line in source]
+    target = [line for line in target if line]
+    return target
+
+
 def check_answer_java(exam: Exam, code: str):
+    solution_lines = strip_code(exam.solution)
+    code_lines = strip_code(code)
+    if len(solution_lines) != len(code_lines):
+        return False
+    for no_line in range(len(solution_lines)):
+        if solution_lines[no_line] != code_lines[no_line]:
+            return False
+
     return True
 
 
