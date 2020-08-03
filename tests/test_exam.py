@@ -1,4 +1,5 @@
 import pytest
+from flask import url_for
 from app import db, create_app
 from app.exam.models import Exam
 from app.exam.controller import check_answer, goto_next_exam
@@ -46,3 +47,15 @@ def test_goto_next_exam(client):
     res = goto_next_exam(3)
     assert res
     assert "4" in res.location
+
+
+def test_all_button_presents(client):
+    exam = (
+        Exam.query.filter(Exam.lang == Exam.Language.py)
+        .filter(Exam.exam_type == Exam.Type.code)
+        .first()
+    )
+    res = client.get(url_for("exam.exam_py", exam_id=exam.id))
+    assert b">Go<" in res.data
+    assert b">&lt;&lt;Prev<" in res.data
+    assert b">Next&gt;&gt;<" in res.data
