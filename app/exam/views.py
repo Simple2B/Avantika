@@ -202,6 +202,12 @@ def exam_html(exam_id):
     form = ExamForm(request.form)
     exam = Exam.query.filter(Exam.id == exam_id).first()
     if form.validate_on_submit():
+        if request.form["submit"] == "Next":
+            user = current_user
+            next_to_pass_exam(exam_id=exam.id, user_id=user.id)
+            return goto_next_exam(exam_id)
+        elif request.form["submit"] == "Prev":
+            return goto_prev_exam(exam_id)
         return render_template(
             "exam/exam_html_css.html",
             form=form,
