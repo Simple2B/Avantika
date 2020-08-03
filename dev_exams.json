@@ -1,6 +1,6 @@
 [
     {
-        "name": "Py-Exam 1",
+        "name": "Py-Question 1",
         "type": "code",
         "lang": "py",
         "instruction": [
@@ -44,7 +44,7 @@
         ]
     },
     {
-        "name": "Py-Exam 2",
+        "name": "Py-Question 2",
         "lang": "py",
         "type": "code",
         "instruction": [
@@ -90,7 +90,7 @@
         "exam_level": "Python Basics prem"
     },
     {
-        "name": "Py-Exam 3",
+        "name": "Py-Question 3",
         "type": "code",
         "lang": "py",
         "instruction": [
@@ -133,7 +133,7 @@
         "exam_level": "Python Inter"
     },
     {
-        "name": "Py-Exam 4",
+        "name": "Py-Question 4",
         "lang": "py",
         "type": "code",
         "instruction": [
@@ -175,7 +175,7 @@
         "exam_level": "Python Inter"
     },
     {
-        "name": "Py-Exam 5",
+        "name": "Py-Question 5",
         "lang": "py",
         "type": "code",
         "instruction": [
@@ -209,7 +209,7 @@
         "exam_level": "Python Inter"
     },
     {
-        "name": "Py-Exam 6",
+        "name": "Py-Question 6",
         "lang": "py",
         "type": "code",
         "instruction": [
@@ -245,7 +245,7 @@
         "exam_level": "Python adv"
     },
     {
-        "name": "Py-Exam 6",
+        "name": "Py-Question 6",
         "lang": "py",
         "type": "code",
         "instruction": [
@@ -288,7 +288,7 @@
         "exam_level": "Python adv"
     },
     {
-        "name": "Py-Exam 7",
+        "name": "Py-Question 7",
         "lang": "py",
         "type": "code",
         "instruction": [
@@ -319,7 +319,7 @@
         "exam_level": "Python adv prem"
     },
     {
-        "name": "Py-Exam 8",
+        "name": "Py-Question 8",
         "lang": "py",
         "type": "code",
         "instruction": [
@@ -352,7 +352,7 @@
         "exam_level": "Python adv prem"
     },
     {
-        "name": "Py-Exam 9",
+        "name": "Py-Question 9",
         "lang": "py",
         "type": "code",
         "instruction": [
@@ -386,7 +386,7 @@
         "exam_level": "Python adv prem"
     },
     {
-        "name": "Py-Exam 10",
+        "name": "Py-Question 10",
         "lang": "py",
         "type": "code",
         "instruction": [
@@ -412,7 +412,7 @@
         "exam_level": "Python Basics reg"
     },
     {
-        "name": "Py-Exam 11 test",
+        "name": "Py-Question 11 test",
         "lang": "py",
         "type": "code",
         "instruction": [
@@ -432,7 +432,7 @@
         "exam_level": "Python Basics reg"
     },
     {
-        "name": "Java-Exam 1",
+        "name": "Java-Question 1",
         "lang": "java",
         "type": "choise",
         "instruction": [
@@ -460,7 +460,7 @@
         "exam_level": "Java Basics reg"
     },
     {
-        "name": "Java-Exam 2",
+        "name": "Java-Question 2",
         "lang": "java",
         "type": "choise",
         "instruction": [
@@ -492,7 +492,7 @@
         "exam_level": "Java Basics reg"
     },
     {
-        "name": "Java-Exam 3",
+        "name": "Java-Question 3",
         "lang": "java",
         "type": "code",
         "instruction": [
@@ -517,7 +517,7 @@
         "exam_level": "Java Basics reg"
     },
     {
-        "name": "Java-Exam 4",
+        "name": "Java-Question 4",
         "lang": "java",
         "type": "code",
         "instruction": [
@@ -562,7 +562,7 @@
         "exam_level": "Java Basics reg"
     },
     {
-        "name": "Java-Exam 5",
+        "name": "Java-Question 5",
         "type": "code",
         "lang": "java",
         "instruction": [
@@ -586,7 +586,7 @@
         "exam_level": "Java Basics reg"
     },
     {
-        "name": "HTML-Exam 0",
+        "name": "HTML-Question 0",
         "type": "code",
         "lang": "html",
         "instruction": [

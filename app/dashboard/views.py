@@ -20,8 +20,34 @@ def index():
 def list_of_exam():
     exams = (
         Exam.query.filter(Exam.deleted == False)  # noqa E712
+        .filter(Exam.lang == Exam.Language.py)
         .order_by(Exam.id.desc())
         .all()
     )
     tabs = get_allowed_tabs()
     return render_template("dashboard/exam_dashboard.html", tabs=tabs, exams=exams)
+
+
+@dashboard_blueprint.route("/exam_dashboard_java")
+@roles_required("Admin")
+def list_of_exam_java():
+    exams = (
+        Exam.query.filter(Exam.deleted == False)  # noqa E712
+        .filter(Exam.lang == Exam.Language.java)
+        .order_by(Exam.id.desc())
+        .all()
+    )
+    tabs = get_allowed_tabs()
+    return render_template("dashboard/exam_dashboard_java.html", tabs=tabs, exams=exams)
+
+
+@dashboard_blueprint.route("/exam_dashboard_html")
+@roles_required("Admin")
+def list_of_exam_html():
+    exams = (
+        Exam.query.filter(Exam.deleted == False)  # noqa E712
+        .filter(Exam.lang == Exam.Language.html)
+        .all()
+    )
+    tabs = get_allowed_tabs()
+    return render_template("dashboard/exam_dashboard_html.html", tabs=tabs, exams=exams)
