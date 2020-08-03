@@ -16,9 +16,9 @@
       </div>
     </div>
     <script async src="/static/js/codepen.js"></script>
-    <button class="btn btn-primary " type="submit" name="submit" value="Prev">&lt;&lt;Prev</button>
+    <button class="btn btn-primary " type="submit" name="submit" value="Prev">&lt;&lt;Back</button>
     {{form.submit(class='btn btn-primary')}}
-    <a class="btn btn-primary" href="{{ url_for('exam.show_solution', exam_id=form.exam_id.data)}}">Show Solution</a>
+    <a class="btn btn-primary" href="{{ url_for('exam.show_solution', exam_id=form.exam_id.data)}}">See answer</a>
     <button class="btn btn-primary " type="submit" name="submit" value="Next">Next&gt;&gt;</button>
   </form>
 </div>

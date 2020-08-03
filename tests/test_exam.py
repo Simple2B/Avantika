@@ -60,12 +60,29 @@ def test_goto_next_exam(client):
 
 
 def test_all_button_presents(client):
-    exam = (
+    exams = (
         Exam.query.filter(Exam.lang == Exam.Language.py)
         .filter(Exam.exam_type == Exam.Type.code)
-        .first()
+        .all()
     )
-    res = client.get(url_for("exam.exam_py", exam_id=exam.id))
-    assert b">Go<" in res.data
-    assert b">&lt;&lt;Prev<" in res.data
-    assert b">Next&gt;&gt;<" in res.data
+    for exam in exams:
+        res = client.get(url_for("exam.exam_py", exam_id=exam.id))
+        assert b">Go<" in res.data
+        assert b">&lt;&lt;Back<" in res.data
+        assert b">Next&gt;&gt;<" in res.data
+        assert b">See answer<" in res.data
+    return exam
+
+
+def test_all_button_exam_choise_presents(client):
+    exams = (
+        Exam.query.filter(Exam.lang == Exam.Language.py)
+        .filter(Exam.exam_type == Exam.Type.choise)
+        .all()
+    )
+    for exam in exams:
+        res = client.get(url_for("exam.exam_py", exam_id=exam.id))
+        assert b">Go<" in res.data
+        assert b">&lt;&lt;Back<" in res.data
+        assert b">Next&gt;&gt;<" in res.data
+    return exam
