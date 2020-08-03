@@ -32,6 +32,16 @@ def test_py_exam_check_answer(client):
         assert check_answer(exam, exam.solution), f"Bad solution in [{exam.name}]"
 
 
+def test_java_exam_check_answer(client):
+    all_exams = (
+        Exam.query.filter(Exam.lang == Exam.Language.java)
+        .filter(Exam.exam_type == Exam.Type.code)
+        .all()
+    )
+    for exam in all_exams:
+        assert check_answer(exam, exam.solution), f"Bad solution in [{exam.name}]"
+
+
 def test_py_exam_sleep_in_code(client):
     exam = (
         Exam.query.filter(Exam.lang == Exam.Language.py)

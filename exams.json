@@ -1,6 +1,6 @@
 [
   {
-    "name": "Py-Exam 1",
+    "name": "Py-Question 1",
     "lang": "py",
     "type": "code",
     "instruction": [
@@ -44,7 +44,7 @@
     ]
   },
   {
-    "name": "Py-Exam 2",
+    "name": "Py-Question 2",
     "lang": "py",
     "type": "code",
     "instruction": [
@@ -90,7 +90,7 @@
     "exam_level": "Python Basics prem"
   },
   {
-    "name": "Py-Exam 3",
+    "name": "Py-Question 3",
     "lang": "py",
     "type": "code",
     "instruction": [
@@ -133,7 +133,7 @@
     "exam_level": "Python Inter"
   },
   {
-    "name": "Py-Exam 4",
+    "name": "Py-Question 4",
     "lang": "py",
     "type": "code",
     "instruction": [
@@ -175,7 +175,7 @@
     "exam_level": "Python Inter"
   },
   {
-    "name": "Py-Exam 5",
+    "name": "Py-Question 5",
     "lang": "py",
     "type": "code",
     "instruction": [
@@ -209,7 +209,7 @@
     "exam_level": "Python Inter"
   },
   {
-    "name": "Py-Exam 6",
+    "name": "Py-Question 6",
     "lang": "py",
     "type": "code",
     "instruction": [
@@ -245,7 +245,7 @@
     "exam_level": "Python adv"
   },
   {
-    "name": "Py-Exam 6",
+    "name": "Py-Question 6",
     "lang": "py",
     "type": "code",
     "instruction": [
@@ -288,7 +288,7 @@
     "exam_level": "Python adv"
   },
   {
-    "name": "Py-Exam 7",
+    "name": "Py-Question 7",
     "lang": "py",
     "type": "code",
     "instruction": [
@@ -319,7 +319,7 @@
     "exam_level": "Python adv prem"
   },
   {
-    "name": "Py-Exam 8",
+    "name": "Py-Question 8",
     "lang": "py",
     "type": "code",
     "instruction": [
@@ -352,7 +352,7 @@
     "exam_level": "Python adv prem"
   },
   {
-    "name": "Py-Exam 9",
+    "name": "Py-Question 9",
     "lang": "py",
     "type": "code",
     "instruction": [
@@ -386,14 +386,12 @@
     "exam_level": "Python adv prem"
   },
   {
-    "name": "Java-Exam 1",
+    "name": "Java-Question 1",
     "lang": "java",
-    "type": "code",
+    "type": "choise",
     "instruction": [
       "Suppose a monthly car insurance premium is $200 if the driver is age 25 or younger and",
-      "$125 if the driver is age 26 or older. Ask the user their age and display the correct cost for them."
-    ],
-    "solution": [
+      "$125 if the driver is age 26 or older. What is the correct cost for user if her age equal 20?",
       "import java.util.Scanner;",
       "public class decisions_carInsurance{",
       "public static void main(String[]args){",
@@ -406,15 +404,49 @@
       "else",
       "\tSystem.out.println(&quot;Your car insurance cost is $125&quot;); }}"
     ],
-    "template": [
-      "import java.util.Scanner;",
-      "public class decisions_carInsurance{",
-      "public static void main(String[]args){"
+    "answers": [
+      "a. 200",
+      "b. 125",
+      "c. 300",
+      "d. 20"
     ],
+    "correct_answer": "a. 200",
     "exam_level": "Java Basics reg"
   },
   {
-    "name": "Java-Exam 3",
+    "name": "Java-Question 2",
+    "lang": "java",
+    "type": "choise",
+    "instruction": [
+      "What is will in display if user enter character 'e', and than 'h'",
+      "import java.util.Scanner;",
+      "public class vowel {",
+      "public static void main (String [] args){",
+      "String user;",
+      "Scanner scan = new Scanner(System.in);",
+      "Scanner scan = new Scanner(System.in);",
+      "System.out.println('enter a letter');",
+      "user = scan.nextLine();",
+      "",
+      "",
+      "if (user.equals('a' | 'e' | 'i' |'o' |'u' |'A' |'E' |'I' |'O' |'U' )){",
+      "System.out.println('yes, this is a vowel');",
+      "}",
+      "else",
+      "{ System.out.println('Error');",
+      "} }}"
+    ],
+    "answers": [
+      "a. 'yes, this is a vowel', 'yes, this is a vowel'",
+      "b. 'Error', 'yes, this is a vowel'",
+      "c. 'Error', 'Error'",
+      "d. 'yes, this is a vowel', 'Error' "
+    ],
+    "correct_answer": "d. 'yes, this is a vowel', 'Error' ",
+    "exam_level": "Java Basics reg"
+  },
+  {
+    "name": "Java-Question 3",
     "lang": "java",
     "type": "code",
     "instruction": [
@@ -439,7 +471,7 @@
     "exam_level": "Java Basics reg"
   },
   {
-    "name": "Java-Exam 4",
+    "name": "Java-Question 4",
     "lang": "java",
     "instruction": [
       "Write a program that will check if state name is in the following list of states or not.",
@@ -483,7 +515,7 @@
     "exam_level": "Java Basics reg"
   },
   {
-    "name": "Java-Exam 4",
+    "name": "Java-Question 4",
     "lang": "java",
     "type": "code",
     "instruction": [
@@ -507,7 +539,7 @@
     "exam_level": "Java Basics reg"
   },
   {
-    "name": "HTML-Exam 0",
+    "name": "HTML-Question 0",
     "lang": "html",
     "type": "code",
     "instruction": [
