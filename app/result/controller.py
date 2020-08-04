@@ -32,5 +32,9 @@ def next_to_pass_exam(exam_id: int, user_id: int):
     if not result:
         log(log.ERROR, "EXAM NOT PASSED: %s", exam_id)
         result = Result(exam_id=exam_id, user_id=user_id)
-    result.passed = False
+        result.passed = False
+    elif result.passed is True:
+        result.passed = True
+    else:
+        result.passed = False
     result.save()

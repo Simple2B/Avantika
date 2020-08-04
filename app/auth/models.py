@@ -19,6 +19,7 @@ class User(db.Model, UserMixin, ModelMixin):
     active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.now)
     roles = db.relationship("Role", secondary="user_roles")
+    results = db.relationship("Result")
 
     @hybrid_property
     def password(self):
@@ -37,6 +38,12 @@ class User(db.Model, UserMixin, ModelMixin):
 
     def __repr__(self):
         return f"<User: {self.username}>"
+
+    def is_exam_passed(self, exam_id):
+        for result in self.results:
+            if result.exam_id == exam_id:
+                return result.passed
+        return False
 
 
 class AnonymousUser(AnonymousUserMixin):
