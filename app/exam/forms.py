@@ -1,5 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, HiddenField, TextAreaField, SelectField
+from wtforms import (
+    StringField,
+    SubmitField,
+    HiddenField,
+    TextAreaField,
+    SelectField,
+    BooleanField,
+)
 from wtforms.validators import DataRequired, Length
 
 
@@ -8,6 +15,7 @@ class ExamForm(FlaskForm):
     name = StringField("Exam:", validators=[DataRequired(), Length(5, 30)])
     instruction = TextAreaField("Instruction")
     code = TextAreaField("Code")
+    result = BooleanField("Result", default=False)
     submit = SubmitField("Go")
 
 

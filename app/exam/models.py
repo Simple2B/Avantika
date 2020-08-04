@@ -34,6 +34,7 @@ class Exam(db.Model, ModelMixin):
     answer = db.Column(db.String(1024), nullable=True)
     correct_answer = db.Column(db.String(60), nullable=True)
     exam_level = db.relationship("ExamLevel")
+    results = db.relationship("Result")
 
     def __repr__(self):
         return f"<Exam: {self.name}>"
@@ -111,17 +112,3 @@ class RoleExamLevel(db.Model, ModelMixin):
         db.Integer(), db.ForeignKey("exam_levels.id", ondelete="CASCADE")
     )
     role_id = db.Column(db.Integer(), db.ForeignKey("roles.id", ondelete="CASCADE"))
-
-
-# class Answer(db.Model, ModelMixin):
-#     """
-#     Connection with exam, answers and correct_index
-#     """
-
-#     __tablename__ = "answers"
-
-#     id = db.Column(db.Integer(), primary_key=True)
-#     exam_id = db.Column(db.Integer(), db.ForeignKey("exams.id"))
-#     exam = db.relationship("Exam")
-#     name = db.Column(db.String(120), nullable=False)
-#     correct_index = db.Column(db.String(60), nullable=False)

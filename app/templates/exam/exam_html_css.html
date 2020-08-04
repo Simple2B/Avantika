@@ -2,7 +2,11 @@
 <div class="container py-4">
   <form class="form" role="form" action="{{ url_for('exam.exam_html', exam_id=form.exam_id.data) }}" method="post">
     {{form.exam_id}}
+    {% if current_user.is_exam_passed(form.exam_id.data) %}
+    {{form.name(class='form-control is-valid', readonly=True)}}
+    {% else %}
     {{form.name(class='form-control', readonly=True)}}
+    {% endif %}
     <div class="form-group">
       {{form.instruction(class='form-control', readonly=True, rows=instruction_height)}}
     </div>

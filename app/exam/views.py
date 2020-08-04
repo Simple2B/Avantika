@@ -35,7 +35,6 @@ def exam_py(exam_id):
         form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
     if form.validate_on_submit():
         if request.form["submit"] == "Next":
-            # exam = Exam.query.filter(Exam.id == exam_id).first()
             user = current_user
             next_to_pass_exam(exam_id=exam.id, user_id=user.id)
             return goto_next_exam(exam_id)
@@ -59,7 +58,6 @@ def exam_py(exam_id):
                     flash(f"Exam failed '{exam.name}'.", "danger")
             else:
                 flash(f"Exam failed '{exam.name}'.", "danger")
-            # return redirect(url_for("exam.exam_py", exam_id=exam_id))
             if exam.exam_type == Exam.Type.code:
                 return render_template(
                     "exam/exam.html",
@@ -84,8 +82,12 @@ def exam_py(exam_id):
                     tabs=get_allowed_tabs(),
                 )
     elif form.is_submitted():
-        flash("The given data was invalid.", "danger")
-
+        if request.form["submit"] == "Next":
+            user = current_user
+            next_to_pass_exam(exam_id=exam.id, user_id=user.id)
+            return goto_next_exam(exam_id)
+        elif request.form["submit"] == "Prev":
+            return goto_prev_exam(exam_id)
     if exam.exam_type == Exam.Type.code:
         form.name.data = exam.name
         form.exam_id.data = exam.id
@@ -236,7 +238,6 @@ def exam_html(exam_id):
 def create_exam():
     form = CreateExamForm(request.form)
     if form.validate_on_submit():
-        # Create new Exam
         exam = Exam()
         exam.name = form.name.data
         level = ExamLevel.query.filter(ExamLevel.name == form.exam_level.data).first()
@@ -263,7 +264,6 @@ def create_exam():
 def create_choise_exam():
     form = ChoiseCreateExamForm(request.form)
     if form.validate_on_submit():
-        # Create new Exam
         exam = Exam()
         exam.name = form.name.data
         level = ExamLevel.query.filter(ExamLevel.name == form.exam_level.data).first()
