@@ -14,7 +14,7 @@
         ]
     },
     {
-        "href": "/exam_lang/py",
+        "href": "/main_exam_py_base",
         "name": "Python Basic",
         "roles": [
             "Admin",
@@ -30,7 +30,7 @@
         ]
     },
     {
-        "href": "/exam_lang/py",
+        "href": "/main_exam_py_inter",
         "name": "Python Intermediate",
         "roles": [
             "Admin",
@@ -43,7 +43,7 @@
         ]
     },
     {
-        "href": "/exam_lang/py",
+        "href": "/main_exam_py_adv",
         "name": "Python Advanced",
         "roles": [
             "Admin",
@@ -53,7 +53,7 @@
         ]
     },
     {
-        "href": "/exam_lang/java",
+        "href": "/main_exam_java",
         "name": "Java Basic",
         "roles": [
             "Admin",
@@ -63,7 +63,7 @@
         ]
     },
     {
-        "href": "/exam_lang/html",
+        "href": "/main_exam_html",
         "name": "HTML, CSS, JS",
         "roles": [
             "Admin",

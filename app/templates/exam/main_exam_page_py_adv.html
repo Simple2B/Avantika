@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="/static/css/jquery.dataTables.min.css">
+<table style="margin-top: 2%; margin-left: 5%;" cellspacing="0" width="50%">
+    <thead>
+        <tr>
+            <th scope="col">Exam Python Advance</th>
+        </tr>
+    </thead>
+    <tbody style="margin-top: 5%;">
+        {% for exam in exams %}
+        <tr>
+            <td><a href="{{ url_for('exam.exam_py', exam_id=exam.id) }}">{{exam.name}}</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<table style="margin-top: 2%; margin-left: 5%;" cellspacing="0" width="50%">
+    <thead>
+        <tr>
+            <th scope="col">Exam Python Advance Prem</th>
+        </tr>
+    </thead>
+    <tbody style="margin-top: 5%;">
+        {% for exam in exams_prem %}
+        <tr>
+            <td><a href="{{ url_for('exam.exam_py', exam_id=exam.id) }}">{{exam.name}}</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

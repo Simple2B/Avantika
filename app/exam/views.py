@@ -25,6 +25,61 @@ from app.logger import log
 exam_blueprint = Blueprint("exam", __name__)
 
 
+@exam_blueprint.route("/main_exam_py_base", methods=["GET", "POST"])
+def main_exam_page_py_base():
+    level = ExamLevel.query.filter(ExamLevel.name == "Python Basics reg").first()
+    exams = Exam.query.filter(Exam.type_id == level.id).all()
+    level_prem = ExamLevel.query.filter(ExamLevel.name == "Python Basics prem").first()
+    exams_prem = Exam.query.filter(Exam.type_id == level_prem.id).all()
+    return render_template(
+        "exam/main_exam_page_py_base.html", exams=exams, exams_prem=exams_prem
+    )
+
+
+@exam_blueprint.route("/main_exam_py_inter", methods=["GET", "POST"])
+def main_exam_page_py_inter():
+    level = ExamLevel.query.filter(ExamLevel.name == "Python Inter").first()
+    exams = Exam.query.filter(Exam.type_id == level.id).all()
+    level_prem = ExamLevel.query.filter(ExamLevel.name == "Python Inter Prem").first()
+    exams_prem = Exam.query.filter(Exam.type_id == level_prem.id).all()
+    return render_template(
+        "exam/main_exam_page_py_inter.html", exams=exams, exams_prem=exams_prem
+    )
+
+
+@exam_blueprint.route("/main_exam_py_adv", methods=["GET", "POST"])
+def main_exam_page_py_adv():
+    level = ExamLevel.query.filter(ExamLevel.name == "Python adv").first()
+    exams = Exam.query.filter(Exam.type_id == level.id).all()
+    level_prem = ExamLevel.query.filter(ExamLevel.name == "Python adv prem").first()
+    exams_prem = Exam.query.filter(Exam.type_id == level_prem.id).all()
+    return render_template(
+        "exam/main_exam_page_py_adv.html", exams=exams, exams_prem=exams_prem
+    )
+
+
+@exam_blueprint.route("/main_exam_java", methods=["GET", "POST"])
+def main_exam_page_java():
+    level = ExamLevel.query.filter(ExamLevel.name == "Java Basics reg").first()
+    exams = Exam.query.filter(Exam.type_id == level.id).all()
+    level_prem = ExamLevel.query.filter(ExamLevel.name == "Java Basics prem").first()
+    exams_prem = Exam.query.filter(Exam.type_id == level_prem.id).all()
+    return render_template(
+        "exam/main_exam_page_java.html", exams=exams, exams_prem=exams_prem
+    )
+
+
+@exam_blueprint.route("/main_exam_html", methods=["GET", "POST"])
+def main_exam_page_html():
+    level = ExamLevel.query.filter(ExamLevel.name == "HTML, CSS, JS reg").first()
+    exams = Exam.query.filter(Exam.type_id == level.id).all()
+    level_prem = ExamLevel.query.filter(ExamLevel.name == "HTML, CSS, JS prem").first()
+    exams_prem = Exam.query.filter(Exam.type_id == level_prem.id).all()
+    return render_template(
+        "exam/main_exam_page_html.html", exams=exams, exams_prem=exams_prem
+    )
+
+
 @exam_blueprint.route("/exam/py/<exam_id>", methods=["GET", "POST"])
 def exam_py(exam_id):
     exam = Exam.query.filter(Exam.id == exam_id).first()
