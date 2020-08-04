@@ -609,6 +609,29 @@
         "exam_level": "HTML, CSS, JS"
     },
     {
+        "name": "HTML-Question 11",
+        "type": "code",
+        "lang": "html",
+        "instruction": [
+            "Write very simple html page with title \"Hello world!\" "
+        ],
+        "solution": [
+            "<body>",
+            "\t<h1>",
+            "\t\tText",
+            "\t</h1>",
+            "</body>"
+        ],
+        "template": [
+            "<body>",
+            "\t<h1>",
+            "\t\tText",
+            "\t</h1>",
+            "</body>"
+        ],
+        "exam_level": "HTML, CSS, JS"
+    },
+    {
         "name": "Py-1 Test",
         "type": "choise",
         "lang": "py",

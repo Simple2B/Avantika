@@ -20,8 +20,9 @@
       <small class="text-danger">{{error}}</small>
       {% endfor %}
     </div>
-    <button class="btn btn-primary " type="submit" name="submit" value="Prev">&lt;&lt;Prev</button>
+    <button class="btn btn-primary " type="submit" name="submit" value="Prev">&lt;&lt;Back</button>
     <button class="btn btn-primary " type="submit" name="submit" value="Go">Go</button>
+    <a class="btn btn-primary" href="{{ url_for('exam.show_solution', exam_id=form.exam_id.data)}}">See answer</a>
     <button class="btn btn-primary " type="submit" name="submit" value="Next">Next&gt;&gt;</button>
   </form>
 </div>
