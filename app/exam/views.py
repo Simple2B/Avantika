@@ -251,7 +251,13 @@ def create_exam():
         exam.template = form.template.data
         exam.verification = form.verification.data
         exam.save()
-        return redirect(url_for("dashboard.index"))
+        if exam.lang == Exam.Language.py:
+            return redirect(url_for("dashboard.list_of_exam"))
+        elif exam.lang == Exam.Language.java:
+            return redirect(url_for("dashboard.list_of_exam_java"))
+        elif exam.lang == Exam.Language.html:
+            return redirect(url_for("dashboard.list_of_exam_html"))
+
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
     return render_template(
@@ -276,7 +282,12 @@ def create_choise_exam():
         exam.answer = form.answer.data
         exam.correct_answer = form.correct_answer.data
         exam.save()
-        return redirect(url_for("dashboard.index"))
+        if exam.lang == Exam.Language.py:
+            return redirect(url_for("dashboard.list_of_exam"))
+        elif exam.lang == Exam.Language.java:
+            return redirect(url_for("dashboard.list_of_exam_java"))
+        elif exam.lang == Exam.Language.html:
+            return redirect(url_for("dashboard.list_of_exam_html"))
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
     return render_template(
@@ -297,7 +308,12 @@ def delete_exam(exam_id):
         exam.save()
     else:
         flash("Wrong exam id", "danger")
-    return redirect(url_for("dashboard.index"))
+    if exam.lang == Exam.Language.py:
+        return redirect(url_for("dashboard.list_of_exam"))
+    elif exam.lang == Exam.Language.java:
+        return redirect(url_for("dashboard.list_of_exam_java"))
+    elif exam.lang == Exam.Language.html:
+        return redirect(url_for("dashboard.list_of_exam_html"))
 
 
 @exam_blueprint.route("/exam_edit/<exam_id>", methods=["GET", "POST"])
@@ -309,7 +325,7 @@ def edit_exam(exam_id):
     if exam is None:
         flash("Wrong exam id.", "danger")
         log(log.WARNING, "NONEXISTENT EXAM [%d]", exam_id)
-        return redirect(url_for("dashboard.index"))
+        return redirect(url_for("dashboard.list_of_exam"))
     if exam.exam_type == Exam.Type.code:
         form = CreateExamForm(request.form)
         if form.validate_on_submit():
@@ -328,7 +344,12 @@ def edit_exam(exam_id):
             exam.template = form.template.data
             exam.verification = form.verification.data
             exam.save()
-            return redirect(url_for("dashboard.index"))
+            if exam.lang == Exam.Language.py:
+                return redirect(url_for("dashboard.list_of_exam"))
+            elif exam.lang == Exam.Language.java:
+                return redirect(url_for("dashboard.list_of_exam_java"))
+            elif exam.lang == Exam.Language.html:
+                return redirect(url_for("dashboard.list_of_exam_html"))
         else:
             form.name.data = exam.name
             form.lang.data = exam.lang
@@ -360,7 +381,12 @@ def edit_exam(exam_id):
             exam.answer = form.answer.data
             exam.correct_answer = form.correct_answer.data
             exam.save()
-            return redirect(url_for("dashboard.index"))
+            if exam.lang == Exam.Language.py:
+                return redirect(url_for("dashboard.list_of_exam"))
+            elif exam.lang == Exam.Language.java:
+                return redirect(url_for("dashboard.list_of_exam_java"))
+            elif exam.lang == Exam.Language.html:
+                return redirect(url_for("dashboard.list_of_exam_html"))
         else:
             form.name.data = exam.name
             form.exam_level.data = exam.exam_level.name
