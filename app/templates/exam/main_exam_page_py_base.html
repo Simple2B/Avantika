@@ -2,6 +2,13 @@
 
 {% block content %}
 <link rel="stylesheet" href="/static/css/jquery.dataTables.min.css">
+{% if current_user.roles[0].name == "Admin" 
+or current_user.roles[0].name == "Student_PB_reg" 
+or current_user.roles[0].name == "Student_PB_prem"
+or current_user.roles[0].name == "Student_PI_reg" 
+or current_user.roles[0].name == "Student_PI_prem"
+or current_user.roles[0].name == "Student_PA_reg"
+or current_user.roles[0].name == "Student_PA_prem" %}
 <table style="margin-top: 2%; margin-left: 5%;" cellspacing="0" width="50%">
     <thead>
         <tr>
@@ -11,11 +18,28 @@
     <tbody style="margin-top: 5%;">
         {% for exam in exams %}
         <tr>
-            <td><a href="{{ url_for('exam.exam_py', exam_id=exam.id) }}">{{exam.name}}</a></td>
+            <td><a href="{{ url_for('exam.exam_py', exam_id=exam.id) }}">
+                    {%set exam_passed = current_user.is_exam_passed(exam.id)%}
+                    {% if exam_passed is boolean %}
+                    {% if exam_passed %}
+                    &#9989;
+                    {% else %}
+                    &#10060;
+                    {% endif %}
+                    {% endif %}
+                    {{exam.name}}</a></td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+{% endif %}
+{% if current_user.roles[0].name == "Admin" 
+or current_user.roles[0].name == "Student_PB_prem" 
+or current_user.roles[0].name == "Student_PB_prem_outsider"
+or current_user.roles[0].name == "Student_PI_prem_outsider" 
+or current_user.roles[0].name == "Student_PI_prem"
+or current_user.roles[0].name == "Student_PA_prem_outsider"
+or current_user.roles[0].name == "Student_PA_prem" %}
 <table style="margin-top: 2%; margin-left: 5%;" cellspacing="0" width="50%">
     <thead>
         <tr>
@@ -25,9 +49,19 @@
     <tbody style="margin-top: 5%;">
         {% for exam in exams_prem %}
         <tr>
-            <td><a href="{{ url_for('exam.exam_py', exam_id=exam.id) }}">{{exam.name}}</a></td>
+            <td><a href="{{ url_for('exam.exam_py', exam_id=exam.id) }}">
+                    {%set exam_passed = current_user.is_exam_passed(exam.id)%}
+                    {% if exam_passed is boolean %}
+                    {% if exam_passed %}
+                    &#9989;
+                    {% else %}
+                    &#10060;
+                    {% endif %}
+                    {% endif %}
+                    {{exam.name}}</a></td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+{% endif %}
 {% endblock %}

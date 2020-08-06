@@ -18,65 +18,57 @@ from .controller import (
     check_answer_choise,
     goto_prev_exam,
 )
-from app.result.controller import go_pass_exam, next_to_pass_exam
+from app.result.controller import go_pass_exam, next_to_pass_exam, go_fail_exam
 from app.tab import get_allowed_tabs
 from app.logger import log
 
 exam_blueprint = Blueprint("exam", __name__)
 
 
+def render_base_template(template_name_or_list, **args):
+    return render_template(template_name_or_list, tabs=get_allowed_tabs(), **args)
+
+
+def exam_level_sort(reg_name: str, prem_name: str, path):
+    level = ExamLevel.query.filter(ExamLevel.name == reg_name).first()
+    exams = Exam.query.filter(Exam.type_id == level.id).all()
+    level_prem = ExamLevel.query.filter(ExamLevel.name == prem_name).first()
+    exams_prem = Exam.query.filter(Exam.type_id == level_prem.id).all()
+    return render_base_template(path, exams=exams, exams_prem=exams_prem)
+
+
 @exam_blueprint.route("/main_exam_py_base", methods=["GET", "POST"])
 def main_exam_page_py_base():
-    level = ExamLevel.query.filter(ExamLevel.name == "Python Basics reg").first()
-    exams = Exam.query.filter(Exam.type_id == level.id).all()
-    level_prem = ExamLevel.query.filter(ExamLevel.name == "Python Basics prem").first()
-    exams_prem = Exam.query.filter(Exam.type_id == level_prem.id).all()
-    return render_template(
-        "exam/main_exam_page_py_base.html", exams=exams, exams_prem=exams_prem
+    return exam_level_sort(
+        "Python Basics reg", "Python Basics prem", "exam/main_exam_page_py_base.html"
     )
 
 
 @exam_blueprint.route("/main_exam_py_inter", methods=["GET", "POST"])
 def main_exam_page_py_inter():
-    level = ExamLevel.query.filter(ExamLevel.name == "Python Inter").first()
-    exams = Exam.query.filter(Exam.type_id == level.id).all()
-    level_prem = ExamLevel.query.filter(ExamLevel.name == "Python Inter Prem").first()
-    exams_prem = Exam.query.filter(Exam.type_id == level_prem.id).all()
-    return render_template(
-        "exam/main_exam_page_py_inter.html", exams=exams, exams_prem=exams_prem
+    return exam_level_sort(
+        "Python Inter", "Python Inter Prem", "exam/main_exam_page_py_inter.html"
     )
 
 
 @exam_blueprint.route("/main_exam_py_adv", methods=["GET", "POST"])
 def main_exam_page_py_adv():
-    level = ExamLevel.query.filter(ExamLevel.name == "Python adv").first()
-    exams = Exam.query.filter(Exam.type_id == level.id).all()
-    level_prem = ExamLevel.query.filter(ExamLevel.name == "Python adv prem").first()
-    exams_prem = Exam.query.filter(Exam.type_id == level_prem.id).all()
-    return render_template(
-        "exam/main_exam_page_py_adv.html", exams=exams, exams_prem=exams_prem
+    return exam_level_sort(
+        "Python adv", "Python adv prem", "exam/main_exam_page_py_adv.html"
     )
 
 
 @exam_blueprint.route("/main_exam_java", methods=["GET", "POST"])
 def main_exam_page_java():
-    level = ExamLevel.query.filter(ExamLevel.name == "Java Basics reg").first()
-    exams = Exam.query.filter(Exam.type_id == level.id).all()
-    level_prem = ExamLevel.query.filter(ExamLevel.name == "Java Basics prem").first()
-    exams_prem = Exam.query.filter(Exam.type_id == level_prem.id).all()
-    return render_template(
-        "exam/main_exam_page_java.html", exams=exams, exams_prem=exams_prem
+    return exam_level_sort(
+        "Java Basics reg", "Java Basics prem", "exam/main_exam_page_java.html"
     )
 
 
 @exam_blueprint.route("/main_exam_html", methods=["GET", "POST"])
 def main_exam_page_html():
-    level = ExamLevel.query.filter(ExamLevel.name == "HTML, CSS, JS reg").first()
-    exams = Exam.query.filter(Exam.type_id == level.id).all()
-    level_prem = ExamLevel.query.filter(ExamLevel.name == "HTML, CSS, JS prem").first()
-    exams_prem = Exam.query.filter(Exam.type_id == level_prem.id).all()
-    return render_template(
-        "exam/main_exam_page_html.html", exams=exams, exams_prem=exams_prem
+    return exam_level_sort(
+        "HTML, CSS, JS reg", "HTML, CSS, JS prem", "exam/main_exam_page_html.html"
     )
 
 
@@ -98,43 +90,46 @@ def exam_py(exam_id):
         else:
             assert exam
             if exam.exam_type == Exam.Type.code:
-                if check_answer(exam, form.code.data):
+                if check_answer(exam, form.code.data) is True:
                     flash(f"Exam success '{exam.name}'.", "success")
                     user = current_user
                     go_pass_exam(exam_id=exam.id, user_id=user.id)
                 else:
                     flash(f"Exam failed '{exam.name}'.", "danger")
+                    user = current_user
+                    go_fail_exam(exam_id=exam.id, user_id=user.id)
             elif exam.exam_type == Exam.Type.choise:
-                if check_answer_choise(exam.id, form.answer.data):
+                if check_answer_choise(exam.id, form.answer.data) is True:
                     flash(f"Exam success '{exam.name}'.", "success")
                     user = current_user
                     go_pass_exam(exam_id=exam.id, user_id=user.id)
                 else:
                     flash(f"Exam failed '{exam.name}'.", "danger")
+                    user = current_user
+                    go_fail_exam(exam_id=exam.id, user_id=user.id)
             else:
                 flash(f"Exam failed '{exam.name}'.", "danger")
+                user = current_user
+                go_fail_exam(exam_id=exam.id, user_id=user.id)
             if exam.exam_type == Exam.Type.code:
-                return render_template(
+                return render_base_template(
                     "exam/exam.html",
                     form=form,
                     instruction_height=(exam.instruction.count("\n") + 2),
                     code_height=(exam.template.count("\n") + 2),
-                    tabs=get_allowed_tabs(),
                 )
             elif exam.exam_type == Exam.Type.choise:
-                return render_template(
+                return render_base_template(
                     "exam/exam_choise.html",
                     form=form,
                     instruction_height=(exam.instruction.count("\n") + 2),
-                    tabs=get_allowed_tabs(),
                 )
             else:
-                return render_template(
+                return render_base_template(
                     "exam/exam.html",
                     form=form,
                     instruction_height=(exam.instruction.count("\n") + 2),
                     code_height=(exam.template.count("\n") + 2),
-                    tabs=get_allowed_tabs(),
                 )
     elif form.is_submitted():
         if request.form["submit"] == "Next":
@@ -148,21 +143,19 @@ def exam_py(exam_id):
         form.exam_id.data = exam.id
         form.code.data = exam.template
         form.instruction.data = exam.instruction
-        return render_template(
+        return render_base_template(
             "exam/exam.html",
             form=form,
             instruction_height=(exam.instruction.count("\n") + 2),
-            tabs=get_allowed_tabs(),
         )
     form.name.data = exam.name
     form.exam_id.data = exam.id
     form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
     form.instruction.data = exam.instruction
-    return render_template(
+    return render_base_template(
         "exam/exam_choise.html",
         form=form,
         instruction_height=(exam.instruction.count("\n") + 2),
-        tabs=get_allowed_tabs(),
     )
 
 
@@ -196,6 +189,8 @@ def exam_java(exam_id):
                     go_pass_exam(exam_id=exam.id, user_id=user.id)
                 else:
                     flash(f"Exam failed '{exam.name}'.", "danger")
+                    user = current_user
+                    go_fail_exam(exam_id=exam.id, user_id=user.id)
             elif exam.exam_type == Exam.Type.choise:
                 if check_answer_choise(exam.id, form.answer.data):
                     flash(f"Exam success '{exam.name}'.", "success")
@@ -203,31 +198,30 @@ def exam_java(exam_id):
                     go_pass_exam(exam_id=exam.id, user_id=user.id)
                 else:
                     flash(f"Exam failed '{exam.name}'.", "danger")
+                    user = current_user
+                    go_fail_exam(exam_id=exam.id, user_id=user.id)
             else:
                 flash(f"Exam failed '{exam.name}'.", "danger")
             # return redirect(url_for("exam.exam_py", exam_id=exam_id))
             if exam.exam_type == Exam.Type.code:
-                return render_template(
+                return render_base_template(
                     "exam/exam.html",
                     form=form,
                     instruction_height=(exam.instruction.count("\n") + 2),
                     code_height=(exam.template.count("\n") + 2),
-                    tabs=get_allowed_tabs(),
                 )
             elif exam.exam_type == Exam.Type.choise:
-                return render_template(
+                return render_base_template(
                     "exam/exam_choise.html",
                     form=form,
                     instruction_height=(exam.instruction.count("\n") + 2),
-                    tabs=get_allowed_tabs(),
                 )
             else:
-                return render_template(
+                return render_base_template(
                     "exam/exam.html",
                     form=form,
                     instruction_height=(exam.instruction.count("\n") + 2),
                     code_height=(exam.template.count("\n") + 2),
-                    tabs=get_allowed_tabs(),
                 )
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
@@ -237,21 +231,19 @@ def exam_java(exam_id):
         form.exam_id.data = exam.id
         form.code.data = exam.template
         form.instruction.data = exam.instruction
-        return render_template(
+        return render_base_template(
             "exam/exam.html",
             form=form,
             instruction_height=(exam.instruction.count("\n") + 2),
-            tabs=get_allowed_tabs(),
         )
     form.name.data = exam.name
     form.exam_id.data = exam.id
     form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
     form.instruction.data = exam.instruction
-    return render_template(
+    return render_base_template(
         "exam/exam_choise.html",
         form=form,
         instruction_height=(exam.instruction.count("\n") + 2),
-        tabs=get_allowed_tabs(),
     )
 
 
@@ -266,12 +258,11 @@ def exam_html(exam_id):
             return goto_next_exam(exam_id)
         elif request.form["submit"] == "Prev":
             return goto_prev_exam(exam_id)
-        return render_template(
+        return render_base_template(
             "exam/exam_html_css.html",
             form=form,
             instruction_height=(exam.instruction.count("\n") + 2),
             code_height=(exam.template.count("\n") + 2),
-            tabs=get_allowed_tabs(),
         )
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
@@ -280,12 +271,11 @@ def exam_html(exam_id):
     form.code.data = exam.template
     form.instruction.data = exam.instruction
     response = make_response(
-        render_template(
+        render_base_template(
             "exam/exam_html_css.html",
             form=form,
             instruction_height=(exam.instruction.count("\n") + 2),
             code_height=(exam.template.count("\n") + 2),
-            tabs=get_allowed_tabs(),
         )
     )
     # response.set_cookie("SameSite", "None", max_age=60 * 60 * 24, secure=True)
@@ -312,16 +302,11 @@ def create_exam():
         exam.template = form.template.data
         exam.verification = form.verification.data
         exam.save()
-        if exam.lang == Exam.Language.py:
-            return redirect(url_for("dashboard.list_of_exam"))
-        elif exam.lang == Exam.Language.java:
-            return redirect(url_for("dashboard.list_of_exam_java"))
-        elif exam.lang == Exam.Language.html:
-            return redirect(url_for("dashboard.list_of_exam_html"))
+        return redirect_for_lang(exam.lang)
 
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
-    return render_template(
+    return render_base_template(
         "exam/create_exam_py.html", form=form, post_action=url_for("exam.create_exam"),
     )
 
@@ -343,15 +328,10 @@ def create_choise_exam():
         exam.answer = form.answer.data
         exam.correct_answer = form.correct_answer.data
         exam.save()
-        if exam.lang == Exam.Language.py:
-            return redirect(url_for("dashboard.list_of_exam"))
-        elif exam.lang == Exam.Language.java:
-            return redirect(url_for("dashboard.list_of_exam_java"))
-        elif exam.lang == Exam.Language.html:
-            return redirect(url_for("dashboard.list_of_exam_html"))
+        return redirect_for_lang(exam.lang)
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
-    return render_template(
+    return render_base_template(
         "exam/create_exam_choise.html",
         form=form,
         post_action=url_for("exam.create_choise_exam"),
@@ -369,12 +349,7 @@ def delete_exam(exam_id):
         exam.save()
     else:
         flash("Wrong exam id", "danger")
-    if exam.lang == Exam.Language.py:
-        return redirect(url_for("dashboard.list_of_exam"))
-    elif exam.lang == Exam.Language.java:
-        return redirect(url_for("dashboard.list_of_exam_java"))
-    elif exam.lang == Exam.Language.html:
-        return redirect(url_for("dashboard.list_of_exam_html"))
+    return redirect_for_lang(exam.lang)
 
 
 @exam_blueprint.route("/exam_edit/<exam_id>", methods=["GET", "POST"])
@@ -405,12 +380,7 @@ def edit_exam(exam_id):
             exam.template = form.template.data
             exam.verification = form.verification.data
             exam.save()
-            if exam.lang == Exam.Language.py:
-                return redirect(url_for("dashboard.list_of_exam"))
-            elif exam.lang == Exam.Language.java:
-                return redirect(url_for("dashboard.list_of_exam_java"))
-            elif exam.lang == Exam.Language.html:
-                return redirect(url_for("dashboard.list_of_exam_html"))
+            return redirect_for_lang(exam.lang)
         else:
             form.name.data = exam.name
             form.lang.data = exam.lang
@@ -420,7 +390,7 @@ def edit_exam(exam_id):
             form.template.data = exam.template
             form.solution.data = exam.solution
             form.verification.data = exam.verification
-        return render_template(
+        return render_base_template(
             "exam/create_exam_py.html",
             form=form,
             post_action=url_for("exam.edit_exam", exam_id=exam_id),
@@ -442,12 +412,7 @@ def edit_exam(exam_id):
             exam.answer = form.answer.data
             exam.correct_answer = form.correct_answer.data
             exam.save()
-            if exam.lang == Exam.Language.py:
-                return redirect(url_for("dashboard.list_of_exam"))
-            elif exam.lang == Exam.Language.java:
-                return redirect(url_for("dashboard.list_of_exam_java"))
-            elif exam.lang == Exam.Language.html:
-                return redirect(url_for("dashboard.list_of_exam_html"))
+            return redirect_for_lang(exam.lang)
         else:
             form.name.data = exam.name
             form.exam_level.data = exam.exam_level.name
@@ -455,7 +420,7 @@ def edit_exam(exam_id):
             form.instruction.data = exam.instruction
             form.answer.data = exam.answer
             form.correct_answer.data = exam.correct_answer
-        return render_template(
+        return render_base_template(
             "exam/create_exam_choise.html",
             form=form,
             post_action=url_for("exam.edit_exam", exam_id=exam_id),
@@ -472,9 +437,20 @@ def show_solution(exam_id):
     form.instruction.data = exam.instruction
     form.code.data = exam.template
     form.solution.data = exam.solution
-    return render_template(
+    return render_base_template(
         "exam/show_solution.html",
         form=form,
         instruction_height=(exam.instruction.count("\n") + 2),
         code_height=(exam.template.count("\n") + 2),
     )
+
+
+def redirect_for_lang(lang):
+    """Redirect by exam language
+    """
+    if lang == Exam.Language.py:
+        return redirect(url_for("dashboard.list_of_exam"))
+    elif lang == Exam.Language.java:
+        return redirect(url_for("dashboard.list_of_exam_java"))
+    elif lang == Exam.Language.html:
+        return redirect(url_for("dashboard.list_of_exam_html"))
