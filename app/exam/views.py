@@ -1,12 +1,4 @@
-from flask import (
-    Blueprint,
-    render_template,
-    url_for,
-    redirect,
-    flash,
-    request,
-    make_response,
-)
+from flask import Blueprint, render_template, url_for, redirect, flash, request
 from flask_user import roles_required, current_user
 
 from .models import Exam, ExamLevel
@@ -249,8 +241,12 @@ def exam_java(exam_id):
 
 @exam_blueprint.route("/exam/html/<exam_id>", methods=["GET", "POST"])
 def exam_html(exam_id):
-    form = ExamForm(request.form)
     exam = Exam.query.filter(Exam.id == exam_id).first()
+    if exam.exam_type == Exam.Type.code:
+        form = ExamForm(request.form)
+    else:
+        form = ChoiseExamForm(request.form)
+        form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
     if form.validate_on_submit():
         if request.form["submit"] == "Next":
             user = current_user
@@ -258,30 +254,70 @@ def exam_html(exam_id):
             return goto_next_exam(exam_id)
         elif request.form["submit"] == "Prev":
             return goto_prev_exam(exam_id)
-        return render_base_template(
-            "exam/exam_html_css.html",
-            form=form,
-            instruction_height=(exam.instruction.count("\n") + 2),
-            code_height=(exam.template.count("\n") + 2),
-        )
+        else:
+            assert exam
+            if exam.exam_type == Exam.Type.code:
+                if check_answer(exam, form.code.data):
+                    flash(f"Exam success '{exam.name}'.", "success")
+                    user = current_user
+                    go_pass_exam(exam_id=exam.id, user_id=user.id)
+                else:
+                    flash(f"Exam failed '{exam.name}'.", "danger")
+                    user = current_user
+                    go_fail_exam(exam_id=exam.id, user_id=user.id)
+            elif exam.exam_type == Exam.Type.choise:
+                if check_answer_choise(exam.id, form.answer.data):
+                    flash(f"Exam success '{exam.name}'.", "success")
+                    user = current_user
+                    go_pass_exam(exam_id=exam.id, user_id=user.id)
+                else:
+                    flash(f"Exam failed '{exam.name}'.", "danger")
+                    user = current_user
+                    go_fail_exam(exam_id=exam.id, user_id=user.id)
+            else:
+                flash(f"Exam failed '{exam.name}'.", "danger")
+        if exam.exam_type == Exam.Type.code:
+            return render_base_template(
+                "exam/exam.html",
+                form=form,
+                instruction_height=(exam.instruction.count("\n") + 2),
+                code_height=(exam.template.count("\n") + 2),
+            )
+        elif exam.exam_type == Exam.Type.choise:
+            return render_base_template(
+                "exam/exam_choise.html",
+                form=form,
+                instruction_height=(exam.instruction.count("\n") + 2),
+            )
+        else:
+            return render_base_template(
+                "exam/exam.html",
+                form=form,
+                instruction_height=(exam.instruction.count("\n") + 2),
+                code_height=(exam.template.count("\n") + 2),
+            )
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
-    form.name.data = exam.name
-    form.exam_id.data = exam.id
-    form.code.data = exam.template
-    form.instruction.data = exam.instruction
-    response = make_response(
-        render_base_template(
-            "exam/exam_html_css.html",
+
+    if exam.exam_type == Exam.Type.code:
+        form.name.data = exam.name
+        form.exam_id.data = exam.id
+        form.code.data = exam.template
+        form.instruction.data = exam.instruction
+        return render_base_template(
+            "exam/exam.html",
             form=form,
             instruction_height=(exam.instruction.count("\n") + 2),
-            code_height=(exam.template.count("\n") + 2),
         )
+    form.name.data = exam.name
+    form.exam_id.data = exam.id
+    form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
+    form.instruction.data = exam.instruction
+    return render_base_template(
+        "exam/exam_choise.html",
+        form=form,
+        instruction_height=(exam.instruction.count("\n") + 2),
     )
-    # response.set_cookie("SameSite", "None", max_age=60 * 60 * 24, secure=True)
-    # response.set_cookie("SameSite", "Bubu")
-    # response.set_cookie("UserName", "Kolya")
-    return response
 
 
 @exam_blueprint.route("/create_exam", methods=["GET", "POST"])

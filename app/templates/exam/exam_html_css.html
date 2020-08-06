@@ -14,12 +14,14 @@
       {{form.code.label}}
       {{form.code(class='form-control', rows=code_height)}}
       <p><strong>Live Demo : </strong></p>
-      <div class="codepen" data-prefill data-height="400" data-theme-id="1" data-default-tab="html,result">
+      <!-- codepen begin -->
+      <div class="codepen" data-prefill data-height="400" data-theme-id="3" data-default-tab="html,result">
         {#{form.code(class='form-control', rows=code_height, data_lang="html")}#}
         <pre data-lang="html">{{form.code.data}}</pre>
       </div>
+      <!-- codepen end -->
     </div>
-    <script async src="/static/js/codepen.js"></script>
+    <script async src="http://assets.codepen.io/assets/embed/ei.js"></script>
     <button class="btn btn-primary " type="submit" name="submit" value="Prev">&lt;&lt;Back</button>
     {{form.submit(class='btn btn-primary')}}
     <a class="btn btn-primary" href="{{ url_for('exam.show_solution', exam_id=form.exam_id.data)}}">See answer</a>
