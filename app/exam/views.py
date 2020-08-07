@@ -278,7 +278,7 @@ def exam_html(exam_id):
                 flash(f"Exam failed '{exam.name}'.", "danger")
         if exam.exam_type == Exam.Type.code:
             return render_base_template(
-                "exam/exam.html",
+                "exam/exam_html_css.html",
                 form=form,
                 instruction_height=(exam.instruction.count("\n") + 2),
                 code_height=(exam.template.count("\n") + 2),
@@ -291,7 +291,7 @@ def exam_html(exam_id):
             )
         else:
             return render_base_template(
-                "exam/exam.html",
+                "exam/exam_html_css.html",
                 form=form,
                 instruction_height=(exam.instruction.count("\n") + 2),
                 code_height=(exam.template.count("\n") + 2),
@@ -305,9 +305,10 @@ def exam_html(exam_id):
         form.code.data = exam.template
         form.instruction.data = exam.instruction
         return render_base_template(
-            "exam/exam.html",
+            "exam/exam_html_css.html",
             form=form,
             instruction_height=(exam.instruction.count("\n") + 2),
+            code_height=(exam.template.count("\n") + 2),
         )
     form.name.data = exam.name
     form.exam_id.data = exam.id
