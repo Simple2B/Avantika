@@ -10,7 +10,7 @@ from wtforms import (
 from wtforms.validators import DataRequired, Length
 
 
-class ChoiseExamForm(FlaskForm):
+class choiceExamForm(FlaskForm):
     exam_id = HiddenField("id")
     name = StringField("Exam:")
     instruction = TextAreaField("Instruction")
@@ -18,14 +18,14 @@ class ChoiseExamForm(FlaskForm):
     submit = SubmitField("Go")
 
 
-class ChoiseCreateExamForm(FlaskForm):
+class choiceCreateExamForm(FlaskForm):
     name = StringField("Exam:", validators=[DataRequired(), Length(5, 30)])
     lang = SelectField(
         "Lang",
         default="py",
         choices=[("py", "python"), ("java", "java"), ("html", "html")],
     )
-    exam_type = SelectField("Type", default="choise", choices=[("choise", "choise")])
+    exam_type = SelectField("Type", default="choice", choices=[("choice", "choice")])
     exam_level = SelectField(
         "Exam Level:",
         choices=[

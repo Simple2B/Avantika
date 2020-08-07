@@ -3,11 +3,11 @@ from flask_user import roles_required, current_user
 
 from .models import Exam, ExamLevel
 from .forms import ExamForm, CreateExamForm, SolutionForm
-from .choisen_answer.forms import ChoiseExamForm, ChoiseCreateExamForm
+from .choicen_answer.forms import choiceExamForm, choiceCreateExamForm
 from .controller import (
     check_answer,
     goto_next_exam,
-    check_answer_choise,
+    check_answer_choice,
     goto_prev_exam,
 )
 from app.result.controller import go_pass_exam, next_to_pass_exam, go_fail_exam
@@ -70,8 +70,8 @@ def exam_py(exam_id):
     if exam.exam_type == Exam.Type.code:
         form = ExamForm(request.form)
     else:
-        form = ChoiseExamForm(request.form)
-        form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
+        form = choiceExamForm(request.form)
+        form.answer.choices = [(choice, choice) for choice in exam.answer.split("\n")]
     if form.validate_on_submit():
         if request.form["submit"] == "Next":
             user = current_user
@@ -90,8 +90,8 @@ def exam_py(exam_id):
                     flash(f"Exam failed '{exam.name}'.", "danger")
                     user = current_user
                     go_fail_exam(exam_id=exam.id, user_id=user.id)
-            elif exam.exam_type == Exam.Type.choise:
-                if check_answer_choise(exam.id, form.answer.data) is True:
+            elif exam.exam_type == Exam.Type.choice:
+                if check_answer_choice(exam.id, form.answer.data) is True:
                     flash(f"Exam success '{exam.name}'.", "success")
                     user = current_user
                     go_pass_exam(exam_id=exam.id, user_id=user.id)
@@ -110,9 +110,9 @@ def exam_py(exam_id):
                     instruction_height=(exam.instruction.count("\n") + 2),
                     code_height=(exam.template.count("\n") + 2),
                 )
-            elif exam.exam_type == Exam.Type.choise:
+            elif exam.exam_type == Exam.Type.choice:
                 return render_base_template(
-                    "exam/exam_choise.html",
+                    "exam/exam_choice.html",
                     form=form,
                     instruction_height=(exam.instruction.count("\n") + 2),
                 )
@@ -142,10 +142,10 @@ def exam_py(exam_id):
         )
     form.name.data = exam.name
     form.exam_id.data = exam.id
-    form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
+    form.answer.choices = [(choice, choice) for choice in exam.answer.split("\n")]
     form.instruction.data = exam.instruction
     return render_base_template(
-        "exam/exam_choise.html",
+        "exam/exam_choice.html",
         form=form,
         instruction_height=(exam.instruction.count("\n") + 2),
     )
@@ -163,8 +163,8 @@ def exam_java(exam_id):
     if exam.exam_type == Exam.Type.code:
         form = ExamForm(request.form)
     else:
-        form = ChoiseExamForm(request.form)
-        form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
+        form = choiceExamForm(request.form)
+        form.answer.choices = [(choice, choice) for choice in exam.answer.split("\n")]
     if form.validate_on_submit():
         if request.form["submit"] == "Next":
             user = current_user
@@ -183,8 +183,8 @@ def exam_java(exam_id):
                     flash(f"Exam failed '{exam.name}'.", "danger")
                     user = current_user
                     go_fail_exam(exam_id=exam.id, user_id=user.id)
-            elif exam.exam_type == Exam.Type.choise:
-                if check_answer_choise(exam.id, form.answer.data):
+            elif exam.exam_type == Exam.Type.choice:
+                if check_answer_choice(exam.id, form.answer.data):
                     flash(f"Exam success '{exam.name}'.", "success")
                     user = current_user
                     go_pass_exam(exam_id=exam.id, user_id=user.id)
@@ -202,9 +202,9 @@ def exam_java(exam_id):
                     instruction_height=(exam.instruction.count("\n") + 2),
                     code_height=(exam.template.count("\n") + 2),
                 )
-            elif exam.exam_type == Exam.Type.choise:
+            elif exam.exam_type == Exam.Type.choice:
                 return render_base_template(
-                    "exam/exam_choise.html",
+                    "exam/exam_choice.html",
                     form=form,
                     instruction_height=(exam.instruction.count("\n") + 2),
                 )
@@ -230,10 +230,10 @@ def exam_java(exam_id):
         )
     form.name.data = exam.name
     form.exam_id.data = exam.id
-    form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
+    form.answer.choices = [(choice, choice) for choice in exam.answer.split("\n")]
     form.instruction.data = exam.instruction
     return render_base_template(
-        "exam/exam_choise.html",
+        "exam/exam_choice.html",
         form=form,
         instruction_height=(exam.instruction.count("\n") + 2),
     )
@@ -245,8 +245,8 @@ def exam_html(exam_id):
     if exam.exam_type == Exam.Type.code:
         form = ExamForm(request.form)
     else:
-        form = ChoiseExamForm(request.form)
-        form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
+        form = choiceExamForm(request.form)
+        form.answer.choices = [(choice, choice) for choice in exam.answer.split("\n")]
     if form.validate_on_submit():
         if request.form["submit"] == "Next":
             user = current_user
@@ -265,8 +265,8 @@ def exam_html(exam_id):
                     flash(f"Exam failed '{exam.name}'.", "danger")
                     user = current_user
                     go_fail_exam(exam_id=exam.id, user_id=user.id)
-            elif exam.exam_type == Exam.Type.choise:
-                if check_answer_choise(exam.id, form.answer.data):
+            elif exam.exam_type == Exam.Type.choice:
+                if check_answer_choice(exam.id, form.answer.data):
                     flash(f"Exam success '{exam.name}'.", "success")
                     user = current_user
                     go_pass_exam(exam_id=exam.id, user_id=user.id)
@@ -283,9 +283,9 @@ def exam_html(exam_id):
                 instruction_height=(exam.instruction.count("\n") + 2),
                 code_height=(exam.template.count("\n") + 2),
             )
-        elif exam.exam_type == Exam.Type.choise:
+        elif exam.exam_type == Exam.Type.choice:
             return render_base_template(
-                "exam/exam_choise.html",
+                "exam/exam_choice.html",
                 form=form,
                 instruction_height=(exam.instruction.count("\n") + 2),
             )
@@ -311,10 +311,10 @@ def exam_html(exam_id):
         )
     form.name.data = exam.name
     form.exam_id.data = exam.id
-    form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
+    form.answer.choices = [(choice, choice) for choice in exam.answer.split("\n")]
     form.instruction.data = exam.instruction
     return render_base_template(
-        "exam/exam_choise.html",
+        "exam/exam_choice.html",
         form=form,
         instruction_height=(exam.instruction.count("\n") + 2),
     )
@@ -347,10 +347,10 @@ def create_exam():
     )
 
 
-@exam_blueprint.route("/create_choise_exam", methods=["GET", "POST"])
+@exam_blueprint.route("/create_choice_exam", methods=["GET", "POST"])
 @roles_required("Admin")
-def create_choise_exam():
-    form = ChoiseCreateExamForm(request.form)
+def create_choice_exam():
+    form = choiceCreateExamForm(request.form)
     if form.validate_on_submit():
         exam = Exam()
         exam.name = form.name.data
@@ -368,9 +368,9 @@ def create_choise_exam():
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
     return render_base_template(
-        "exam/create_exam_choise.html",
+        "exam/create_exam_choice.html",
         form=form,
-        post_action=url_for("exam.create_choise_exam"),
+        post_action=url_for("exam.create_choice_exam"),
     )
 
 
@@ -432,8 +432,8 @@ def edit_exam(exam_id):
             post_action=url_for("exam.edit_exam", exam_id=exam_id),
         )
     else:
-        form = ChoiseCreateExamForm(request.form)
-        form.answer.choices = [(choise, choise) for choise in exam.answer.split("\n")]
+        form = choiceCreateExamForm(request.form)
+        form.answer.choices = [(choice, choice) for choice in exam.answer.split("\n")]
         if form.validate_on_submit():
             exam.name = form.name.data
             level = ExamLevel.query.filter(
@@ -457,7 +457,7 @@ def edit_exam(exam_id):
             form.answer.data = exam.answer
             form.correct_answer.data = exam.correct_answer
         return render_base_template(
-            "exam/create_exam_choise.html",
+            "exam/create_exam_choice.html",
             form=form,
             post_action=url_for("exam.edit_exam", exam_id=exam_id),
         )

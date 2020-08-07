@@ -388,7 +388,7 @@
   {
     "name": "Java-Question 1",
     "lang": "java",
-    "type": "choise",
+    "type": "choice",
     "instruction": [
       "Suppose a monthly car insurance premium is $200 if the driver is age 25 or younger and",
       "$125 if the driver is age 26 or older. What is the correct cost for user if her age equal 20?",
@@ -416,7 +416,7 @@
   {
     "name": "Java-Question 2",
     "lang": "java",
-    "type": "choise",
+    "type": "choice",
     "instruction": [
       "What is will in display if user enter character 'e', and than 'h'",
       "import java.util.Scanner;",
@@ -563,7 +563,7 @@
   },
   {
     "name": "HTML-Question 1",
-    "type": "choise",
+    "type": "choice",
     "lang": "html",
     "instruction": [
       "Fill in the blanks",
@@ -580,7 +580,7 @@
   },
   {
     "name": "HTML-Question 2",
-    "type": "choise",
+    "type": "choice",
     "lang": "html",
     "instruction": [
       "Fill in the blanks so that an image 400px wide and 400px in length is displayed on the screen",
@@ -597,7 +597,7 @@
   },
   {
     "name": "HTML-Question 3",
-    "type": "choise",
+    "type": "choice",
     "lang": "html",
     "instruction": [
       "Fill in the blanks",
