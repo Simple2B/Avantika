@@ -18,7 +18,7 @@ class Exam(db.Model, ModelMixin):
         html = "html"
 
     class Type(enum.Enum):
-        choice = "choice"
+        choise = "choice"
         code = "code"
 
     id = db.Column(db.Integer, primary_key=True)

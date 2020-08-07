@@ -3,7 +3,7 @@ from flask_user import roles_required, current_user
 
 from .models import Exam, ExamLevel
 from .forms import ExamForm, CreateExamForm, SolutionForm
-from .choicen_answer.forms import choiceExamForm, choiceCreateExamForm
+from .choisen_answer.forms import ChoiceCreateExamForm, ChoiceExamForm
 from .controller import (
     check_answer,
     goto_next_exam,
@@ -70,7 +70,7 @@ def exam_py(exam_id):
     if exam.exam_type == Exam.Type.code:
         form = ExamForm(request.form)
     else:
-        form = choiceExamForm(request.form)
+        form = ChoiceExamForm(request.form)
         form.answer.choices = [(choice, choice) for choice in exam.answer.split("\n")]
     if form.validate_on_submit():
         if request.form["submit"] == "Next":
@@ -163,7 +163,7 @@ def exam_java(exam_id):
     if exam.exam_type == Exam.Type.code:
         form = ExamForm(request.form)
     else:
-        form = choiceExamForm(request.form)
+        form = ChoiceExamForm(request.form)
         form.answer.choices = [(choice, choice) for choice in exam.answer.split("\n")]
     if form.validate_on_submit():
         if request.form["submit"] == "Next":
@@ -245,7 +245,7 @@ def exam_html(exam_id):
     if exam.exam_type == Exam.Type.code:
         form = ExamForm(request.form)
     else:
-        form = choiceExamForm(request.form)
+        form = ChoiceExamForm(request.form)
         form.answer.choices = [(choice, choice) for choice in exam.answer.split("\n")]
     if form.validate_on_submit():
         if request.form["submit"] == "Next":
@@ -350,7 +350,7 @@ def create_exam():
 @exam_blueprint.route("/create_choice_exam", methods=["GET", "POST"])
 @roles_required("Admin")
 def create_choice_exam():
-    form = choiceCreateExamForm(request.form)
+    form = ChoiceCreateExamForm(request.form)
     if form.validate_on_submit():
         exam = Exam()
         exam.name = form.name.data
@@ -432,7 +432,7 @@ def edit_exam(exam_id):
             post_action=url_for("exam.edit_exam", exam_id=exam_id),
         )
     else:
-        form = choiceCreateExamForm(request.form)
+        form = ChoiceCreateExamForm(request.form)
         form.answer.choices = [(choice, choice) for choice in exam.answer.split("\n")]
         if form.validate_on_submit():
             exam.name = form.name.data
