@@ -18,7 +18,7 @@ class Exam(db.Model, ModelMixin):
         html = "html"
 
     class Type(enum.Enum):
-        choise = "choise"
+        choise = "choice"
         code = "code"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -70,7 +70,7 @@ class Exam(db.Model, ModelMixin):
                 log(log.ERROR, "Exam [%s] has not type", self.name)
             if "verification" in args:
                 self.verification = "\n".join(args["verification"])
-        elif self.exam_type == Exam.Type.choise.name:
+        elif self.exam_type == Exam.Type.choice.name:
             self.answer = "\n".join(args["answers"]) if "answers" in args else ""
             self.correct_answer = args["correct_answer"]
             if "exam_level" in args:

@@ -67,7 +67,7 @@ def check_answer_js(exam: Exam, code: str):
     return True
 
 
-def check_answer_choise(exam_id: int, cor_index: str):
+def check_answer_choice(exam_id: int, cor_index: str):
     correct_index = Exam.query.filter(Exam.id == exam_id).first()
     if correct_index.correct_answer == cor_index:
         return True

@@ -74,10 +74,10 @@ def test_all_button_presents(client):
     return exam
 
 
-def test_all_button_exam_choise_presents(client):
+def test_all_button_exam_choice_presents(client):
     exams = (
         Exam.query.filter(Exam.lang == Exam.Language.py)
-        .filter(Exam.exam_type == Exam.Type.choise)
+        .filter(Exam.exam_type == Exam.Type.choice)
         .all()
     )
     for exam in exams:

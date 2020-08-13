@@ -43,7 +43,7 @@ class User(db.Model, UserMixin, ModelMixin):
         for result in self.results:
             if result.exam_id == exam_id:
                 return result.passed
-        return False
+        return None
 
 
 class AnonymousUser(AnonymousUserMixin):

@@ -434,7 +434,7 @@
     {
         "name": "Java-Question 1",
         "lang": "java",
-        "type": "choise",
+        "type": "choice",
         "instruction": [
             "Suppose a monthly car insurance premium is $200 if the driver is age 25 or younger and",
             "$125 if the driver is age 26 or older. What is the correct cost for user if her age equal 20?",
@@ -462,7 +462,7 @@
     {
         "name": "Java-Question 2",
         "lang": "java",
-        "type": "choise",
+        "type": "choice",
         "instruction": [
             "What is will in display if user enter character 'e', and than 'h'",
             "import java.util.Scanner;",
@@ -606,7 +606,7 @@
             "\t</h1>",
             "</body>"
         ],
-        "exam_level": "HTML, CSS, JS"
+        "exam_level": "HTML, CSS, JS reg"
     },
     {
         "name": "HTML-Question 11",
@@ -629,11 +629,11 @@
             "\t</h1>",
             "</body>"
         ],
-        "exam_level": "HTML, CSS, JS"
+        "exam_level": "HTML, CSS, JS reg"
     },
     {
         "name": "Py-1 Test",
-        "type": "choise",
+        "type": "choice",
         "lang": "py",
         "exam_level": "Python Basics reg",
         "instruction": [
@@ -654,7 +654,7 @@
     },
     {
         "name": "Py-2 Test",
-        "type": "choise",
+        "type": "choice",
         "lang": "py",
         "exam_level": "Python Basics reg",
         "instruction": [
@@ -675,7 +675,7 @@
     },
     {
         "name": "Py-3 Test",
-        "type": "choise",
+        "type": "choice",
         "lang": "py",
         "exam_level": "Python Basics reg",
         "instruction": [
@@ -693,5 +693,56 @@
             "d. 2 3 4 5 6 6"
         ],
         "correct_answer": "d. 2 3 4 5 6 6"
+    },
+    {
+        "name": "HTML-Question 1",
+        "type": "choice",
+        "lang": "html",
+        "instruction": [
+            "Fill in the blanks",
+            "<____ > Courses for kids</title>"
+        ],
+        "answers": [
+            "a. h1",
+            "b. title",
+            "c. start",
+            "d. p"
+        ],
+        "correct_answer": "b. title",
+        "exam_level": "HTML, CSS, JS reg"
+    },
+    {
+        "name": "HTML-Question 2",
+        "type": "choice",
+        "lang": "html",
+        "instruction": [
+            "Fill in the blanks so that an image 400px wide and 400px in length is displayed on the screen",
+            "<image src = “C:/cupcake.png” width=' ' length=' '>"
+        ],
+        "answers": [
+            "a. 20 125",
+            "b. 400 4000",
+            "c. 40 40",
+            "d. 400 400"
+        ],
+        "correct_answer": "d. 400 400",
+        "exam_level": "HTML, CSS, JS reg"
+    },
+    {
+        "name": "HTML-Question 3",
+        "type": "choice",
+        "lang": "html",
+        "instruction": [
+            "Fill in the blanks",
+            "<a _____ = \"C:/Contact.html\"><img___=\"C:/cupcake.png\" ></a>"
+        ],
+        "answers": [
+            "a. href  href",
+            "b. href src",
+            "c  src src",
+            "d. src  href"
+        ],
+        "correct_answer": "b. href src",
+        "exam_level": "HTML, CSS, JS reg"
     }
 ]
