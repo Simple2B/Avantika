@@ -2,7 +2,7 @@ import pytest
 from flask import url_for
 from app import db, create_app
 from app.tab import load_tabs
-from app.auth.models import User, Role, UserRoles
+from .common import login, logout, register, create_user
 
 app = create_app(environment="testing")
 app.config["TESTING"] = True
@@ -30,23 +30,6 @@ def client():
         db.session.remove()
         db.drop_all()
         app_ctx.pop()
-
-
-def register(user_name, password="password"):
-    # noinspection PyArgumentList
-    user = User(username=user_name, password=password)
-    user.save()
-    return user.id
-
-
-def login(client, user_id, password="password"):
-    return client.post(
-        "/login", data=dict(user_id=user_id, password=password), follow_redirects=True,
-    )
-
-
-def logout(client):
-    return client.get("/logout", follow_redirects=True)
 
 
 def test_index_page(client):
@@ -109,15 +92,3 @@ def test_get_tabs_user(client):
         assert f"{a_tab.name}".encode("utf-8") in response.data
     for r_tab in restricted_tabs:
         assert f"{r_tab.name}".encode("utf-8") not in response.data
-
-
-def create_user(username, password, role_name):
-    user = User(username=username)
-    user.password = password
-    user.save()
-    role = Role.query.filter(Role.name == role_name).first()
-    if not role:
-        role = Role(name=role_name)
-        role.save()
-    user_to_role = UserRoles(user_id=user.id, role_id=role.id)
-    user_to_role.save()
