@@ -63,7 +63,7 @@ $(document).ready(function () {
                 $('#exam_level').append('<option value="Java Basics reg">Java Basics reg</option>');
                 $('#exam_level').append('<option value="Java Basics prem">Java Basics prem</option>');
                 break;
-            case "python":
+            case "py":
                 $("#exam_level").empty();
                 $('#exam_level').append('<option value="Python Basics reg">Python Basics reg</option>');
                 $('#exam_level').append('<option value="Python Basics prem">Python Basics prem</option>');

@@ -444,6 +444,7 @@ def edit_exam(exam_id):
                 flash("The level invalid", "danger")
                 log(log.WARNING, "NONEXISTENT LEVEL %s", form.exam_level.data)
             exam.type_id = level.id
+            exam.lang.name = form.lang.data
             exam.exam_type = form.exam_type.data
             exam.instruction = form.instruction.data
             exam.answer = form.answer.data
@@ -452,6 +453,7 @@ def edit_exam(exam_id):
             return redirect_for_lang(exam.lang)
         else:
             form.name.data = exam.name
+            form.lang.data = exam.lang.name
             form.exam_level.data = exam.exam_level.name
             form.exam_type.data = exam.exam_type
             form.instruction.data = exam.instruction
