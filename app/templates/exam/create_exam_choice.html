@@ -13,42 +13,6 @@
     </script>
 
 
-<script>
-$(document).ready(function () {
-    function update_exam_level(){
-        switch($("#lang").val()) {
-            case "html":
-                $("#exam_level").empty();
-                $('#exam_level').append('<option value="HTML, CSS, JS reg">HTML, CSS, JS reg</option>');
-                $('#exam_level').append('<option value="HTML, CSS, JS prem">HTML, CSS, JS prem</option>');
-                break;
-            case "java":
-                $("#exam_level").empty();
-                $('#exam_level').append('<option value="Java Basics preg">Java Basics reg</option>');
-                $('#exam_level').append('<option value="Java Basics prem">Java Basics prem</option>');
-                // $('#exam_level').replaceWith('<option value="Java Basics prem" selected>Java Basics prem</option>');
-                break;
-            case "py":
-                $("#exam_level").empty();
-                $('#exam_level').append('<option value="Python Basics reg">Python Basics reg</option>');
-                $('#exam_level').append('<option value="Python Basics prem">Python Basics prem</option>');
-                $('#exam_level').append('<option value="Python Inter Prem">Python Inter Prem</option>');
-                $('#exam_level').append('<option value="Python Basics prem">Python Basics prem</option>');
-                $('#exam_level').append('<option value="Python adv">Python adv</option>');
-                $('#exam_level').append('<option value="Python adv prem">Python adv prem</option>');
-                break;
-        }
-    };
-
-
-    $("#lang").change(e => {
-        update_exam_level();
-    });
-    update_exam_level();
-
-});
-</script>
-
 {% endblock %}
 
 {% block content %}

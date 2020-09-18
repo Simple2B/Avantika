@@ -52,25 +52,54 @@ $(document).ready(function () {
     });
 
     function update_exam_level(){
+        const html_levels = [
+            "HTML, CSS, JS reg",
+            "HTML, CSS, JS prem"
+        ];
+        const java_levels = [
+            "Java Basics reg",
+            "Java Basics prem"
+        ]
+        const python_levels = [
+            "Python Basics reg",
+            "Python Basics prem",
+            "Python Inter Prem",
+            "Python Basics prem",
+            "Python adv",
+            "Python adv prem"
+        ];
+        let selected_value = $("#exam_level").val();
+        console.log(selected_value);
         switch($("#lang").val()) {
             case "html":
                 $("#exam_level").empty();
-                $('#exam_level').append('<option value="HTML, CSS, JS reg">HTML, CSS, JS reg</option>');
-                $('#exam_level').append('<option value="HTML, CSS, JS prem">HTML, CSS, JS prem</option>');
+                html_levels.forEach(element => {
+                    if(selected_value === element) {
+                        $('#exam_level').append(`<option selected value="${element}">${element}</option>`);
+                    } else {
+                        $('#exam_level').append(`<option value="${element}">${element}</option>`);
+                    }
+                });
                 break;
             case "java":
                 $("#exam_level").empty();
-                $('#exam_level').append('<option value="Java Basics reg">Java Basics reg</option>');
-                $('#exam_level').append('<option value="Java Basics prem">Java Basics prem</option>');
+                java_levels.forEach(element => {
+                    if(selected_value === element) {
+                        $('#exam_level').append(`<option selected value="${element}">${element}</option>`);
+                    } else {
+                        $('#exam_level').append(`<option value="${element}">${element}</option>`);
+                    }
+                });
                 break;
             case "py":
                 $("#exam_level").empty();
-                $('#exam_level').append('<option value="Python Basics reg">Python Basics reg</option>');
-                $('#exam_level').append('<option value="Python Basics prem">Python Basics prem</option>');
-                $('#exam_level').append('<option value="Python Inter Prem">Python Inter Prem</option>');
-                $('#exam_level').append('<option value="Python Basics prem">Python Basics prem</option>');
-                $('#exam_level').append('<option value="Python adv">Python adv</option>');
-                $('#exam_level').append('<option value="Python adv prem">Python adv prem</option>');
+                python_levels.forEach(element => {
+                    if(selected_value === element) {
+                        $('#exam_level').append(`<option selected value="${element}">${element}</option>`);
+                    } else {
+                        $('#exam_level').append(`<option value="${element}">${element}</option>`);
+                    }
+                });
                 break;
         }
     };
