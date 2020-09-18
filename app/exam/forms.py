@@ -30,12 +30,16 @@ class CreateExamForm(FlaskForm):
     exam_level = SelectField(
         "Exam Level:",
         choices=[
-            ("Python Basics reg", "Python Basics reg"),
-            ("Python Basics prem", "Python Basics prem"),
-            ("Python Inter", "Python Inter"),
-            ("Python Inter Prem", "Python Inter Prem"),
-            ("Python adv", "Python adv"),
-            ("Python adv prem", "Python adv prem"),
+            ("Python Basics reg", "Python Basics Regular"),
+            ("Python Basics prem", "Python Basics Premium"),
+            ("Python Inter", "Python Intermediate"),
+            ("Python Intermediate Premium", "Python Inter Prem"),
+            ("Python adv", "Python Advanced"),
+            ("Python adv prem", "Python Advanced Premium"),
+            ("Java Basics reg", "Java Basics Regular"),
+            ("Java Basics prem", "Java Basics Premium"),
+            ("HTML, CSS, JS reg", "HTML, CSS, JS Regular"),
+            ("HTML, CSS, JS prem", "HTML, CSS, JS Premium"),
         ],
     )
     instruction = TextAreaField("Instruction")

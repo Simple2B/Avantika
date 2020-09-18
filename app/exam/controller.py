@@ -40,7 +40,7 @@ def check_answer_py(exam: Exam, code: str):
                 return False
             return test_process.returncode == 0
         except subprocess.TimeoutExpired:
-            log(log.WARNING, "EXAM TIMEOUT: Exam:[]", exam.name)
+            log(log.WARNING, "EXAM TIMEOUT: Exam:[%s]", exam.name)
             return False
 
 

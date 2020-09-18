@@ -82,7 +82,7 @@
     },
     {
         "href": "/status",
-        "name": "Status",
+        "name": "Exam Progress",
         "roles": [
             "Admin",
             "Student_PB_reg",

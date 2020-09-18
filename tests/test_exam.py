@@ -3,10 +3,15 @@ from flask import url_for
 from app import db, create_app
 from app.exam.models import Exam
 from app.exam.controller import check_answer, goto_next_exam
+from .common import login, logout, register, create_user
 
 app = create_app(environment="testing")
 app.config["TESTING"] = True
 app.config["SERVER_NAME"] = "localhost.localdomain"
+
+LOGIN_STUDENT = "student"
+PASSW_STUDENT = "student"
+ROLE_STUDENT = "Student_PI_reg"
 
 
 @pytest.fixture
@@ -16,6 +21,8 @@ def client():
         app_ctx.push()
         db.create_all()
         Exam.load_all_exams()
+        create_user(LOGIN_STUDENT, PASSW_STUDENT, ROLE_STUDENT)
+        login(client, LOGIN_STUDENT, PASSW_STUDENT)
         yield client
         db.session.remove()
         db.drop_all()
