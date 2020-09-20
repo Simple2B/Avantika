@@ -63,13 +63,12 @@ $(document).ready(function () {
         const python_levels = [
             "Python Basics reg",
             "Python Basics prem",
-            "Python Inter Prem",
+            "Python Inter",
             "Python Basics prem",
             "Python adv",
             "Python adv prem"
         ];
         let selected_value = $("#exam_level").val();
-        console.log(selected_value);
         switch($("#lang").val()) {
             case "html":
                 $("#exam_level").empty();
