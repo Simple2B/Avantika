@@ -4,6 +4,12 @@
 <div class="container">
   <h1>Welcome!</h1>
   <hr>
+  {% if current_user.is_anonymous %}
+
+  {% elif current_user.is_admin %}
   <p>Admin Portal</p>
+  {% else %}
+  <p>Student Portal</p>
+  {% endif %}
 </div>
 {% endblock %}

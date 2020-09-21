@@ -45,9 +45,17 @@ class User(db.Model, UserMixin, ModelMixin):
                 return result.passed
         return None
 
+    @property
+    def is_admin(self):
+        roles_name = [r.name for r in self.roles]
+        return "Admin" in roles_name
+
 
 class AnonymousUser(AnonymousUserMixin):
-    pass
+
+    @property
+    def is_admin(self):
+        return False
 
 
 class Role(db.Model, ModelMixin):

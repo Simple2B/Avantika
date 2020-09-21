@@ -35,6 +35,10 @@ class ChoiceCreateExamForm(FlaskForm):
             ("Python Inter Prem", "Python Inter Prem"),
             ("Python adv", "Python adv"),
             ("Python adv prem", "Python adv prem"),
+            ("HTML, CSS, JS reg", "HTML, CSS, JS reg"),
+            ("HTML, CSS, JS prem", "HTML, CSS, JS prem"),
+            ("Java Basics reg", "Java Basics reg"),
+            ("Java Basics prem", "Java Basics prem"),
         ],
     )
     instruction = TextAreaField("Instruction")
