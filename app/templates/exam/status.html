@@ -8,8 +8,8 @@
 <table id="theTable" class="table table-striped table-sm" cellspacing="0" width="100%">
     <thead class="black white-text bg-secondary">
         <tr>
-            <th scope="col">Exam</th>
-            <th scope="col">Exam Levels</th>
+            <th scope="col">Question</th>
+            <th scope="col">Question Levels</th>
             <th scope="col">Passed</th>
         </tr>
     </thead>
@@ -18,7 +18,11 @@
         <tr>
             <td>{{ result.exam.name }}</td>
             <td>{{ result.exam.exam_level.name }}</td>
-            <td>{{ result.passed }}</td>
+            {%  if result.passed %}
+            <td>Correct</td>
+            {% else %}
+            <td>Incorrect</td>
+            {% endif %}
         </tr>
         {% endfor %}
     </tbody>

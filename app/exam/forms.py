@@ -12,7 +12,7 @@ from wtforms.validators import DataRequired, Length
 
 class ExamForm(FlaskForm):
     exam_id = HiddenField("id", validators=[DataRequired()])
-    name = StringField("Exam:", validators=[DataRequired(), Length(5, 30)])
+    name = StringField("Question:", validators=[DataRequired(), Length(5, 30)])
     instruction = TextAreaField("Instruction")
     code = TextAreaField("Code")
     result = BooleanField("Result", default=False)
@@ -20,7 +20,7 @@ class ExamForm(FlaskForm):
 
 
 class CreateExamForm(FlaskForm):
-    name = StringField("Exam:", validators=[DataRequired(), Length(5, 30)])
+    name = StringField("Question:", validators=[DataRequired(), Length(5, 30)])
     lang = SelectField(
         "Lang",
         default="py",
@@ -28,7 +28,7 @@ class CreateExamForm(FlaskForm):
     )
     exam_type = SelectField("Type", default="code", choices=[("code", "code")])
     exam_level = SelectField(
-        "Exam Level:",
+        "Question Level:",
         choices=[
             ("Python Basics reg", "Python Basics Regular"),
             ("Python Basics prem", "Python Basics Premium"),

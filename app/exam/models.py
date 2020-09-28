@@ -37,7 +37,7 @@ class Exam(db.Model, ModelMixin):
     results = db.relationship("Result")
 
     def __repr__(self):
-        return f"<Exam: {self.name}>"
+        return f"<Question: {self.name}>"
 
     def to_dict(self):
         return dict(

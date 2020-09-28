@@ -83,24 +83,24 @@ def exam_py(exam_id):
             assert exam
             if exam.exam_type == Exam.Type.code:
                 if check_answer(exam, form.code.data) is True:
-                    flash(f"Exam success '{exam.name}'.", "success")
+                    flash(f"Question success '{exam.name}'.", "success")
                     user = current_user
                     go_pass_exam(exam_id=exam.id, user_id=user.id)
                 else:
-                    flash(f"Exam failed '{exam.name}'.", "danger")
+                    flash(f"Question failed '{exam.name}'.", "danger")
                     user = current_user
                     go_fail_exam(exam_id=exam.id, user_id=user.id)
             elif exam.exam_type == Exam.Type.choice:
                 if check_answer_choice(exam.id, form.answer.data) is True:
-                    flash(f"Exam success '{exam.name}'.", "success")
+                    flash(f"Question success '{exam.name}'.", "success")
                     user = current_user
                     go_pass_exam(exam_id=exam.id, user_id=user.id)
                 else:
-                    flash(f"Exam failed '{exam.name}'.", "danger")
+                    flash(f"Question failed '{exam.name}'.", "danger")
                     user = current_user
                     go_fail_exam(exam_id=exam.id, user_id=user.id)
             else:
-                flash(f"Exam failed '{exam.name}'.", "danger")
+                flash(f"Question failed '{exam.name}'.", "danger")
                 user = current_user
                 go_fail_exam(exam_id=exam.id, user_id=user.id)
             if exam.exam_type == Exam.Type.code:
@@ -176,24 +176,24 @@ def exam_java(exam_id):
             assert exam
             if exam.exam_type == Exam.Type.code:
                 if check_answer(exam, form.code.data):
-                    flash(f"Exam success '{exam.name}'.", "success")
+                    flash(f"Question success '{exam.name}'.", "success")
                     user = current_user
                     go_pass_exam(exam_id=exam.id, user_id=user.id)
                 else:
-                    flash(f"Exam failed '{exam.name}'.", "danger")
+                    flash(f"Question failed '{exam.name}'.", "danger")
                     user = current_user
                     go_fail_exam(exam_id=exam.id, user_id=user.id)
             elif exam.exam_type == Exam.Type.choice:
                 if check_answer_choice(exam.id, form.answer.data):
-                    flash(f"Exam success '{exam.name}'.", "success")
+                    flash(f"Question success '{exam.name}'.", "success")
                     user = current_user
                     go_pass_exam(exam_id=exam.id, user_id=user.id)
                 else:
-                    flash(f"Exam failed '{exam.name}'.", "danger")
+                    flash(f"Question failed '{exam.name}'.", "danger")
                     user = current_user
                     go_fail_exam(exam_id=exam.id, user_id=user.id)
             else:
-                flash(f"Exam failed '{exam.name}'.", "danger")
+                flash(f"Question failed '{exam.name}'.", "danger")
             # return redirect(url_for("exam.exam_py", exam_id=exam_id))
             if exam.exam_type == Exam.Type.code:
                 return render_base_template(
@@ -258,24 +258,24 @@ def exam_html(exam_id):
             assert exam
             if exam.exam_type == Exam.Type.code:
                 if check_answer(exam, form.code.data):
-                    flash(f"Exam success '{exam.name}'.", "success")
+                    flash(f"Question success '{exam.name}'.", "success")
                     user = current_user
                     go_pass_exam(exam_id=exam.id, user_id=user.id)
                 else:
-                    flash(f"Exam failed '{exam.name}'.", "danger")
+                    flash(f"Question failed '{exam.name}'.", "danger")
                     user = current_user
                     go_fail_exam(exam_id=exam.id, user_id=user.id)
             elif exam.exam_type == Exam.Type.choice:
                 if check_answer_choice(exam.id, form.answer.data):
-                    flash(f"Exam success '{exam.name}'.", "success")
+                    flash(f"Question success '{exam.name}'.", "success")
                     user = current_user
                     go_pass_exam(exam_id=exam.id, user_id=user.id)
                 else:
-                    flash(f"Exam failed '{exam.name}'.", "danger")
+                    flash(f"Question failed '{exam.name}'.", "danger")
                     user = current_user
                     go_fail_exam(exam_id=exam.id, user_id=user.id)
             else:
-                flash(f"Exam failed '{exam.name}'.", "danger")
+                flash(f"Question failed '{exam.name}'.", "danger")
         if exam.exam_type == Exam.Type.code:
             return render_base_template(
                 "exam/exam_html_css.html",
@@ -382,7 +382,7 @@ def delete_exam(exam_id):
     exam = Exam.query.filter(Exam.id == exam_id).first()
     if exam:
         exam.deleted = True
-        flash(f"Exam {exam.name} deleted", "success")
+        flash(f"Question {exam.name} deleted", "success")
         exam.save()
     else:
         flash("Wrong exam id", "danger")
@@ -444,7 +444,7 @@ def edit_exam(exam_id):
                 flash("The level invalid", "danger")
                 log(log.WARNING, "NONEXISTENT LEVEL %s", form.exam_level.data)
             exam.type_id = level.id
-            exam.lang.name = form.lang.data
+            exam.lang = form.lang.data
             exam.exam_type = form.exam_type.data
             exam.instruction = form.instruction.data
             exam.answer = form.answer.data
