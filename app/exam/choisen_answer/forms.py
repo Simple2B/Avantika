@@ -12,14 +12,14 @@ from wtforms.validators import DataRequired, Length
 
 class ChoiceExamForm(FlaskForm):
     exam_id = HiddenField("id")
-    name = StringField("Exam:")
+    name = StringField("Question:")
     instruction = TextAreaField("Instruction")
     answer = RadioField("Answer")
     submit = SubmitField("Go")
 
 
 class ChoiceCreateExamForm(FlaskForm):
-    name = StringField("Exam:", validators=[DataRequired(), Length(5, 30)])
+    name = StringField("Question:", validators=[DataRequired(), Length(5, 30)])
     lang = SelectField(
         "Lang",
         default="py",
@@ -27,7 +27,7 @@ class ChoiceCreateExamForm(FlaskForm):
     )
     exam_type = SelectField("Type", default="choice", choices=[("choice", "choice")])
     exam_level = SelectField(
-        "Exam Level:",
+        "Question Level:",
         choices=[
             ("Python Basics reg", "Python Basics reg"),
             ("Python Basics prem", "Python Basics prem"),

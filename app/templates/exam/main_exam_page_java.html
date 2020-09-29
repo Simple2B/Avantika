@@ -4,18 +4,18 @@
 <link rel="stylesheet" href="/static/css/jquery.dataTables.min.css">
 {% if current_user.roles[0].name == "Admin" 
 or current_user.roles[0].name == "Student_J_reg" 
-or current_user.roles[0].name == "Student_J_pre" %}
+ %}
 <table style="margin-top: 2%; margin-left: 5%;" cellspacing="0" width="50%">
     <thead>
         <tr>
-            <th scope="col">Exam Java</th>
+            <th scope="col">Question Java</th>
         </tr>
     </thead>
     <tbody style="margin-top: 5%;">
         {% for exam in exams %}
         <tr>
-            <td><a href="{{ url_for('exam.exam_py', exam_id=exam.id) }}">
-                    {%set exam_passed = current_user.is_exam_passed(exam.id)%}
+            <td>
+                {%set exam_passed = current_user.is_exam_passed(exam.id)%}
                     {% if exam_passed is boolean %}
                     {% if exam_passed %}
                     &#9989;
@@ -23,6 +23,8 @@ or current_user.roles[0].name == "Student_J_pre" %}
                     &#10060;
                     {% endif %}
                     {% endif %}
+                <a href="{{ url_for('exam.exam_py', exam_id=exam.id) }}">
+                    
                     {{exam.name}}</a></td>
         </tr>
         {% endfor %}
@@ -35,14 +37,14 @@ or current_user.roles[0].name == "Student_J_pre_outsider" %}
 <table style="margin-top: 2%; margin-left: 5%;" cellspacing="0" width="50%">
     <thead>
         <tr>
-            <th scope="col">Exam Java Prem</th>
+            <th scope="col">Question Java Prem</th>
         </tr>
     </thead>
     <tbody style="margin-top: 5%;">
         {% for exam in exams_prem %}
         <tr>
-            <td><a href="{{ url_for('exam.exam_java', exam_id=exam.id) }}">
-                    {%set exam_passed = current_user.is_exam_passed(exam.id)%}
+            <td>
+                {%set exam_passed = current_user.is_exam_passed(exam.id)%}
                     {% if exam_passed is boolean %}
                     {% if exam_passed %}
                     &#9989;
@@ -50,7 +52,9 @@ or current_user.roles[0].name == "Student_J_pre_outsider" %}
                     &#10060;
                     {% endif %}
                     {% endif %}
-                    {{exam.name}}</a></td>
+                    {{exam.name}}
+                <a href="{{ url_for('exam.exam_java', exam_id=exam.id) }}">
+                    </a></td>
         </tr>
         {% endfor %}
     </tbody>
