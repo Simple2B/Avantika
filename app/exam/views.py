@@ -324,7 +324,7 @@ def exam_html(exam_id):
 @exam_blueprint.route("/create_exam", methods=["GET", "POST"])
 @roles_required("Admin")
 def create_exam():
-    form = CreateExamForm(request.form, default=request.form.data['lang'])
+    form = CreateExamForm(request.form)
     if form.validate_on_submit():
         exam = Exam()
         exam.name = form.name.data
