@@ -103,6 +103,34 @@ def goto_next_exam(exam_id: int):
     return redirect(url_for(f"exam.exam_{lang.name}", exam_id=next_exam.id))
 
 
+def next_exam_exists(the_exam):
+    type_id = the_exam.type_id
+    lang = the_exam.lang
+    # Взять все экзаменны по заданому языку
+    exams = (
+        Exam.query.filter(Exam.lang == lang)
+        .filter(Exam.type_id == type_id)
+        .filter(Exam.deleted != True)  # noqa F712
+        .all()
+    )
+    # take list w/o last element
+    return the_exam.id in [exam.id for exam in exams][0:-1]
+
+
+def prev_exam_exists(the_exam):
+    type_id = the_exam.type_id
+    lang = the_exam.lang
+    # Взять все экзаменны по заданому языку
+    exams = (
+        Exam.query.filter(Exam.lang == lang)
+        .filter(Exam.type_id == type_id)
+        .filter(Exam.deleted != True)  # noqa F712
+        .all()
+    )
+    exams.reverse()
+    return the_exam.id in [exam.id for exam in exams][0:-1]
+
+
 def goto_prev_exam(exam_id: int):
     exam_id = int(exam_id)
     the_exam = Exam.query.filter(Exam.id == exam_id).first()

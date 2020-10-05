@@ -9,6 +9,8 @@ from .controller import (
     goto_next_exam,
     check_answer_choice,
     goto_prev_exam,
+    next_exam_exists,
+    prev_exam_exists,
 )
 from app.result.controller import go_pass_exam, next_to_pass_exam, go_fail_exam
 from app.tab import get_allowed_tabs
@@ -67,6 +69,8 @@ def main_exam_page_html():
 @exam_blueprint.route("/exam/py/<exam_id>", methods=["GET", "POST"])
 def exam_py(exam_id):
     exam = Exam.query.filter(Exam.id == exam_id).first()
+    next_exam_exist = next_exam_exists(exam)
+    prev_exam_exist = prev_exam_exists(exam)
     if exam.exam_type == Exam.Type.code:
         form = ExamForm(request.form)
     else:
@@ -76,6 +80,8 @@ def exam_py(exam_id):
         if request.form["submit"] == "Next":
             user = current_user
             next_to_pass_exam(exam_id=exam.id, user_id=user.id)
+            return goto_next_exam(exam_id)
+        elif request.form["submit"] == "Skip":
             return goto_next_exam(exam_id)
         elif request.form["submit"] == "Prev":
             return goto_prev_exam(exam_id)
@@ -109,12 +115,16 @@ def exam_py(exam_id):
                     form=form,
                     instruction_height=(exam.instruction.count("\n") + 2),
                     code_height=(exam.template.count("\n") + 2),
+                    next_exam_exist=next_exam_exist,
+                    prev_exam_exist=prev_exam_exist,
                 )
             elif exam.exam_type == Exam.Type.choice:
                 return render_base_template(
                     "exam/exam_choice.html",
                     form=form,
                     instruction_height=(exam.instruction.count("\n") + 2),
+                    next_exam_exist=next_exam_exist,
+                    prev_exam_exist=prev_exam_exist,
                 )
             else:
                 return render_base_template(
@@ -122,6 +132,8 @@ def exam_py(exam_id):
                     form=form,
                     instruction_height=(exam.instruction.count("\n") + 2),
                     code_height=(exam.template.count("\n") + 2),
+                    next_exam_exist=next_exam_exist,
+                    prev_exam_exist=prev_exam_exist,
                 )
     elif form.is_submitted():
         if request.form["submit"] == "Next":
@@ -139,6 +151,8 @@ def exam_py(exam_id):
             "exam/exam.html",
             form=form,
             instruction_height=(exam.instruction.count("\n") + 2),
+            next_exam_exist=next_exam_exist,
+            prev_exam_exist=prev_exam_exist,
         )
     form.name.data = exam.name
     form.exam_id.data = exam.id
@@ -148,6 +162,8 @@ def exam_py(exam_id):
         "exam/exam_choice.html",
         form=form,
         instruction_height=(exam.instruction.count("\n") + 2),
+        next_exam_exist=next_exam_exist,
+        prev_exam_exist=prev_exam_exist,
     )
 
 
@@ -242,6 +258,8 @@ def exam_java(exam_id):
 @exam_blueprint.route("/exam/html/<exam_id>", methods=["GET", "POST"])
 def exam_html(exam_id):
     exam = Exam.query.filter(Exam.id == exam_id).first()
+    next_exam_exist = next_exam_exists(exam)
+    prev_exam_exist = prev_exam_exists(exam)
     if exam.exam_type == Exam.Type.code:
         form = ExamForm(request.form)
     else:
@@ -282,12 +300,16 @@ def exam_html(exam_id):
                 form=form,
                 instruction_height=(exam.instruction.count("\n") + 2),
                 code_height=(exam.template.count("\n") + 2),
+                next_exam_exist=next_exam_exist,
+                prev_exam_exist=prev_exam_exist,
             )
         elif exam.exam_type == Exam.Type.choice:
             return render_base_template(
                 "exam/exam_choice.html",
                 form=form,
                 instruction_height=(exam.instruction.count("\n") + 2),
+                next_exam_exist=next_exam_exist,
+                prev_exam_exist=prev_exam_exist,
             )
         else:
             return render_base_template(
@@ -295,6 +317,8 @@ def exam_html(exam_id):
                 form=form,
                 instruction_height=(exam.instruction.count("\n") + 2),
                 code_height=(exam.template.count("\n") + 2),
+                next_exam_exist=next_exam_exist,
+                prev_exam_exist=prev_exam_exist,
             )
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
@@ -309,6 +333,8 @@ def exam_html(exam_id):
             form=form,
             instruction_height=(exam.instruction.count("\n") + 2),
             code_height=(exam.template.count("\n") + 2),
+            next_exam_exist=next_exam_exist,
+            prev_exam_exist=prev_exam_exist,
         )
     form.name.data = exam.name
     form.exam_id.data = exam.id
@@ -318,6 +344,8 @@ def exam_html(exam_id):
         "exam/exam_choice.html",
         form=form,
         instruction_height=(exam.instruction.count("\n") + 2),
+        next_exam_exist=next_exam_exist,
+        prev_exam_exist=prev_exam_exist,
     )
 
 
@@ -476,12 +504,20 @@ def show_solution(exam_id):
     form.instruction.data = exam.instruction
     form.code.data = exam.template
     form.solution.data = exam.solution
-    return render_base_template(
-        "exam/show_solution.html",
-        form=form,
-        instruction_height=(exam.instruction.count("\n") + 2),
-        code_height=(exam.template.count("\n") + 2),
-    )
+    form.correct_answer = exam.correct_answer
+    if exam.template:
+        return render_base_template(
+            "exam/show_solution.html",
+            form=form,
+            instruction_height=(exam.instruction.count("\n") + 2),
+            code_height=(exam.template.count("\n") + 2),
+        )
+    else:
+        return render_base_template(
+            "exam/show_solution.html",
+            form=form,
+            instruction_height=(exam.instruction.count("\n") + 2),
+        )
 
 
 def redirect_for_lang(lang):

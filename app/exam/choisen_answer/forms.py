@@ -15,7 +15,7 @@ class ChoiceExamForm(FlaskForm):
     name = StringField("Question:")
     instruction = TextAreaField("Instruction")
     answer = RadioField("Answer")
-    submit = SubmitField("Go")
+    submit = SubmitField("Submit")
 
 
 class ChoiceCreateExamForm(FlaskForm):

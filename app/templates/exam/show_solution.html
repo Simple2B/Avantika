@@ -9,6 +9,7 @@
         <div class="form-group">
             {{form.instruction(class='form-control', readonly=True, rows=instruction_height)}}
         </div>
+        {% if not form.correct_answer  %}
         <div class="form-group">
             {{form.code.label}}
             {{form.code(class='form-control', rows=code_height)}}
@@ -20,8 +21,16 @@
             {{form.solution.label}}
             {{form.solution(class='form-control', readonly=True, rows=10)}}
         </div>
+        {% endif  %}
+        {% if form.correct_answer  %}
+        <div class="form-group">
+            <div>Correct answer</div>
+            <div>{{form.correct_answer}}</div>
+            
+        </div>
+        {% endif  %}
         <button class="btn btn-primary " type="submit" name="submit" value="Prev">&lt;&lt;Back</button>
-        <button class="btn btn-primary " type="submit" name="submit" value="Go">Go</button>
+        <button class="btn btn-primary " type="submit" name="submit" value="Go">Submit</button>
         <a class="btn btn-primary" href="{{ url_for('exam.exam_py', exam_id=form.exam_id.data) }}">Hide
             Solution</a>
         <button class="btn btn-primary " type="submit" name="submit" value="Next">Next&gt;&gt;</button>

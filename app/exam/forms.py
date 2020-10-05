@@ -16,7 +16,7 @@ class ExamForm(FlaskForm):
     instruction = TextAreaField("Instruction")
     code = TextAreaField("Code")
     result = BooleanField("Result", default=False)
-    submit = SubmitField("Go")
+    submit = SubmitField("Submit")
 
 
 class CreateExamForm(FlaskForm):
