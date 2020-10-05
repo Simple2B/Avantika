@@ -69,8 +69,8 @@ def main_exam_page_html():
 @exam_blueprint.route("/exam/py/<exam_id>", methods=["GET", "POST"])
 def exam_py(exam_id):
     exam = Exam.query.filter(Exam.id == exam_id).first()
-    next_exam_exist = next_exam_exists(exam.id)
-    prev_exam_exist = prev_exam_exists(exam.id)
+    next_exam_exist = next_exam_exists(exam)
+    prev_exam_exist = prev_exam_exists(exam)
     if exam.exam_type == Exam.Type.code:
         form = ExamForm(request.form)
     else:
@@ -258,8 +258,8 @@ def exam_java(exam_id):
 @exam_blueprint.route("/exam/html/<exam_id>", methods=["GET", "POST"])
 def exam_html(exam_id):
     exam = Exam.query.filter(Exam.id == exam_id).first()
-    next_exam_exist = next_exam_exists(exam.id)
-    prev_exam_exist = prev_exam_exists(exam.id)
+    next_exam_exist = next_exam_exists(exam)
+    prev_exam_exist = prev_exam_exists(exam)
     if exam.exam_type == Exam.Type.code:
         form = ExamForm(request.form)
     else:
@@ -518,7 +518,6 @@ def show_solution(exam_id):
             form=form,
             instruction_height=(exam.instruction.count("\n") + 2),
         )
-
 
 
 def redirect_for_lang(lang):
