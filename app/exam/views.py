@@ -77,6 +77,8 @@ def exam_py(exam_id):
             user = current_user
             next_to_pass_exam(exam_id=exam.id, user_id=user.id)
             return goto_next_exam(exam_id)
+        elif request.form["submit"] == "Skip":
+            return goto_next_exam(exam_id)
         elif request.form["submit"] == "Prev":
             return goto_prev_exam(exam_id)
         else:
