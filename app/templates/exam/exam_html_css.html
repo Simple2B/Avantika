@@ -22,11 +22,19 @@
       <!-- codepen end -->
     </div>
     <script async src="http://assets.codepen.io/assets/embed/ei.js"></script>
+    {% if prev_exam_exist %}
     <button class="btn btn-primary " type="submit" name="submit" value="Prev">&lt;&lt;Back</button>
+    {% else %}
+    <div>Beginning of questions</div>
+    {% endif %}
     {{form.submit(class='btn btn-primary')}}
     <a class="btn btn-primary" href="{{ url_for('exam.show_solution', exam_id=form.exam_id.data)}}">See answer</a>
+    {% if next_exam_exist %}
     <button class="btn btn-primary " type="submit" name="submit" value="Next">Next&gt;&gt;</button>
     <button class="btn btn-primary " type="submit" name="submit" value="Skip">Skip question&gt;&gt;</button>
+    {% else %}
+    <div>End of questions</div>
+    {% endif %}
   </form>
 </div>
 {% endblock %}

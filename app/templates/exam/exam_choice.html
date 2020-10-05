@@ -22,10 +22,18 @@
             {% endfor %}
         </table>
         <div style="margin-top: 5%;">
+            {% if prev_exam_exist %}
             <button class="btn btn-primary " type="submit" name="submit" value="Prev">&lt;&lt;Back</button>
+            {% else %}
+            <div>Beginning of questions</div>
+            {% endif %}
             <button class="btn btn-primary " type="submit" name="submit" value="Go">Submit</button>
+            {% if next_exam_exist %}
             <button class="btn btn-primary " type="submit" name="submit" value="Next">Next&gt;&gt;</button>
             <button class="btn btn-primary " type="submit" name="submit" value="Skip">Skip question&gt;&gt;</button>
+            {% else %}
+            <div>End of questions</div>
+            {% endif %}
         </div>
     </form>
 </div>

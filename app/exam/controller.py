@@ -103,6 +103,43 @@ def goto_next_exam(exam_id: int):
     return redirect(url_for(f"exam.exam_{lang.name}", exam_id=next_exam.id))
 
 
+def next_exam_exists(exam_id: int):
+    exam_id = int(exam_id)
+    the_exam = Exam.query.filter(Exam.id == exam_id).first()
+    type_id = the_exam.type_id
+    lang = the_exam.lang
+    # Взять все экзаменны по заданому языку
+    exams = (
+        Exam.query.filter(Exam.lang == lang)
+        .filter(Exam.type_id == type_id)
+        .filter(Exam.deleted != True)  # noqa F712
+        .all()
+    )
+    for i in range(len(exams) - 1):
+        if exams[i].id == exam_id:
+            return True
+    return False
+
+
+def prev_exam_exists(exam_id: int):
+    exam_id = int(exam_id)
+    the_exam = Exam.query.filter(Exam.id == exam_id).first()
+    type_id = the_exam.type_id
+    lang = the_exam.lang
+    # Взять все экзаменны по заданому языку
+    exams = (
+        Exam.query.filter(Exam.lang == lang)
+        .filter(Exam.type_id == type_id)
+        .filter(Exam.deleted != True)  # noqa F712
+        .all()
+    )
+    exams.reverse()
+    for i in range(len(exams) - 1):
+        if exams[i].id == exam_id:
+            return True
+    return False
+
+
 def goto_prev_exam(exam_id: int):
     exam_id = int(exam_id)
     the_exam = Exam.query.filter(Exam.id == exam_id).first()
