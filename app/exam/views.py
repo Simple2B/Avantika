@@ -504,12 +504,21 @@ def show_solution(exam_id):
     form.instruction.data = exam.instruction
     form.code.data = exam.template
     form.solution.data = exam.solution
-    return render_base_template(
-        "exam/show_solution.html",
-        form=form,
-        instruction_height=(exam.instruction.count("\n") + 2),
-        code_height=(exam.template.count("\n") + 2),
-    )
+    form.correct_answer = exam.correct_answer
+    if exam.template:
+        return render_base_template(
+            "exam/show_solution.html",
+            form=form,
+            instruction_height=(exam.instruction.count("\n") + 2),
+            code_height=(exam.template.count("\n") + 2),
+        )
+    else:
+        return render_base_template(
+            "exam/show_solution.html",
+            form=form,
+            instruction_height=(exam.instruction.count("\n") + 2),
+        )
+
 
 
 def redirect_for_lang(lang):

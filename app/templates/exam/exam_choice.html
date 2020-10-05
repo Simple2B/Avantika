@@ -28,6 +28,7 @@
             <div>Beginning of questions</div>
             {% endif %}
             <button class="btn btn-primary " type="submit" name="submit" value="Go">Submit</button>
+            <a class="btn btn-primary" href="{{ url_for('exam.show_solution', exam_id=form.exam_id.data)}}">See answer</a>
             {% if next_exam_exist %}
             <button class="btn btn-primary " type="submit" name="submit" value="Next">Next&gt;&gt;</button>
             <button class="btn btn-primary " type="submit" name="submit" value="Skip">Skip question&gt;&gt;</button>
