@@ -179,7 +179,7 @@ def exam_lang(lang):
 
 
 @exam_blueprint.route("/exam/java/<exam_id>", methods=["GET", "POST"])
-def exam_java(exam_id, **exist):
+def exam_java(exam_id):
     exam = Exam.query.filter(Exam.id == exam_id).first()
     next_exam_exist = next_exam_exists(exam)
     prev_exam_exist = prev_exam_exists(exam)
