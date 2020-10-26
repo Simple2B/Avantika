@@ -80,11 +80,11 @@ def exam_py(exam_id):
         if request.form["submit"] == "Next":
             user = current_user
             next_to_pass_exam(exam_id=exam.id, user_id=user.id)
-            return goto_next_exam(exam_id)
+            return goto_next_exam(exam=exam)
         elif request.form["submit"] == "Skip":
-            return goto_next_exam(exam_id)
+            return goto_next_exam(exam=exam)
         elif request.form["submit"] == "Prev":
-            return goto_prev_exam(exam_id)
+            return goto_prev_exam(exam=exam)
         else:
             assert exam
             if exam.exam_type == Exam.Type.code:
@@ -139,9 +139,14 @@ def exam_py(exam_id):
         if request.form["submit"] == "Next":
             user = current_user
             next_to_pass_exam(exam_id=exam.id, user_id=user.id)
-            return goto_next_exam(exam_id)
+            return goto_next_exam(exam=exam)
         elif request.form["submit"] == "Prev":
-            return goto_prev_exam(exam_id)
+            return goto_prev_exam(exam=exam)
+        elif request.form["submit"] == "Skip":
+            return goto_next_exam(exam=exam)
+        else:
+            flash("Need an answer", "danger")
+
     if exam.exam_type == Exam.Type.code:
         form.name.data = exam.name
         form.exam_id.data = exam.id
@@ -174,8 +179,10 @@ def exam_lang(lang):
 
 
 @exam_blueprint.route("/exam/java/<exam_id>", methods=["GET", "POST"])
-def exam_java(exam_id):
+def exam_java(exam_id, **exist):
     exam = Exam.query.filter(Exam.id == exam_id).first()
+    next_exam_exist = next_exam_exists(exam)
+    prev_exam_exist = prev_exam_exists(exam)
     if exam.exam_type == Exam.Type.code:
         form = ExamForm(request.form)
     else:
@@ -185,9 +192,11 @@ def exam_java(exam_id):
         if request.form["submit"] == "Next":
             user = current_user
             next_to_pass_exam(exam_id=exam.id, user_id=user.id)
-            return goto_next_exam(exam_id)
+            return goto_next_exam(exam=exam)
         elif request.form["submit"] == "Prev":
-            return goto_prev_exam(exam_id)
+            return goto_prev_exam(exam=exam)
+        elif request.form["submit"] == "Skip":
+            return goto_next_exam(exam=exam)
         else:
             assert exam
             if exam.exam_type == Exam.Type.code:
@@ -200,6 +209,8 @@ def exam_java(exam_id):
                     user = current_user
                     go_fail_exam(exam_id=exam.id, user_id=user.id)
             elif exam.exam_type == Exam.Type.choice:
+                if form.answer.data is None:
+                    flash("Need an answer", "danger")
                 if check_answer_choice(exam.id, form.answer.data):
                     flash(f"Question success '{exam.name}'.", "success")
                     user = current_user
@@ -217,12 +228,16 @@ def exam_java(exam_id):
                     form=form,
                     instruction_height=(exam.instruction.count("\n") + 2),
                     code_height=(exam.template.count("\n") + 2),
+                    next_exam_exist=next_exam_exist,
+                    prev_exam_exist=prev_exam_exist,
                 )
             elif exam.exam_type == Exam.Type.choice:
                 return render_base_template(
                     "exam/exam_choice.html",
                     form=form,
                     instruction_height=(exam.instruction.count("\n") + 2),
+                    next_exam_exist=next_exam_exist,
+                    prev_exam_exist=prev_exam_exist,
                 )
             else:
                 return render_base_template(
@@ -230,6 +245,8 @@ def exam_java(exam_id):
                     form=form,
                     instruction_height=(exam.instruction.count("\n") + 2),
                     code_height=(exam.template.count("\n") + 2),
+                    next_exam_exist=next_exam_exist,
+                    prev_exam_exist=prev_exam_exist,
                 )
     elif form.is_submitted():
         flash("The given data was invalid.", "danger")
@@ -243,6 +260,8 @@ def exam_java(exam_id):
             "exam/exam.html",
             form=form,
             instruction_height=(exam.instruction.count("\n") + 2),
+            next_exam_exist=next_exam_exist,
+            prev_exam_exist=prev_exam_exist,
         )
     form.name.data = exam.name
     form.exam_id.data = exam.id
@@ -252,6 +271,8 @@ def exam_java(exam_id):
         "exam/exam_choice.html",
         form=form,
         instruction_height=(exam.instruction.count("\n") + 2),
+        next_exam_exist=next_exam_exist,
+        prev_exam_exist=prev_exam_exist,
     )
 
 
@@ -269,9 +290,11 @@ def exam_html(exam_id):
         if request.form["submit"] == "Next":
             user = current_user
             next_to_pass_exam(exam_id=exam.id, user_id=user.id)
-            return goto_next_exam(exam_id)
+            return goto_next_exam(exam=exam)
         elif request.form["submit"] == "Prev":
-            return goto_prev_exam(exam_id)
+            return goto_prev_exam(exam=exam)
+        elif request.form["submit"] == "Skip":
+            return goto_next_exam(exam=exam)
         else:
             assert exam
             if exam.exam_type == Exam.Type.code:

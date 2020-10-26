@@ -2,8 +2,10 @@
 
 {% block content %}
 <link rel="stylesheet" href="/static/css/jquery.dataTables.min.css">
-{% if current_user.roles[0].name == "Admin" 
-or current_user.roles[0].name == "Student_J_reg" 
+{% if current_user.roles[0].name == "Admin"
+or current_user.roles[0].name == "Student_J_reg"
+or current_user.roles[0].name == "Student_J_pre"
+or current_user.roles[0].name == "Student_J_pre_outsider"
  %}
 <table style="margin-top: 2%; margin-left: 5%;" cellspacing="0" width="50%">
     <thead>
@@ -24,15 +26,15 @@ or current_user.roles[0].name == "Student_J_reg"
                     {% endif %}
                     {% endif %}
                 <a href="{{ url_for('exam.exam_py', exam_id=exam.id) }}">
-                    
+
                     {{exam.name}}</a></td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 {% endif %}
-{% if current_user.roles[0].name == "Admin" 
-or current_user.roles[0].name == "Student_J_pre" 
+{% if current_user.roles[0].name == "Admin"
+or current_user.roles[0].name == "Student_J_pre"
 or current_user.roles[0].name == "Student_J_pre_outsider" %}
 <table style="margin-top: 2%; margin-left: 5%;" cellspacing="0" width="50%">
     <thead>
@@ -52,9 +54,8 @@ or current_user.roles[0].name == "Student_J_pre_outsider" %}
                     &#10060;
                     {% endif %}
                     {% endif %}
-                    {{exam.name}}
                 <a href="{{ url_for('exam.exam_java', exam_id=exam.id) }}">
-                    </a></td>
+                    {{exam.name}}</a></td>
         </tr>
         {% endfor %}
     </tbody>

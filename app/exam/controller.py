@@ -73,18 +73,8 @@ def check_answer_choice(exam_id: int, cor_index: str):
         return True
 
 
-def goto_next_exam(exam_id: int):
-    exam_id = int(exam_id)
-    the_exam = Exam.query.filter(Exam.id == exam_id).first()
-    type_id = the_exam.type_id
-    lang = the_exam.lang
-    # Взять все экзаменны по заданому языку
-    exams = (
-        Exam.query.filter(Exam.lang == lang)
-        .filter(Exam.type_id == type_id)
-        .filter(Exam.deleted != True)  # noqa F712
-        .all()
-    )
+def prepare_goto_exam(the_exam, prev):
+    exams = prepare_exams(the_exam=the_exam, reverse=prev)
     found_current = False
     next_exam = None
     index = 0
@@ -92,7 +82,7 @@ def goto_next_exam(exam_id: int):
         if found_current:
             next_exam = exam
             break
-        if exam.id == exam_id:
+        if exam.id == the_exam.id:
             found_current = True
             if index >= (len(exams) - 1):
                 first_exam = exams[0]
@@ -100,64 +90,41 @@ def goto_next_exam(exam_id: int):
                 break
         index += 1
 
-    return redirect(url_for(f"exam.exam_{lang.name}", exam_id=next_exam.id))
+    return redirect(url_for(
+        f"exam.exam_{the_exam.lang.name}",
+        exam_id=next_exam.id)
+        )
 
 
-def next_exam_exists(the_exam):
+def goto_next_exam(exam):
+    return prepare_goto_exam(
+        the_exam=exam, prev=False)
+
+
+def goto_prev_exam(exam):
+    return prepare_goto_exam(
+        the_exam=exam, prev=True)
+
+
+def prepare_exams(the_exam, reverse):
     type_id = the_exam.type_id
     lang = the_exam.lang
-    # Взять все экзаменны по заданому языку
     exams = (
         Exam.query.filter(Exam.lang == lang)
         .filter(Exam.type_id == type_id)
         .filter(Exam.deleted != True)  # noqa F712
         .all()
     )
-    # take list w/o last element
+    if reverse:
+        exams.reverse()
+    return exams
+
+
+def next_exam_exists(the_exam):
+    exams = prepare_exams(the_exam, reverse=False)
     return the_exam.id in [exam.id for exam in exams][0:-1]
 
 
 def prev_exam_exists(the_exam):
-    type_id = the_exam.type_id
-    lang = the_exam.lang
-    # Взять все экзаменны по заданому языку
-    exams = (
-        Exam.query.filter(Exam.lang == lang)
-        .filter(Exam.type_id == type_id)
-        .filter(Exam.deleted != True)  # noqa F712
-        .all()
-    )
-    exams.reverse()
+    exams = prepare_exams(the_exam, reverse=True)
     return the_exam.id in [exam.id for exam in exams][0:-1]
-
-
-def goto_prev_exam(exam_id: int):
-    exam_id = int(exam_id)
-    the_exam = Exam.query.filter(Exam.id == exam_id).first()
-    type_id = the_exam.type_id
-    lang = the_exam.lang
-    # Взять все экзаменны по заданому языку
-    exams = (
-        Exam.query.filter(Exam.lang == lang)
-        .filter(Exam.type_id == type_id)
-        .filter(Exam.deleted != True)  # noqa F712
-        .all()
-    )
-
-    found_current = False
-    next_exam = None
-    index = 0
-    exams.reverse()
-    for exam in exams:
-        if found_current:
-            next_exam = exam
-            break
-        if exam.id == exam_id:
-            found_current = True
-            if index >= (len(exams) - 1):
-                first_exam = exams[0]
-                next_exam = first_exam
-                break
-        index += 1
-
-    return redirect(url_for(f"exam.exam_{lang.name}", exam_id=next_exam.id))
