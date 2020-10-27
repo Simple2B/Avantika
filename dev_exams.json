@@ -717,7 +717,7 @@
         "lang": "html",
         "instruction": [
             "Fill in the blanks so that an image 400px wide and 400px in length is displayed on the screen",
-            "<image src = “C:/cupcake.png” width=' ' length=' '>"
+            "<image src = 'C:/cupcake.png' width=' ' length=' '>"
         ],
         "answers": [
             "a. 20 125",
