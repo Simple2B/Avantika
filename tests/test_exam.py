@@ -3,7 +3,7 @@ from flask import url_for
 from app import db, create_app
 from app.exam.models import Exam
 from app.exam.controller import check_answer, goto_next_exam
-from .common import login, logout, register, create_user
+from .common import login, create_user
 
 app = create_app(environment="testing")
 app.config["TESTING"] = True
@@ -19,6 +19,7 @@ def client():
     with app.test_client() as client:
         app_ctx = app.app_context()
         app_ctx.push()
+        db.drop_all()
         db.create_all()
         Exam.load_all_exams()
         create_user(LOGIN_STUDENT, PASSW_STUDENT, ROLE_STUDENT)
@@ -78,7 +79,6 @@ def test_all_button_presents(client):
         assert b">&lt;&lt;Back<" in res.data
         assert b">Next&gt;&gt;<" in res.data
         assert b">See answer<" in res.data
-    return exam
 
 
 def test_all_button_exam_choice_presents(client):
@@ -87,9 +87,14 @@ def test_all_button_exam_choice_presents(client):
         .filter(Exam.exam_type == Exam.Type.choice)
         .all()
     )
-    for exam in exams:
+    for i, exam in enumerate(exams):
         res = client.get(url_for("exam.exam_py", exam_id=exam.id))
-        assert b">Go<" in res.data
-        assert b">&lt;&lt;Back<" in res.data
-        assert b">Next&gt;&gt;<" in res.data
-    return exam
+        assert b">Submit<" in res.data
+        if i != 0:
+            assert b">&lt;&lt;Back<" in res.data
+        else:
+            assert b">&lt;&lt;Back<" not in res.data
+        if i < len(exams) - 1:
+            assert b">Next&gt;&gt;<" in res.data
+        else:
+            assert b">Next&gt;&gt;<" not in res.data
